@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
+[ ! -f .container ] && echo "Nothing running!" && exit
 CONTAINER=`cat .container`
-docker exec $CONTAINER docker commit
+
 docker container stop $(docker container ps -a -q)
+rm -f .container
+systemctl restart docker
