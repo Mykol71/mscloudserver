@@ -17,12 +17,12 @@ CONTAINER=`docker run -d -it --name=$SHOPCODE.teleflora.com --rm --privileged -v
 echo $CONTAINER>.container
 
 #configure the second nic for host networking by passing eth1 through to the container
-./pipework --direct-phys eth1 $CONTAINER ${POSIP}/24@192.168.1.254
+./pipework --direct-phys eth1 $CONTAINER ${POSIP}/24@192.168.222.1
 POSIP=`docker exec $CONTAINER /usr/sbin/ifconfig eth1 | grep broad | sed -e 's/    //g' | cut -d ' ' -f2`
 echo "$POSIP" > .posip
 
 #copy over media
-[ "$POSTYPE" == "daisy" ] && cp /home/daisy/*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp /home/daisy/*.gz /home/tfpos-$SHOPCODE/$POSDIR/. &&  cp /home/daisy/*.sh /home/tfpos-$SHOPCODE/$POSDIR/.
+[ "$POSTYPE" == "daisy" ] && cp /backups/daisy/*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp /backups/daisy/*.gz /home/tfpos-$SHOPCODE/$POSDIR/.
 
 #changed from /bin to /usr/bin at some point. Created link to avoid problems with other scripts and programs.
 docker exec $CONTAINER ln -s /usr/bin /bin
