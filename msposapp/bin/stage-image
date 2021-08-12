@@ -22,7 +22,7 @@ POSIP=`docker exec $CONTAINER /usr/sbin/ifconfig eth1 | grep broad | sed -e 's/ 
 echo "$POSIP" > .posip
 
 #copy over media
-[ "$POSTYPE" == "daisy" ] && cp /backups/daisy/*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp /backups/daisy/*.gz /home/tfpos-$SHOPCODE/$POSDIR/.
+[ "$POSTYPE" == "daisy" ] && cp ../files/daisy*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/ostools*.gz /home/tfpos-$SHOPCODE/$POSDIR/.
 
 #changed from /bin to /usr/bin at some point. Created link to avoid problems with other scripts and programs.
 docker exec $CONTAINER ln -s /usr/bin /bin
@@ -50,11 +50,12 @@ docker exec $CONTAINER ./bin/updateos.pl --hostname=$SHOPCODE.teleflora.com >/de
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER ./install-daisy.pl /d/daisy
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER umount /mnt/cdrom
 
-#mount backup data
-#[ "POSTYPE" == "daisy" ] && ln -s /backups/tfrync-${SHOPCODE}/d /home/tfpos-${SHOPCODE}/d
-#[ "POSTYPE" == "rti" ] && ln -s /backups/tfrync-${SHOPCODE}/usr2 /home/tfpos-${SHOPCODE}/usr2
+#mount backup data if exist.
+[ "POSTYPE" == "daisy" ] && [ -d /backups/tfrsync-${SHOPCODE} ] && ln -s /backups/tfrync-${SHOPCODE}/d /home/tfpos-${SHOPCODE}/d
+[ "POSTYPE" == "rti" ] && [ -d /backups/tfrsync-${SHOPCODE} && ln -s /backups/tfrync-${SHOPCODE}/usr2 /home/tfpos-${SHOPCODE}/usr2
 
 #move off hosts.deny
+#this is just for devel convienence. for security reasons, this should be removed after live use, disallowing ssh access even from the docker/outer host.
 docker exec $CONTAINER mv /etc/hosts.deny /etc/hosts.deny.orig
 
 #install vpn software
@@ -75,7 +76,7 @@ read VPN
 docker exec $CONTAINER yum -y update
 
 #save/export container
-docker commit $CONTAINER $SHOPCODE.teleflora.com
+#docker commit $CONTAINER $SHOPCODE.teleflora.com
 
 #Done
 echo "---"

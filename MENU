@@ -16,14 +16,15 @@ while :; do
     CYAN=''
     NC='\033[0m'
     clear
-    echo -e "${GREY}$(date +'%x %l:%M %p') -- $(cat /etc/redhat-release) ${NC}"
+#    echo -e "${GREY}$(date +'%x %l:%M %p') -- $(cat /etc/redhat-release) ${NC}"
+    echo -e "${GREY}$(date +'%x %l:%M %p') ${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ./msposapp/.envtype ] && cat ./msposapp/.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ '${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'" Free Space:${NC} $(df -h /backups | tail -1 | awk '{print $4}')"'\n'
-    printf '\u2503'${GREY}" $(hostname)"${NC}'\n'
-    printf '\u2503'${GREY}' MSCloudServer v2.0'${NC}'\n'
+    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
+    printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
+    printf '\u2503'${GREY}' Hostver  : 2.0'${NC}'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"---\033[0m System"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Data"'\n'
