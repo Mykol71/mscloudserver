@@ -33,7 +33,7 @@ printf '\u2503''\033[1m'"---\033[0m Container"'\n'
 printf '\u2503''\033[1m'" 1.\033[0m Status"'\n'
 printf '\u2503''\033[1m'" 2.\033[0m Stop"'\n'
 printf '\u2503''\033[1m'" 3.\033[0m Connect"'\n'
-printf '\u2503''\033[1m'" 4.\033[0m Data"'\n'
+#printf '\u2503''\033[1m'" 4.\033[0m #Data"'\n'
 printf '\u2503''\n'
 printf '\u2503''\033[1m'"----\033[0m Images"'\n'
 printf '\u2503''\033[1m'" 11.\033[0m List"'\n'
@@ -81,13 +81,13 @@ printf '\u2517''\u2501''\n'
 		read
 		cd -
 		;;
-	4)
-		cd $ROOTDIR/bin
-		./data_import
-		echo -ne "${CYAN}Press enter to continue..${NC}"
-		read
-		cd -
-		;;
+#	4)
+#		cd $ROOTDIR/bin
+#		./data_import
+#		echo -ne "${CYAN}Press enter to continue..${NC}"
+#		read
+#		cd -
+#		;;
 	12)
 		cd $ROOTDIR/bin
 		time ./create-base-image
