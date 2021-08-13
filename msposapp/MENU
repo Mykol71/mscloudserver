@@ -22,9 +22,9 @@ while :; do
     echo -e "\u2503${BLUE} @ ${NC}`[ -f .envtype ] && cat .envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
-    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `docker ps --format "{{.Status}}" 2>/dev/null`${NC}" || echo -e "\u2503${GREY} Status   : Not running${NC}"
-#    echo -e "\u2503${GREY} Shopcode : `ls /home | grep -v tfsupport | grep tfpos | cut -d- -f2 2>/dev/null`${NC}"
+    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')${NC}"'\n'
+    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `docker ps --format "{{.Status}}"`${NC}"
+    [ ! -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : Not running${NC}"
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
     [ "$CONTAINER" != "" ] && echo -e "\u2503${GREY} VPN      :`docker exec ${CONTAINER} strongswan status | sed -e 's/\ //' | grep === | grep -v Assoc 2>/dev/null`${NC}" || echo -e "\u2503${GREY} VPN      :${NC}"
@@ -49,7 +49,6 @@ printf '\u2503''\033[1m'" 114.\033[0m Stop"'\n'
 printf '\u2503''\033[1m'" 115.\033[0m Delete"'\n'
 printf '\u2503''\n'
 printf '\u2503''\033[1m'"---\033[0m System"'\n'
-printf '\u2503''\033[1m'" p.\033[0m Purge"'\n'
 printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
 printf '\u2503''\033[1m'" x.\033[0m Exit"'\n'
 printf '\u2517''\u2501''\n'
@@ -85,14 +84,6 @@ printf '\u2517''\u2501''\n'
 	4)
 		cd $ROOTDIR/bin
 		./data_import
-		echo -ne "${CYAN}Press enter to continue..${NC}"
-		read
-		cd -
-		;;
-	p)
-		cd $ROOTDIR/bin
-		./prune-docker
-		CONTAINER=`cat ./bin/.container 2>/dev/null`
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -
