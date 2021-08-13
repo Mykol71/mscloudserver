@@ -5,14 +5,9 @@ rm -f /var/tmp/centos7*xz
 rm -f /var/tmp/daisy*xz
 rm -f /var/tmp/rti*xz
 rm -f ./ipsec*
-docker container stop $(docker container ps -a -q)
+[ -f .container ] && docker container stop $(docker container ps -a -q)
 docker system prune --all
-userdel tfpos-`cat .shopcode`
-userdel tfpos-`cat .shopcode`-tfsupport
-rm -rf /home/tfpos-`cat .shopcode`
-rm -rf /home/tfpos-`cat .shopcode`-tfsupport
-rm -rf /var/spool/mail/tfpos-`cat .shopcode`
-rm -rf /var/spool/mail/tfpos-`cat .shopcode`-tfsupport
+[ -f .shopcode ] && [ -d /home/tfpos-`cat .shopcode` ] && userdel tfpos-`cat .shopcode` && userdel tfpos-`cat .shopcode`-tfsupport && rm -rf /home/tfpos-`cat .shopcode` && rm -rf /home/tfpos-`cat .shopcode`-tfsupport && rm -rf /var/spool/mail/tfpos-`cat .shopcode` && rm -rf /var/spool/mail/tfpos-`cat .shopcode`-tfsupport
 find .. -name ".*" -type f -exec rm -f {} \;
 yum clean all
 systemctl restart docker
