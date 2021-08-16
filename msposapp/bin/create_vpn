@@ -34,20 +34,12 @@ read -p ""
 if [ $REPLY == "n" ]; then
   exit 1
 else
-# configure strongSwan
+# configure libreswan
 echo "Creating VPN Connection......"
 
-echo "# ipsec.conf - strongSwan IPsec configuration file">ipsec.conf
 echo "">>ipsec.conf
-echo "# basic configuration">>ipsec.conf
-echo "config setup">>ipsec.conf
-echo "        charondebug="all"">>ipsec.conf
-echo "        uniqueids=yes">>ipsec.conf
-echo "        strictcrlpolicy=no">>ipsec.conf
-echo "">>ipsec.conf
-echo "# connection to $LOCATION_NAME">>ipsec.conf
 echo "conn ${LOCATION_NAME}">>ipsec.conf
-echo "  keyexchange=ikev1">>ipsec.conf
+echo "  keyexchange=ike">>ipsec.conf
 echo "  authby=secret">>ipsec.conf
 echo "  left=%defaultroute">>ipsec.conf
 echo "  leftid=${POS_CLOUD_PUBLIC}">>ipsec.conf
@@ -64,16 +56,14 @@ echo "  dpdtimeout=120">>ipsec.conf
 echo "  dpdaction=restart">>ipsec.conf
 echo "  auto=start">>ipsec.conf
 
-echo "# ipsec.secrets - strongSwan IPsec secrets file">ipsec.secrets
-echo "# source destination secret">>ipsec.secrets
-echo "${POS_CLOUD_PUBLIC} ${STORE_PUBLIC} : PSK "${PRESHAREDKEY}"">>ipsec.secrets
+echo "${POS_CLOUD_PUBLIC} ${STORE_PUBLIC} : PPKS \"\" \"${PRESHAREDKEY}\"">>ipsec.secrets
 
 chmod 666 ipsec.*
 
 # copy produced config files to container
-docker cp ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
-docker cp ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
-docker exec ${CONTAINER} chmod 600 /etc/strongswan/ipsec.secrets
+docker cp ipsec.conf "${CONTAINER}:/etc/ipsec.d/$LOCATION_NAME.conf"
+docker cp ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
+docker exec ${CONTAINER} chmod 600 /etc/ipsec.secrets
 
 echo "VPN Connection Created."
 fi

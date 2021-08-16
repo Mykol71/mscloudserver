@@ -60,7 +60,7 @@ docker exec $CONTAINER mv /etc/hosts.deny /etc/hosts.deny.orig
 
 #install vpn software
 docker exec $CONTAINER yum -y install epel-release
-docker exec $CONTAINER yum -y install strongswan strongswan-libipsec
+docker exec $CONTAINER yum -y install libreswan
 
 #install receipt printer drivers
 #docker cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
@@ -70,7 +70,7 @@ docker exec $CONTAINER yum -y install strongswan strongswan-libipsec
 #create vpn if desired
 echo -n "Create VPN? (y/n): "
 read VPN
-[ "$VPN" == "y" ] && ./create_vpn && docker exec ${CONTAINER} strongswan start
+[ "$VPN" == "y" ] && ./create_vpn && docker exec ${CONTAINER} systemctl start ipsec
 
 #update OS
 docker exec $CONTAINER yum -y update
