@@ -71,7 +71,6 @@ chmod 600 ipsec.secrets
 # copy produced config files to container
 docker cp ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
 docker cp ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
-#docker cp ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
 
 echo "VPN Connection Created."
 fi
