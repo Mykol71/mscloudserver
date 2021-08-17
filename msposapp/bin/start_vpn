@@ -8,10 +8,4 @@ else
   exit 1
 fi
 
-# copy produced config files to container
-docker cp ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
-docker cp ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
-
-docker exec $CONTAINER strongswan start
-
-#wget -qO- http://ipv4.icanhazip.com; echo
+[ -f ipsec.conf ] && docker exec $CONTAINER strongswan start
