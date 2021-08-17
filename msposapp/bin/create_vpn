@@ -51,7 +51,7 @@ conn $REMOTE_NAME
   right=${REMOTE_PUBLIC}
   rightsubnet="${REMOTE_NET}/24"
   ike=aes128-sha1-modp1024!
-  esp=aes128-sha1!
+  esp=aes128-sha1-modp1024!
   keyingtries=0
   ikelifetime=1h
   lifetime=8h
@@ -71,7 +71,7 @@ chmod 600 ipsec.secrets
 # copy produced config files to container
 docker cp ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
 docker cp ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
-docker cp ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
+#docker cp ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
 
 echo "VPN Connection Created."
 fi
