@@ -39,7 +39,7 @@ cat >> ipsec.conf <<EOF
 config setup
 	charondebug="all"
         uniqueids=yes
-        strictcrlpolicy=mp
+        strictcrlpolicy=no
 
 # connection to $REMOTE_NAME
 conn $REMOTE_NAME
@@ -49,10 +49,9 @@ conn $REMOTE_NAME
   leftid=${AWS_PUBLIC}
   leftsubnet="${AWS_NETWORK}/24"
   right=${REMOTE_PUBLIC}
-#  rightid=${REMOTE_PUBLIC}
   rightsubnet="${REMOTE_NET}/24"
   ike=aes128-sha1-modp1024!
-  esp=aes128-sha1-modp1024!
+  esp=aes128-sha1!
   keyingtries=0
   ikelifetime=1h
   lifetime=8h
