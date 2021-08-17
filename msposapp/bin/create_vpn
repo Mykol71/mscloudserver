@@ -35,6 +35,12 @@ else
 echo "Creating VPN Connection......"
 cat >> ipsec.conf <<EOF
 
+# basic config
+config setup
+	charondebug="all"
+        uniqueids=yes
+        strictcrlpolicy=mp
+
 # connection to $REMOTE_NAME
 conn $REMOTE_NAME
   keyexchange=ikev1
@@ -43,6 +49,7 @@ conn $REMOTE_NAME
   leftid=${AWS_PUBLIC}
   leftsubnet="${AWS_NETWORK}/24"
   right=${REMOTE_PUBLIC}
+#  rightid=${REMOTE_PUBLIC}
   rightsubnet="${REMOTE_NET}/24"
   ike=aes128-sha1-modp1024!
   esp=aes128-sha1-modp1024!
@@ -65,6 +72,7 @@ chmod 600 ipsec.secrets
 # copy produced config files to container
 docker cp ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
 docker cp ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
+docker cp ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
 
 echo "VPN Connection Created."
 fi
