@@ -8,4 +8,4 @@ else
   exit 1
 fi
 
-docker exec ${CONTAINER} ipsec trafficstatus
+docker exec ${CONTAINER} strongswan statusall
