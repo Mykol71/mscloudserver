@@ -12,6 +12,8 @@ else
   exit 1
 fi
 
-docker exec $CONTAINER strongswan stop
-docker exec $CONTAINER rm /etc/strongswan/ipsec.conf
-docker exec $CONTAINER rm /etc/strongswan/ipsec.secrets
+docker exec $CONTAINER systemctl stop ipsec
+docker exec $CONTAINER rm /etc/ipsec.d/*.conf
+docker exec $CONTAINER rm /etc/ipsec.secrets
+rm -f ./ipsec.conf
+rm -f ./ipsec.secrets
