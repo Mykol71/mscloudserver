@@ -1,5 +1,8 @@
 #!/bin/bash
 
+[ ! -f ../.envtype ] && echo "Not installed. Run the installer from the main menu." && exit 0
+[ "`docker image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
+
 OS=centos
 echo -n "daisy or rti?: "
 read POSTYPE
@@ -60,7 +63,7 @@ docker exec $CONTAINER mv /etc/hosts.deny /etc/hosts.deny.orig
 
 #install vpn software
 docker exec $CONTAINER yum -y install epel-release
-docker exec $CONTAINER yum -y install strongswan strongswan-libipsec Network-Manager
+docker exec $CONTAINER yum -y install strongswan strongswan-libipsec xl2tpd NetworkManager-strongswan
 
 #install receipt printer drivers
 #docker cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
