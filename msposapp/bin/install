@@ -25,13 +25,13 @@ ntpdate pool.ntp.org
 timedatectl set-timezone America/Chicago
 
 # install shellinabox
-yum -y install openssl shellinabox
-sed -i 's/4200/443/g' /etc/sysconfig/shellinaboxd
-sed -i 's/^OPTS/\#OPTS/g' /etc/sysconfig/shellinaboxd
-cp ./*.css /usr/share/shellinabox/.
-echo "OPTS=\"-s /:SSH:`hostname` --user-css Normal:+black-on-white.css,Reverse:-white-on-black.css\"" >>/etc/sysconfig/shellinaboxd
-systemctl enable shellinaboxd
-systemctl start shellinaboxd
+#yum -y install openssl shellinabox
+#sed -i 's/4200/443/g' /etc/sysconfig/shellinaboxd
+#sed -i 's/^OPTS/\#OPTS/g' /etc/sysconfig/shellinaboxd
+#cp ./*.css /usr/share/shellinabox/.
+#echo "OPTS=\"-s /:SSH:`hostname` --user-css Normal:+black-on-white.css,Reverse:-white-on-black.css\"" >/etc/sysconfig/shellinaboxd
+#systemctl enable shellinaboxd
+#systemctl start shellinaboxd
 
 #install vpn client software
 yum -y install epel-release
@@ -73,7 +73,7 @@ sed -i 's/\/home/\/backups/' /etc/default/useradd
  
 # add /etc/skel/tfrsync
 # push this to user create script for backups.
-#cp -f ./tfrsync /etc/skel/.
+cp -f ./tfrsync /etc/skel/.
  
 # make backups folder if its not there.
 [ ! -d /backups ] && mkdir /backups
