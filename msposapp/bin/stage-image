@@ -63,7 +63,7 @@ docker exec $CONTAINER mv /etc/hosts.deny /etc/hosts.deny.orig
 
 #install vpn software
 docker exec $CONTAINER yum -y install epel-release
-docker exec $CONTAINER yum -y install strongswan libreswan
+docker exec $CONTAINER yum -y install strongswan libreswan xl2tpd
 
 #install receipt printer drivers
 #docker cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
