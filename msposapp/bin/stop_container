@@ -8,3 +8,6 @@ rm -f .container
 systemctl restart docker
 
 [ -f .shopcode ] && [ -d /home/tfpos-`cat .shopcode` ] && userdel tfpos-`cat .shopcode` && userdel tfpos-`cat .shopcode`-tfsupport && rm -rf /home/tfpos-`cat .shopcode` && rm -rf /home/tfpos-`cat .shopcode`-tfsupport && rm -rf /var/spool/mail/tfpos-`cat .shopcode` && rm -rf /var/spool/mail/tfpos-`cat .shopcode`-tfsupport
+
+rm -f ./ipsec.secrets
+rm -f ./ipsec.conf

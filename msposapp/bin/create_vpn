@@ -12,6 +12,9 @@ else
   exit 1
 fi
 
+# check if vpn exist
+[ -f ipsec.conf ] && echo "VPN connection already exists." && exit 0
+
 # gather user input
 INPUTS="REMOTE_NAME AWS_PUBLIC AWS_NETWORK REMOTE_PUBLIC REMOTE_NET PASSPHRASE"
 
