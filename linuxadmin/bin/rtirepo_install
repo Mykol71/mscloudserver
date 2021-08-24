@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# verify root
+ID=`/usr/bin/id -u`
+[ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
+
+# disable subscription manager
+sed -i '/enabled=1/enabled=0' /etc/yum/pluginconf.d/subscription-manager.conf
+
+# create rti repos file
+cat > /etc/yum.repos.d/rtirepos.repo <<EOF
+[RTIRepo]
+name=RTIRepo
+enabled=1
+gpgcheck=1
+baseurl=https://tfrhelrepo.centralus.cloudapp.azure.com/rhel-7-server-rpms/
+EOF
+
+# update system
+yum -y update
+
+exit 0
