@@ -11,10 +11,9 @@ yum -y insights-client
 [ $? -ne 0 ] && echo "Could not install insights client." && exit 2
 
 # make config changes to conf.
-sed -i '/' /etc/yum/pluginconf.d/subscription-manager.conf
-sed -i '/enabled=1/enabled=0' /etc/yum/pluginconf.d/subscription-manager.conf
-sed -i '/enabled=1/enabled=0' /etc/yum/pluginconf.d/subscription-manager.conf
-sed -i '/enabled=1/enabled=0' /etc/yum/pluginconf.d/subscription-manager.conf
+sed -i '/\#authmethod=BASIC/authmethod=BASIC' /etc/insights-client/insights-client.conf
+sed -i '/\#username=/username=michael_green' /etc/insights-client/insights-client.conf
+sed -i '/\#password=/password=1971Dandy\!' /etc/insights-client/insights-client.conf
 [ $? -ne 0 ] && echo "Could not update conf file." && exit 3
 
 # register.
