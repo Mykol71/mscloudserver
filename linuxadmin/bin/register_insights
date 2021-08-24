@@ -21,4 +21,7 @@ insights-client --unregister
 insights-client --register
 [ $? -ne 0 ] && echo "Could not register." && exit 4
 
+# move off redhat.repo if exists.
+[ -f /etc/yum/repos.d/redhat.repo ] && mv /etc/yum.repos.d/redhat.repo ~
+
 exit 0
