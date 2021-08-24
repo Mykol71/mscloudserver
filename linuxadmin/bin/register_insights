@@ -12,13 +12,13 @@ yum -y install insights-client
 
 # make config changes to conf.
 sed -i 's/\#authmethod=BASIC/authmethod=BASIC/g' /etc/insights-client/insights-client.conf
-sed -i 's/\#username=/username=michael_green/g' /etc/insights-client/insights-client.conf
-sed -i 's/\#password=/password=1971Dandy\!/g' /etc/insights-client/insights-client.conf
+sed -i 's/\#username=/username=tflinuxpos/g' /etc/insights-client/insights-client.conf
+sed -i 's/\#password=/password=erpoithxciujhnbmxhgkvhasw/g' /etc/insights-client/insights-client.conf
 [ $? -ne 0 ] && echo "Could not update conf file." && exit 3
 
 # register.
 insights-client --unregister
-insights-client --register
+insights-client --registerjk
 [ $? -ne 0 ] && echo "Could not register." && exit 4
 
 # move off redhat.repo if exists.
