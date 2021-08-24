@@ -18,7 +18,7 @@ sed -i 's/\#password=/password=erpoithxciujhnbmxhgkvhasw/g' /etc/insights-client
 
 # register.
 insights-client --unregister
-insights-client --registerjk
+insights-client --register
 [ $? -ne 0 ] && echo "Could not register." && exit 4
 
 # move off redhat.repo if exists.
