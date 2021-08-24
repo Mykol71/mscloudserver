@@ -6,6 +6,7 @@ ID=`/usr/bin/id -u`
 
 # disable subscription manager
 sed -i '/enabled=1/enabled=0' /etc/yum/pluginconf.d/subscription-manager.conf
+[ $? -ne 0 ] && echo "Could not disable subscription manager." && exit 2
 
 # create rti repos file
 cat > /etc/yum.repos.d/rtirepos.repo <<EOF
@@ -15,8 +16,10 @@ enabled=1
 gpgcheck=1
 baseurl=https://tfrhelrepo.centralus.cloudapp.azure.com/rhel-7-server-rpms/
 EOF
+[ $? -ne 0 ] && echo "Could not create rtirepo file." && exit 3
 
 # update system
 yum -y update
+[ $? -ne 0 ] && echo "Could not install updates." && exit 4
 
 exit 0
