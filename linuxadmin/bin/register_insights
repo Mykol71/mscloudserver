@@ -17,6 +17,7 @@ sed -i 's/\#password=/password=1971Dandy\!/g' /etc/insights-client/insights-clie
 [ $? -ne 0 ] && echo "Could not update conf file." && exit 3
 
 # register.
+insights-client --unregister
 insights-client --register
 [ $? -ne 0 ] && echo "Could not register." && exit 4
 
