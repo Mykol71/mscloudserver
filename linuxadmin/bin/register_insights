@@ -11,9 +11,9 @@ yum -y insights-client
 [ $? -ne 0 ] && echo "Could not install insights client." && exit 2
 
 # make config changes to conf.
-sed -i '/\#authmethod=BASIC/authmethod=BASIC' /etc/insights-client/insights-client.conf
-sed -i '/\#username=/username=michael_green' /etc/insights-client/insights-client.conf
-sed -i '/\#password=/password=1971Dandy\!' /etc/insights-client/insights-client.conf
+sed -i 's/\#authmethod=BASIC/authmethod=BASIC/g' /etc/insights-client/insights-client.conf
+sed -i 's/\#username=/username=michael_green/g' /etc/insights-client/insights-client.conf
+sed -i 's/\#password=/password=1971Dandy\!/g' /etc/insights-client/insights-client.conf
 [ $? -ne 0 ] && echo "Could not update conf file." && exit 3
 
 # register.
