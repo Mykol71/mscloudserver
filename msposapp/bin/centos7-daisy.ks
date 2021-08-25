@@ -114,6 +114,7 @@ biosdevname
 iptables-services
 perl-Digest
 perl-Digest-MD5
+NetworkManager
 deltarpm
 -chrony
 %end
