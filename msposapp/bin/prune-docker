@@ -1,13 +1,29 @@
 #!/bin/bash
 
+# remove temp files.
 rm -rf /var/tmp/containers
 rm -f /var/tmp/centos7*xz
 rm -f /var/tmp/daisy*xz
 rm -f /var/tmp/rti*xz
 rm -f ./ipsec*
-[ -f .container ] && docker container stop $(docker container ps -a -q)
+
+# stop running containers and prune docker.
+#[ -f .container ] && docker container stop $(docker container ps -a -q)
+docker container stop $(docker container ps -a -q)
 docker system prune --all
-[ -f .shopcode ] && [ -d /home/tfpos-`cat .shopcode` ] && userdel tfpos-`cat .shopcode` && userdel tfpos-`cat .shopcode`-tfsupport && rm -rf /home/tfpos-`cat .shopcode` && rm -rf /home/tfpos-`cat .shopcode`-tfsupport && rm -rf /var/spool/mail/tfpos-`cat .shopcode` && rm -rf /var/spool/mail/tfpos-`cat .shopcode`-tfsupport
+[ -f .shopcode ] && rm .shopcode
+
+# remove users, home folders, mail files, and created hidden files.
 find .. -name ".*" -type f -exec rm -f {} \;
+for user in `ls /home | grep tfpos-`
+  do
+    userdel $user
+    rm -rf /home/$user
+    rm -f /var/spool/mail/$user
+  done
+
+# remove yum junk.
 yum clean all
+
+# restart docker to release NIC.
 systemctl restart docker
