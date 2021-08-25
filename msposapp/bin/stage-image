@@ -25,7 +25,7 @@ POSIP=`docker exec $CONTAINER /usr/sbin/ifconfig eth1 | grep broad | sed -e 's/ 
 echo "$POSIP" > .posip
 
 #copy over media
-[ "$POSTYPE" == "daisy" ] && cp ../files/daisy*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/ostools*.gz /home/tfpos-$SHOPCODE/$POSDIR/.
+[ "$POSTYPE" == "daisy" ] && cp ../files/daisy*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/ostools*.gz /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/register_insights /home/tfpos-$SHOPCODE/$POSDIR/.
 
 #changed from /bin to /usr/bin at some point. Created link to avoid problems with other scripts and programs.
 docker exec $CONTAINER ln -s /usr/bin /bin
@@ -52,6 +52,9 @@ docker exec $CONTAINER ./bin/updateos.pl --hostname=$SHOPCODE.teleflora.com >/de
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER cp /mnt/cdrom/install-daisy.pl .
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER ./install-daisy.pl /d/daisy
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER umount /mnt/cdrom
+
+#register with insights.
+#docker exec $CONTAINER ./register_insights
 
 #mount backup data if exist.
 [ "POSTYPE" == "daisy" ] && [ -d /backups/tfrsync-${SHOPCODE} ] && ln -s /backups/tfrync-${SHOPCODE}/d /home/tfpos-${SHOPCODE}/d
