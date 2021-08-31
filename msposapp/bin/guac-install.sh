@@ -13,7 +13,7 @@
 #
 ######  PRE-RUN CHECKS  ##############################################
 if ! [ $(id -u) = 0 ]; then echo "This script must be run as sudo or root, try again..."; exit 1; fi
-if ! [ $(getenforce) = "Enforcing" ]; then echo "This script requires SELinux to be active and in \"Enforcing mode\""; exit 1; fi
+if ! [ $(getenforce) = "Permissive" ]; then echo "This script requires SELinux to be \"Permissive mode\""; exit 1; fi
 if ! [ $(uname -m) = "x86_64" ]; then echo "This script will only run on 64 bit versions of RHEL/CentOS"; exit 1; fi
 # Check that firewalld is installed
 if ! rpm -q --quiet "firewalld"; then echo "This script requires firewalld to be installed on the system"; exit 1; fi
@@ -32,7 +32,7 @@ SCRIPT_BUILD="2020_07_16" # Scripts Date for last modified as "yyyy_mm_dd"
 ADM_POC="Local Admin, admin@admin.com"  # Point of contact for the Guac server admin
 
 # Versions
-GUAC_STBL_VER="1.2.0" # Latest stable version of Guac from https://guacamole.apache.org/releases/
+GUAC_STBL_VER="1.3.0" # Latest stable version of Guac from https://guacamole.apache.org/releases/
 MYSQL_CON_VER="8.0.21" # Working stable release of MySQL Connecter J
 MAVEN_VER="3.8.2" # Latest stable version of Apache Maven
 

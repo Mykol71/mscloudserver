@@ -79,7 +79,10 @@ cp -f ./tfrsync /etc/skel/.
 [ ! -d /backups ] && mkdir /backups
 
 # install guacamole
-yum -y install guacamole guacd
+systemctl stop firewalld
+cd ./msposapp/bin
+./guac-install.sh
+cd -
 yum -y install libguac-client-vnc libguac-client-ssh libguac-client-rdp
  
 # lastly, update everything
