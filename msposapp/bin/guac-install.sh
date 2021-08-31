@@ -1350,7 +1350,8 @@ nginxcfg () {
 s_echo "y" "${Bold}Nginx Configuration"
 
 # Backup Nginx Configuration
-{ [ -f /etc/nginx/conf.d/default.conf ] && mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.ori.bkp; } &
+[ ! -f /etc/ngnix/conf.d/default.conf ] && touch /etc/ngnix/conf.d/default.conf
+{ mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.ori.bkp; } &
 s_echo "n" "${Reset}-Making Nginx config backup...    "; spinner
 
 # HTTP Nginx Conf
