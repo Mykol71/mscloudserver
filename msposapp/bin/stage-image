@@ -4,10 +4,11 @@
 [ "`docker image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
 
 OS=centos
-echo -n "daisy or rti?: "
+echo -n "daisy, rti, or doveplus?: "
 read POSTYPE
 [ "$POSTYPE" == "daisy" ] && VER="10.1.17" && POSDIR="d"
 [ "$POSTYPE" == "rti" ] && VER="16.1.3" && POSDIR="usr2"
+[ "$POSTYPE" == "doveplus" ] && VER="16.1.3" && POSDIR="c"
 POSIP=`cat .posip`
 SHOPCODE=`cat .shopcode`
 
@@ -16,12 +17,15 @@ useradd -b /home tfpos-$SHOPCODE
 useradd -b /home tfpos-$SHOPCODE-tfsupport
 
 #start container
-CONTAINER=`docker run -d -it --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}7-${POSTYPE}-${VER} /usr/sbin/init`
+[ "$POSTYPE" != "doveplus" ] && CONTAINER=`docker run -d -it --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}7-${POSTYPE}-${VER} /usr/sbin/init`
+
+[ "$POSTYPE" == "doveplus" ] && [ ! -d /home/tfpos-$SHOPCODE/$POSDIR ] && mkdir /home/tfpos-$SHOPCODE/$POSDIR && CONTAINER=`docker run --privileged -d -it --name $SHOPCODE.teleflora.com --device=/dev/kvm --device=/dev/net/tun -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cap-add=NET_ADMIN --cap-add=SYS_ADMIN -w="/${POSDIR}" -i win10dove bash`
+
 echo $CONTAINER>.container
 
 #configure the second nic for host networking by passing eth1 through to the container
-./pipework --direct-phys eth1 $CONTAINER ${POSIP}/24@192.168.222.1
-POSIP=`docker exec $CONTAINER /usr/sbin/ifconfig eth1 | grep broad | sed -e 's/    //g' | cut -d ' ' -f2`
+#./pipework --direct-phys eth1 $CONTAINER ${POSIP}/24@192.168.222.1
+#POSIP=`docker exec $CONTAINER /usr/sbin/ifconfig eth1 | grep broad | sed -e 's/    //g' | cut -d ' ' -f2`
 echo "$POSIP" > .posip
 
 #copy over media
@@ -37,11 +41,10 @@ docker exec $CONTAINER echo LANG=en_US.UTF-8 >/etc/locale.conf
 docker exec $CONTAINER mknod /dev/loop b 7 0
 
 #install ostools
-docker exec $CONTAINER tar xvfz ostools-1.15-latest.tar.gz
-docker exec $CONTAINER ./bin/install-ostools.pl ./ostools-1.15-latest.tar.gz --noharden-linux
+[ "${POSTYPE}" != "doveplus" ] && docker exec $CONTAINER tar xvfz ostools-1.15-latest.tar.gz && docker exec $CONTAINER ./bin/install-ostools.pl ./ostools-1.15-latest.tar.gz --noharden-linux
 
 #configure system hostname
-docker exec $CONTAINER ./bin/updateos.pl --hostname=$SHOPCODE.teleflora.com >/dev/null 2>&1
+[ "${POSTYPE}" != "doveplus" ] && docker exec $CONTAINER ./bin/updateos.pl --hostname=$SHOPCODE.teleflora.com >/dev/null 2>&1
 
 #prepare for daisy
 [ "$POSTYPE" == daisy ] && docker exec $CONTAINER ./bin/updateos.pl --daisy8
@@ -62,11 +65,11 @@ docker exec $CONTAINER ./bin/updateos.pl --hostname=$SHOPCODE.teleflora.com >/de
 
 #move off hosts.deny
 #this is just for devel convienence. for security reasons, this should be removed after live use, disallowing ssh access even from the docker/outer host.
-docker exec $CONTAINER mv /etc/hosts.deny /etc/hosts.deny.orig
+[ "$POSTYPE" != "doveplus" ] && docker exec $CONTAINER mv /etc/hosts.deny /etc/hosts.deny.orig
 
 #install vpn software
-docker exec $CONTAINER yum -y install epel-release
-docker exec $CONTAINER yum -y install strongswan libreswan xl2tpd strongswan-libipsec NetworkManager NetworkManager-strongswan NetworkManager-l2tp NetworkManager-libreswan
+#docker exec $CONTAINER yum -y install epel-release
+#docker exec $CONTAINER yum -y install strongswan libreswan xl2tpd strongswan-libipsec NetworkManager NetworkManager-strongswan NetworkManager-l2tp NetworkManager-libreswan
 
 #install receipt printer drivers
 #docker cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
@@ -74,18 +77,15 @@ docker exec $CONTAINER yum -y install strongswan libreswan xl2tpd strongswan-lib
 #docker exec $CONTAINER rpm -i /tmp/istar.rpm
 
 #create vpn if desired
-echo -n "Create VPN? (y/n): "
-read VPN
-[ "$VPN" == "y" ] && ./create_vpn && docker exec ${CONTAINER} systemctl start NetworkManager && docker exec ${CONTAINER} systemctl start strongswan && docker exec ${CONTAINER} systemctl start xl2tpd && docker exec ${CONTAINER} strongswan start
+#echo -n "Create VPN? (y/n): "
+#read VPN
+#[ "$VPN" == "y" ] && ./create_vpn && docker exec ${CONTAINER} systemctl start NetworkManager && docker exec ${CONTAINER} systemctl start strongswan && docker exec ${CONTAINER} systemctl start xl2tpd && docker exec ${CONTAINER} strongswan start
 
 #update OS
-docker exec $CONTAINER yum -y update
+[ "${POSTYPE}" != "doveplus" ] && docker exec $CONTAINER yum -y update
 
 #Done
 echo "---"
 echo "${OS}7-$POSTYPE-$SHOPCODE instance is ready!"
-echo "---"
-docker exec $CONTAINER ./bin/updateos.pl --version
-docker exec $CONTAINER cat /etc/redhat-release
 echo "---"
 exit 0
