@@ -60,9 +60,9 @@ find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
 # install guacamole
 systemctl stop firewalld
-echo "Install guacamole?: "
+echo -n "Install guacamole?: "
 read REPLY
-[ "$REPLY" == "y|Y" ] && [ ! -d /etc/guacamole ] && ./guac-install.sh
+[ "$REPLY" == "y|Y" ] && docker run -p 8080:8080 -d -v /etc/guacamole:/guacamole.properties oznu/guacamole
 
 # change default home dir to /backups from now on
 # Dont do this unless cloud backup dedicated server as well
