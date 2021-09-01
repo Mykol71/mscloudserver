@@ -23,7 +23,7 @@ while :; do
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')${NC}"'\n'
-    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `docker ps --format "{{.Status}}"`${NC}"
+    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `docker ps --format "{{.Status}}" | head -1`${NC}"
     [ ! -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : Not running${NC}"
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
