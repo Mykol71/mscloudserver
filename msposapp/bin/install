@@ -59,10 +59,9 @@ find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 [ "`grep tfsupport /etc/sudoers`" == "" ] && echo "tfsupport        ALL=(ALL)       NOPASSWD: ALL">>/etc/sudoers
 
 # install guacamole
-systemctl stop firewalld
 echo -n "Install guacamole?: "
 read REPLY
-[ "$REPLY" == "y|Y" ] && docker run -p 8080:8080 -d -v /etc/guacamole:/guacamole.properties oznu/guacamole
+[ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] && docker run -p 8080:8080 -d -v /etc/guacamole:/guacamole.properties oznu/guacamole
 
 # change default home dir to /backups from now on
 # Dont do this unless cloud backup dedicated server as well
