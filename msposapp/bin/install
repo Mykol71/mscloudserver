@@ -60,7 +60,9 @@ find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
 # install guacamole
 systemctl stop firewalld
-[ ! -d /etc/guacamole ] && ./guac-install.sh
+echo "Install guacamole?: "
+read REPLY
+[ "$REPLY" == "y|Y" ] && [ ! -d /etc/guacamole ] && ./guac-install.sh
 
 # change default home dir to /backups from now on
 # Dont do this unless cloud backup dedicated server as well
