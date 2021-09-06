@@ -3,7 +3,8 @@
 [ ! -f .container ] && echo "Nothing running!" && exit
 CONTAINER=`cat .container`
 
-docker container stop $(docker container ps -a -q)
+#docker container stop $(docker container ps -a -q)
+docker container stop $(cat .container)
 rm -f .container
 systemctl restart docker
 
