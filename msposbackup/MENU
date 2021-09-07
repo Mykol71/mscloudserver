@@ -82,7 +82,8 @@ printf '\u2517''\u2501''\n'
 		read
 		;;
 	r)
-		cat ./docs/README.md | more
+		cat ./README.md | more
+		read
 		;;
 	x)
 		cd ..
