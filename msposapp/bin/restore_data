@@ -1,0 +1,13 @@
+#!/bin/bash
+
+[ ! -f ./.container ] && echo No running container! && exit
+
+CONTAINER=`cat .container`
+SHOPCODE=`cat .shopcode`
+
+[ "`ls /backups | grep $SHOPCODE | wc -l`" != "0" ] && echo -n "Restore data? " && read REPLY
+
+[ "$REPLY" == "y" ] && [ "`ls /backups | grep $SHOPCODE | wc -l`" != "1" ] && echo "`ls /backups | grep $SHOPCODE | cut -d- -f3`" && echo -n "Which? " && read BACKUP_SUB && BACKUP_NAME="-$BACKUP_SUB"
+[ "$REPLY" == "y" ] && [ "`ls /backups | grep $SHOPCODE | wc -l`" == "1" ] && BACKUP_NAME=""
+[ "$REPLY" != "y" ] && BACKUP_DIR="" || BACKUP_DIR="/backups/tfrsync-$SHOPCODE$BACKUP_NAME"
+echo $BACKUP_DIR
