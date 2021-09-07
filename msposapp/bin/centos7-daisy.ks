@@ -22,7 +22,7 @@ network --bootproto=dhcp --activate --onboot=on
 shutdown
 bootloader --disable
 #lang en_US.UTF-8
-lang en_US.UTF-8  --addsupport=en_US,en
+lang en_US  --addsupport=en_US,en
 auth  --useshadow --passalgo=sha512
 firewall --enabled --ssh  --trust=eth0
 firstboot --disable
@@ -44,7 +44,7 @@ profile = pci-dss
 %end
 
 # Package setup
-%packages --excludedocs --instLangs=en --nocore
+%packages --excludedocs --instLangs=en_US --nocore
 @Base
 bind-utils
 bash
