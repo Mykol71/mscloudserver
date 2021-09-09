@@ -26,6 +26,6 @@ msposapp
 - auto-remove connection info from guac when stoping.
 - brand guac home page?
 - check into support for function keys.
--
+- input validation.
 -
 - 

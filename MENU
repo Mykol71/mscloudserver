@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-TFCLOUD_VERSION="2.0"
+TFCLOUD_VERSION="2.3"
 # verify root
 ID=$(/usr/bin/id -u)
 [ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
@@ -25,16 +25,16 @@ while :; do
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
     echo -e "\u2503${GREY} Shopcode : `[ -f ./msposapp/bin/.shopcode ] && cat ./msposapp/bin/.shopcode`${NC}"
-    printf '\u2503'${GREY}' Version  : 2.0'${NC}'\n'
+    printf '\u2503'${GREY}' Version  : 2.3'${NC}'\n'
     printf '\u2503''\n'
     [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./msposapp/bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"---\033[0m System"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Data"'\n'
     printf '\u2503''\033[1m'" 2.\033[0m Containers"'\n'
-    printf '\u2503''\033[1m'" 3.\033[0m Repos"'\n'
-    printf '\u2503''\033[1m'" 4.\033[0m Admin"'\n'
-    printf '\u2503''\033[1m'" 5.\033[0m Reports"'\n'
+#    printf '\u2503''\033[1m'" 3.\033[0m Repos"'\n'
+    printf '\u2503''\033[1m'" 3.\033[0m Admin"'\n'
+    printf '\u2503''\033[1m'" 4.\033[0m Reports"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'" i.\033[0m Install"'\n'
     printf '\u2503''\033[1m'" p.\033[0m Purge"'\n'
@@ -54,17 +54,17 @@ while :; do
 		./MENU
 		cd -
 		;;
+#	3)
+#		cd $ROOTDIR/tfmscentos
+#		./MENU
+#		cd -
+#		;;
 	3)
-		cd $ROOTDIR/tfmscentos
-		./MENU
-		cd -
-		;;
-	4)
 		cd $ROOTDIR/linuxadmin
 		./MENU
 		cd -
 		;;
-	5)
+	4)
 		cd $ROOTDIR/msposreports
 		./MENU
 		cd -

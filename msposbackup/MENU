@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TFCLOUD_VERSION="2.0"
+TFCLOUD_VERSION="2.3"
 
 # verify root
 ID=$(/usr/bin/id -u)
@@ -29,7 +29,7 @@ echo -e "\u2503${BLUE} @ ${NC}`[ -f ../msposapp/.envtype ] && cat ../msposapp/.e
 #printf '\u2503'" Space    :${NC} $(df -h /backups | tail -1 | awk '{print $4}')"'\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
-    printf '\u2503'${GREY}' Version  : 2.0'${NC}'\n'
+    printf '\u2503'${GREY}' Version  : 2.3'${NC}'\n'
     printf '\u2503''\n'
 printf '\u2503''\033[1m'"---\033[0m Backups"'\n'
 printf '\u2503''\033[1m'" 1.\033[0m List Accounts"'\n'
