@@ -14,5 +14,5 @@ SHOPCODE=`cat .shopcode`
 echo From: $BACKUP_DIR
 echo To  : /home/tfpos-$SHOPCODE/
 
-[ "$BACKUP_DIR" != "" ] && rsync -av $BACKUP_DIR/d/. /home/tfpos-$SHOPCODE/d
+[ "$BACKUP_DIR" != "" ] && rsync -av $BACKUP_DIR/. /home/tfpos-$SHOPCODE/
 docker exec $CONTAINER chown -R daisy:daisy /d
