@@ -27,7 +27,6 @@ while :; do
     [ ! -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : Not running${NC}"
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     printf '\u2503'${GREY}" Backups  : `[ -f ./bin/.shopcode ] && ls /backups | grep $(cat ./bin/.shopcode) | wc -l`${NC}"'\n'
-printf '\u2503''\n'
 [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} VPN      :`docker exec $(cat ./bin/.container) strongswan status | grep -v Assoc | cut -d: -f1 | sed -e 's/\ \ \ \ \ \ //' | head -1`${NC}" || echo -e "\u2503${GREY} VPN      :${NC}"

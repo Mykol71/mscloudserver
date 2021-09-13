@@ -26,7 +26,6 @@ while :; do
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
     echo -e "\u2503${GREY} Shopcode : `[ -f ./msposapp/bin/.shopcode ] && cat ./msposapp/bin/.shopcode`${NC}"
     printf '\u2503'${GREY}' Version  : 2.3'${NC}'\n'
-    printf '\u2503''\n'
     [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./msposapp/bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"---\033[0m System"'\n'
