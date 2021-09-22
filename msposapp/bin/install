@@ -74,6 +74,22 @@ cp -f ./tfrsync /etc/skel/.
 # make backups folder if its not there.
 [ ! -d /backups ] && mkdir /backups
 
+# mount azure fileshare
+# NEED RHEL/CentOS8 kernel for this!
+#[ ! -d /mnt/rticloudbackup ] && mkdir /mnt/rticloudbackup
+#if [ ! -d "/etc/smbcredentials" ]; then
+#mkdir /etc/smbcredentials
+#fi
+#if [ ! -f "/etc/smbcredentials/rticloudbackup.cred" ]; then
+#    bash -c 'echo "username=rticloudbackup" >> /etc/smbcredentials/rticloudbackup.cred'
+#    bash -c 'echo "password=QW8X0EC37hpJwKy4iP/Kdo4tpzT+GdMTbLF+lR0CkcxN22IkQOQeCCN7fmHxPC6Dqv7vXllNQBtPvbuYTqmXgQ==" >> /etc/smbcredentials/rticloudbackup.cred'
+#fi
+#chmod 600 /etc/smbcredentials/rticloudbackup.cred
+#if [ "`grep rticloudbackup /etc/fstab`" == "" ]; then
+#bash -c 'echo "//rticloudbackup.file.core.windows.net/rticloudbackup /mnt/rticloudbackup cifs nofail,vers=3.0,credentials=/etc/smbcredentials/rticloudbackup.cred,dir_mode=0777,file_mode=0777,serverino" >> /etc/fstab'
+#fi
+#mount -t cifs //rticloudbackup.file.core.windows.net/rticloudbackup /mnt/rticloudbackup -o vers=3.0,credentials=/etc/smbcredentials/rticloudbackup.cred,dir_mode=0777,file_mode=0777,serverino
+
 # lastly, update everything
 yum -y update
  
