@@ -18,7 +18,7 @@ cat > /etc/yum.repos.d/rtirepos.repo <<EOF
 [RTIRepo]
 name=RTIRepo
 enabled=1
-gpgcheck=0
+gpgcheck=1
 baseurl=https://tfrhelrepo.centralus.cloudapp.azure.com/rhel-7-server-rpms/
 EOF
 [ $? -ne 0 ] && echo "Could not create rtirepo file." && exit 3
