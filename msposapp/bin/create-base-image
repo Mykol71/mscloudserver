@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-echo -n "daisy, rti, or dove?: "
+echo -n "daisy or rti?: "
 read POSTYPE
 
 rm -rf /var/tmp/containers
@@ -18,8 +18,8 @@ docker image save centos7:latest > /var/tmp/centos7-daisy.tar.xz
 ./create-daisy-image 2>/tmp/create-daisy-image.error.log
 fi
 
-if [ "$POSTYPE" == "dove" ]; then
-./containerbuild.sh centos7-doveplus.ks 2>/tmp/build-daisy-container.error.log
+if [ "$POSTYPE" == "doveplus" ]; then
+./containerbuild.sh centos7-doveplus.ks 2>/tmp/build-doveplus-container.error.log
 docker image save centos7:latest > /var/tmp/centos7-doveplus.tar.xz
 ./create-doveplus-image 2>/tmp/create-doveplus-image.error.log
 fi

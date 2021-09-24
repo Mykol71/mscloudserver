@@ -4,7 +4,7 @@
 [ "`docker image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
 
 OS=centos
-echo -n "daisy, rti, or doveplus?: "
+echo -n "daisy or rti?: "
 read POSTYPE
 [ "$POSTYPE" == "daisy" ] && VER="10.1.17" && POSDIR="d"
 [ "$POSTYPE" == "rti" ] && VER="16.1.3" && POSDIR="usr2"
