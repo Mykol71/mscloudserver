@@ -19,12 +19,7 @@ docker image save centos7:latest > /var/tmp/centos7-daisy.tar.xz
 fi
 
 if [ "$POSTYPE" == "dove" ]; then
-[ ! -d /var/tmp/win10-dovepos ] && mkdir /var/tmp/win10-dovepos
-cp ./win10-dockerfile /var/tmp/win10-dovepos/Dockerfile
-cp ./startup.sh /var/tmp/win10-dovepos/startup.sh
-#cp ../files/*.exe /var/tmp/win10-dovepos/.
-cd /var/tmp/win10-dovepos
-docker build -t win10dove:latest -f Dockerfile . 2>/tmp/build-dove-container.error.log
-docker image save win10dove:latest > /var/tmp/win10-dovepos.tar.xz
-cd -
+./containerbuild.sh centos7-doveplus.ks 2>/tmp/build-daisy-container.error.log
+docker image save centos7:latest > /var/tmp/centos7-doveplus.tar.xz
+./create-doveplus-image 2>/tmp/create-doveplus-image.error.log
 fi
