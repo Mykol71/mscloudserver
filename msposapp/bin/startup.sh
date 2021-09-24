@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eou pipefail
 
+exec /usr/sbin/init
 chown root:kvm /dev/kvm
 systemctl start libvirtd
 systemctl start virtlogd

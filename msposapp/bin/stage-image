@@ -8,7 +8,7 @@ echo -n "daisy, rti, or doveplus?: "
 read POSTYPE
 [ "$POSTYPE" == "daisy" ] && VER="10.1.17" && POSDIR="d"
 [ "$POSTYPE" == "rti" ] && VER="16.1.3" && POSDIR="usr2"
-[ "$POSTYPE" == "doveplus" ] && VER="16.1.3" && POSDIR="c"
+[ "$POSTYPE" == "doveplus" ] && VER="18.1.1" && POSDIR="c"
 POSIP=`cat .posip`
 SHOPCODE=`cat .shopcode`
 
@@ -19,7 +19,7 @@ useradd -b /home tfpos-$SHOPCODE-tfsupport
 #start container
 [ "$POSTYPE" != "doveplus" ] && CONTAINER=`docker run -d -it --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}7-${POSTYPE}-${VER} /usr/sbin/init`
 
-[ "$POSTYPE" == "doveplus" ] && [ ! -d /home/tfpos-$SHOPCODE/$POSDIR ] && mkdir /home/tfpos-$SHOPCODE/$POSDIR && CONTAINER=`docker run --privileged -d -it --name $SHOPCODE.teleflora.com --device=/dev/kvm --device=/dev/net/tun -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cap-add=NET_ADMIN --cap-add=SYS_ADMIN -w="/${POSDIR}" -i win10dove bash`
+[ "$POSTYPE" == "doveplus" ] && [ ! -d /home/tfpos-$SHOPCODE/$POSDIR ] && mkdir /home/tfpos-$SHOPCODE/$POSDIR && CONTAINER=`docker run --privileged -d -it --name $SHOPCODE.teleflora.com --device=/dev/kvm --device=/dev/net/tun -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cap-add=NET_ADMIN --cap-add=SYS_ADMIN -w="/${POSDIR}" -i ${OS}7-${POSTYPE}-${VER} bash`
 
 echo $CONTAINER>.container
 
