@@ -30,6 +30,7 @@ echo "$POSIP" > .posip
 
 #copy over media
 [ "$POSTYPE" == "daisy" ] && cp ../files/daisy*.iso /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/ostools*.gz /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/register_insights /home/tfpos-$SHOPCODE/$POSDIR/.
+[ "$POSTYPE" == "rti" ] && cp ../files/ostools*.gz /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/register_insights /home/tfpos-$SHOPCODE/$POSDIR/.
 
 #changed from /bin to /usr/bin at some point. Created link to avoid problems with other scripts and programs.
 docker exec $CONTAINER ln -s /usr/bin /bin
@@ -75,13 +76,13 @@ docker exec $CONTAINER yum -y install strongswan libreswan xl2tpd strongswan-lib
 #docker cp ./istar.rpm ${CONTAINER}:/tmp
 #docker exec $CONTAINER rpm -i /tmp/istar.rpm
 
+#update OS
+[ "${POSTYPE}" != "doveplus" ] && docker exec $CONTAINER yum -y update
+
 #create vpn if desired
 echo -n "Create VPN? (y/n): "
 read VPN
 [ "$VPN" == "y" ] && ./create_vpn && docker exec ${CONTAINER} systemctl start NetworkManager && docker exec ${CONTAINER} systemctl start strongswan && docker exec ${CONTAINER} systemctl start xl2tpd && docker exec ${CONTAINER} strongswan start
-
-#update OS
-[ "${POSTYPE}" != "doveplus" ] && docker exec $CONTAINER yum -y update
 
 #Done
 echo "---"
