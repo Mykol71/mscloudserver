@@ -1,6 +1,9 @@
 #!/bin/bash
 
 [ ! -f ./.container ] && echo No running container! && exit
+POS_DIR=$1
+[ "$POS_DIR" == "d" ] && POS_USER=daisy
+[ "$POS_DIR" == "usr2" ] && POS_USER=rti
 
 CONTAINER=`cat .container`
 SHOPCODE=`cat .shopcode`
@@ -20,5 +23,7 @@ echo To  : /home/tfpos-$SHOPCODE/
 echo ""
 sleep 3
 
-[ "$BACKUP_DIR" != "" ] && rsync -av $BACKUP_DIR/. /home/tfpos-$SHOPCODE/
-docker exec $CONTAINER chown -R daisy:daisy /d
+[ "$BACKUP_DIR" != "" ] && rsync -avzh $BACKUP_DIR/. /home/tfpos-$SHOPCODE/
+docker exec $CONTAINER chown -R $POS_USER:$POS_USER /$POS_DIR
+[ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/etc /
+[ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/home /

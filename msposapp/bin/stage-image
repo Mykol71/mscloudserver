@@ -60,7 +60,7 @@ docker exec $CONTAINER mknod /dev/loop b 7 0
 #docker exec $CONTAINER ./register_insights
 
 #restore backup data if exist.
-[ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data
+[ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data $POSDIR
 
 #move off hosts.deny
 #this is just for devel convienence. for security reasons, this should be removed after live use, disallowing ssh access even from the docker/outer host.
