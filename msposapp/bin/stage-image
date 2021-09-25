@@ -14,7 +14,6 @@ SHOPCODE=`cat .shopcode`
 
 #add POS users
 useradd -b /home tfpos-$SHOPCODE
-useradd -b /home tfpos-$SHOPCODE-tfsupport
 
 #start container
 [ "$POSTYPE" != "doveplus" ] && CONTAINER=`docker run -d -it --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}7-${POSTYPE}-${VER} /usr/sbin/init`
