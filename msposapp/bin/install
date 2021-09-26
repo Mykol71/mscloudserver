@@ -45,6 +45,7 @@ systemctl enable docker
 
 # add custom cloud backup server scripts to /usr/local/bin
 find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
+find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
 find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
 # add tfsupport usr and generate keys folder, if not there.
