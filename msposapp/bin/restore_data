@@ -25,6 +25,6 @@ sleep 3
 
 [ "$BACKUP_DIR" != "" ] && rsync -avzh $BACKUP_DIR/. /home/tfpos-$SHOPCODE/
 docker exec $CONTAINER chown -R $POS_USER:$POS_USER /$POS_DIR
-[ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/etc /
-[ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/home /
-[ -d /home/tfpos-$SHOPCODE/usr ] && mv /home/tfpos-$SHOPCODE/usr /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/usr /
+[ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/etc / && docker exec $CONTAIER chown -R root:root /etc 
+[ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/home / && chown -R tfsupport /home/tfsupport
+[ -d /home/tfpos-$SHOPCODE/usr/java ] && mv /home/tfpos-$SHOPCODE/usr/java /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/usr/java / && chown -R root:root /usr/java
