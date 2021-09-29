@@ -27,4 +27,6 @@ sleep 3
 [ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/etc / && docker exec $CONTAINER chown -R root:root /etc 
 [ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/home / && docker exec $CONTAINER chown -R tfsupport /home/tfsupport
 [ -d /home/tfpos-$SHOPCODE/usr/java ] && mv /home/tfpos-$SHOPCODE/usr/java /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/java /usr/ && docker exec $CONTAINER chown -R root:root /usr/java
+[ -d /home/tfpos-$SHOPCODE/usr/lib ] && mv /home/tfpos-$SHOPCODE/usr/lib /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/lib /usr/ && docker exec $CONTAINER chown -R root:root /usr/lib
 docker exec $CONTAINER chown root:root /etc/sudoers
+[ -d /home/tfpos-$SHOPCODE/usr2 ] && docker exec $CONTAINER chown -R tfsupport:rti /usr2
