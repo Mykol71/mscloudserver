@@ -32,8 +32,9 @@ docker exec $CONTAINER chown root:root /etc/sudoers
 
 if [ "$POS_DIR" == "usr2" ]; then
 docker exec $CONTAINER chown -R tfsupport:rti /usr2
-docker exec $CONTAINER ln -s /usr/lib/systemd/system/bbj.service /etc/systemd/system/bbj.service
-docker exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/blm.service
+docker exec $CONTAINER ln -s /usr/lib/systemd/system/bbj.service /etc/systemd/system/BBjServices
+docker exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/BLM
+docker exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/BasisLicenseManager
 
 # disable real time.
 docker exec $CONTAINER sed -i 's/^/#/g' /usr2/bbx/config/rtiBackgr
