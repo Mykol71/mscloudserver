@@ -75,9 +75,6 @@ docker exec $CONTAINER yum -y install strongswan libreswan xl2tpd strongswan-lib
 #docker cp ./istar.rpm ${CONTAINER}:/tmp
 #docker exec $CONTAINER rpm -i /tmp/istar.rpm
 
-#update OS
-[ "${POSTYPE}" != "doveplus" ] && docker exec $CONTAINER yum -y update
-
 #create vpn if desired
 echo -n "Create VPN? (y/n): "
 read VPN
