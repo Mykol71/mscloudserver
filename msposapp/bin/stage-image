@@ -6,9 +6,9 @@
 OS=centos
 echo -n "daisy or rti?: "
 read POSTYPE
-[ "$POSTYPE" == "daisy" ] && VER="10.1.22" && POSDIR="d"
-[ "$POSTYPE" == "rti" ] && VER="16.1.3" && POSDIR="usr2"
-[ "$POSTYPE" == "doveplus" ] && VER="18.1.1" && POSDIR="c"
+[ "$POSTYPE" == "daisy" ] && VER="10" && POSDIR="d"
+[ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
+[ "$POSTYPE" == "doveplus" ] && VER="18" && POSDIR="c"
 POSIP=`cat .posip`
 SHOPCODE=`cat .shopcode`
 
@@ -51,7 +51,7 @@ docker exec $CONTAINER mknod /dev/loop b 7 0
 
 #install daisy
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER mkdir /mnt/cdrom
-[ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER mount -o loop daisy_"${VER}"_rhel7.iso /mnt/cdrom
+[ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER mount -o loop daisy_"${VER}".1.22_rhel7.iso /mnt/cdrom
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER cp /mnt/cdrom/install-daisy.pl .
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER ./install-daisy.pl /d/daisy
 [ "$POSTYPE" == "daisy" ] && docker exec $CONTAINER umount /mnt/cdrom
