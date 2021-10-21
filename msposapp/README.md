@@ -1,31 +1,31 @@
 msposapp
 --------
 
-- rti staging.
+o add loop to fix /home folder permissions; restore_data script.
+o daisy specific restore data stuff.
+o rti staging.
 - update daisy version.
 - update rti version.
-- look for already deleted vpns when stopping.
-- mult-user menu conflicts; how to share guac install.
-- check into docker root-less support.
-- win10 build.
-- doveplus stage.
+o look for already deleted vpns when stopping.
+o add network restart to install to reclaim used nic (eth1) instead of requiring reboot.
+o mult-customer support considerations; same server.
+o check into docker root-less support.
+o win10 build.
+o doveplus stage.
 - dont stop guac when stopping pos container.
-- https setup; certbot support.
-               port forwarding? proxy?
-- hardening enable selinux.
-- readd rhel support.
-- data restore; add printers.
+o readd rhel support.
+~ data restore; add printers.
                 add users.
                 add samba shares.
                 add rti support.
-- dont ask if to install guac if already running.
-- vpn changes; switch to road warrior style?
+o dont ask if to install guac if already running.
+o vpn changes; switch to road warrior style?
                routing issue with site-to-site.
-- auto check for server IP instead of asking during install.
-- auto-add connection info to guacamole during staging.
-- auto-remove connection info from guac when stoping.
-- brand guac home page?
-- check into support for function keys.
-- input validation.
--
-- 
+o auto check for server IP instead of asking during install.
+o auto-add connection info to guacamole during staging.
+o auto-remove connection info from guac when stoping.
+o brand guac home page?
+o check into support for function keys.
+o input validation.
+o
+o 
