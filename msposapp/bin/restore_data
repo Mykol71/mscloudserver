@@ -23,6 +23,7 @@ echo To  : /home/tfpos-$SHOPCODE/
 echo ""
 sleep 3
 
+# For both POS system types.
 [ "$BACKUP_DIR" != "" ] && rsync -avzh $BACKUP_DIR/. /home/tfpos-$SHOPCODE/ && docker exec $CONTAINER chown -R $POS_USER:$POS_USER /$POS_DIR
 [ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/etc / && docker exec $CONTAINER chown -R root:root /etc 
 [ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/home / && docker exec $CONTAINER chown -R tfsupport /home/tfsupport
@@ -30,6 +31,7 @@ sleep 3
 [ -d /home/tfpos-$SHOPCODE/usr/lib ] && mv /home/tfpos-$SHOPCODE/usr/lib /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/lib /usr/ && docker exec $CONTAINER chown -R root:root /usr/lib
 docker exec $CONTAINER chown root:root /etc/sudoers
 
+# RTI only.
 if [ "$POS_DIR" == "usr2" ]; then
 docker exec $CONTAINER chown -R tfsupport:rti /usr2
 docker exec $CONTAINER ln -s /usr/lib/systemd/system/bbj.service /etc/systemd/system/BBjServices
@@ -44,4 +46,10 @@ docker exec $CONTAINER systemctl restart cups
 docker exec $CONTAINER systemctl restart blm
 docker exec $CONTAINER systemctl restart bbj
 docker exec $CONTAINER systemctl restart rti
+fi
+
+
+# Daisy only.
+if [ "$POS_DIR" == "d" ]; then
+docker exec $CONTAINER chown -R daisy:daisy /d
 fi
