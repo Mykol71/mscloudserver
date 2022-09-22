@@ -8,4 +8,4 @@ else
   exit 1
 fi
 
-docker exec ${CONTAINER} strongswan statusall
+podman exec ${CONTAINER} ipsec briefstatus

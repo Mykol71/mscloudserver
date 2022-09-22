@@ -1,0 +1,6 @@
+Running... anaconda --kickstart /home/tfsupport/MSCloudServer/msposapp/bin/centos8-rti.ks --cmdline --loglevel debug --dirinstall --remotelog 127.0.0.1:54647
+Running... losetup -j /var/tmp/centos8-rti-docker.tar.xz
+Return code: 0
+Running... losetup --detach /dev/
+losetup: /dev/: failed to use device: No such device
+Return code: 1

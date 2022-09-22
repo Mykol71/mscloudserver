@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export TERM=linux
+rm -f ~/.ssh/known_hosts
+[ "`netstat -an | grep 8080`" != "" ] && ssh tfsupport@172.17.0.3 || ssh tfsupport@172.17.0.2

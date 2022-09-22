@@ -8,4 +8,4 @@ else
   exit 1
 fi
 
-[ -f ipsec.conf ] && docker exec $CONTAINER strongswan start
+[ -f ipsec.conf ] && podman exec $CONTAINER ipsec start

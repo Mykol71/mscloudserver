@@ -24,32 +24,32 @@ echo ""
 sleep 3
 
 # For both POS system types.
-[ "$BACKUP_DIR" != "" ] && rsync -avzh $BACKUP_DIR/. /home/tfpos-$SHOPCODE/ && docker exec $CONTAINER chown -R $POS_USER:$POS_USER /$POS_DIR
-[ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/etc / && docker exec $CONTAINER chown -R root:root /etc 
-[ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/home / && docker exec $CONTAINER chown -R tfsupport /home/tfsupport
-[ -d /home/tfpos-$SHOPCODE/usr/java ] && mv /home/tfpos-$SHOPCODE/usr/java /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/java /usr/ && docker exec $CONTAINER chown -R root:root /usr/java
-[ -d /home/tfpos-$SHOPCODE/usr/lib ] && mv /home/tfpos-$SHOPCODE/usr/lib /home/tfpos-$SHOPCODE/$POS_DIR/. && docker exec $CONTAINER rsync -avhz /$POS_DIR/lib /usr/ && docker exec $CONTAINER chown -R root:root /usr/lib
-docker exec $CONTAINER chown root:root /etc/sudoers
+[ "$BACKUP_DIR" != "" ] && rsync -avzh $BACKUP_DIR/. /home/tfpos-$SHOPCODE/ && podman exec $CONTAINER chown -R $POS_USER:$POS_USER /$POS_DIR
+[ -d /home/tfpos-$SHOPCODE/etc ] && mv /home/tfpos-$SHOPCODE/etc /home/tfpos-$SHOPCODE/$POS_DIR/. && podman exec $CONTAINER rsync -avhz /$POS_DIR/etc / && podman exec $CONTAINER chown -R root:root /etc 
+[ -d /home/tfpos-$SHOPCODE/home ] && mv /home/tfpos-$SHOPCODE/home /home/tfpos-$SHOPCODE/$POS_DIR/. && podman exec $CONTAINER rsync -avhz /$POS_DIR/home / && podman exec $CONTAINER chown -R tfsupport /home/tfsupport
+[ -d /home/tfpos-$SHOPCODE/usr/java ] && mv /home/tfpos-$SHOPCODE/usr/java /home/tfpos-$SHOPCODE/$POS_DIR/. && podman exec $CONTAINER rsync -avhz /$POS_DIR/java /usr/ && podman exec $CONTAINER chown -R root:root /usr/java
+[ -d /home/tfpos-$SHOPCODE/usr/lib ] && mv /home/tfpos-$SHOPCODE/usr/lib /home/tfpos-$SHOPCODE/$POS_DIR/. && podman exec $CONTAINER rsync -avhz /$POS_DIR/lib /usr/ && podman exec $CONTAINER chown -R root:root /usr/lib
+podman exec $CONTAINER chown root:root /etc/sudoers
 
 # RTI only.
 if [ "$POS_DIR" == "usr2" ]; then
-docker exec $CONTAINER chown -R tfsupport:rti /usr2
-docker exec $CONTAINER ln -s /usr/lib/systemd/system/bbj.service /etc/systemd/system/BBjServices
-docker exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/BLM
-docker exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/BasisLicenseManager
+podman exec $CONTAINER chown -R tfsupport:rti /usr2
+#podman exec $CONTAINER ln -s /usr/lib/systemd/system/bbj.service /etc/systemd/system/BBjServices
+#podman exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/BLM
+#podman exec $CONTAINER ln -s /usr/lib/systemd/system/blm.service /etc/systemd/system/BasisLicenseManager
 
 # disable real time.
-docker exec $CONTAINER sed -i 's/^/#/g' /usr2/bbx/config/rtiBackgr
+podman exec $CONTAINER sed -i 's/^/#/g' /usr2/bbx/config/rtiBackgr
 
 # restart services.
-docker exec $CONTAINER systemctl restart cups
-docker exec $CONTAINER systemctl restart blm
-docker exec $CONTAINER systemctl restart bbj
-docker exec $CONTAINER systemctl restart rti
+podman exec $CONTAINER systemctl restart cups
+podman exec $CONTAINER systemctl restart blm
+podman exec $CONTAINER systemctl restart bbj
+podman exec $CONTAINER systemctl restart rti
 fi
 
 
 # Daisy only.
 if [ "$POS_DIR" == "d" ]; then
-docker exec $CONTAINER chown -R daisy:daisy /d
+podman exec $CONTAINER chown -R daisy:daisy /d
 fi

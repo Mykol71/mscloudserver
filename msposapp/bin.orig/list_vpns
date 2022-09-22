@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[ "$1" != "" ] && CONTAINER="$1" && podman exec $CONTAINER ipsec stop && exit 0
-
 # check for running container
 if [ -f ./.container ]; then
   CONTAINER="`cat .container`"
@@ -10,5 +8,4 @@ else
   exit 1
 fi
 
-# disconnect
-podman exec $CONTAINER ipsec stop
+docker exec ${CONTAINER} strongswan statusall

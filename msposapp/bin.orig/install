@@ -1,0 +1,100 @@
+#!/usr/bin/bash
+#Set Host User
+HOST_USER=`whoami`
+
+#Environment Name 
+[ ! -f ../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../.envtype
+#POS IP
+[ ! -f .posip ] && echo -n "POS IP Adress: " && read POSIP && echo "$POSIP" >.posip
+#Shopcode
+[ ! -f .shopcode ] && echo -n "POS Shop Code: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
+
+#set selinux to permissive
+setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
+#install required packages
+yum clean all
+yum -y install net-tools yum-langpacks gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time bridge-utils docker device-mapper-libs device-mapper-event-libs ntp lorax anaconda-tui unzip expect
+
+# sync time
+systemctl enable ntpd
+ntpdate pool.ntp.org
+
+# set timezone
+timedatectl set-timezone America/Chicago
+
+#install vpn client software
+yum -y install epel-release
+yum -y install strongswan libreswan xl2tpd strongswan-libipsec NetworkManager NetworkManager-strongswan NetworkManager-l2tp NetworkManager-libreswan
+
+#ip port forwarding
+[ "`grep net.ipv4.ip_forward /etc/sysctl.conf`" == "" ] &&  echo "net.ipv4.ip_forward = 1">>/etc/sysctl.conf &&  sysctl -p /etc/sysctl.conf && systemctl restart network.service
+[ "`grep net.ipv4.conf.all.accept_redirects /etc/sysctl.conf`" == "" ] &&  echo "net.ipv4.conf.all.accept_redirects = 0">>/etc/sysctl.conf &&  sysctl -p /etc/sysctl.conf && systemctl restart network.service
+[ "`grep net.ipv4.conf.all.send_redirects /etc/sysctl.conf`" == "" ] &&  echo "net.ipv4.conf.all.send_redirects = 0">>/etc/sysctl.conf &&  sysctl -p /etc/sysctl.conf && systemctl restart network.service
+
+#disable consistant network naming
+rpm -qa | grep -e '^systemd-[0-9]\+\|^udev-[0-9]\+'
+sed -i '/^GRUB\_CMDLINE\_LINUX/s/\"$/\ net\.ifnames\=0\"/' /etc/default/grub
+grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+
+#copy in port forwrd config for docker
+cp -f ./99-docker.conf /usr/lib/sysctl.d/99-docker.conf
+systemctl restart docker 2>/dev/null
+systemctl enable docker
+
+# add custom cloud backup server scripts to /usr/local/bin
+find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
+find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
+find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
+
+# add tfsupport usr and generate keys folder, if not there.
+[ ! -d /home/tfsupport ] && useradd tfsupport
+[ ! -d /home/tfsupport/keys ] && mkdir /home/tfsupport/keys && chown tfsupport:tfsupport /home/tfsupport/keys
+
+# make ssh folder if not there, and copy authorized keys from centos user (if exists).
+[ -d /home/centos/.ssh ] && [ ! -d /home/tfsupport/.ssh ] && mkdir /home/tfsupport/.ssh && chown -R tfsupport:tfsupport /home/tfsupport/.ssh && chmod 700 /home/tfsupport/.ssh
+[ -d /home/centos/.ssh ] && [ ! -f /home/tfsupport/.ssh/authorized_keys ] && cp -f /home/centos/.ssh/authorized_keys /home/tfsupport/.ssh/authorized_keys && chown tfsupport:tfsupport /home/tfsupport/.ssh/authorized_keys
+ 
+# Add tfsupport to sudoers, if not there.
+[ "`grep tfsupport /etc/sudoers`" == "" ] && echo "tfsupport        ALL=(ALL)       NOPASSWD: ALL">>/etc/sudoers
+
+# install guacamole
+echo -n "Install guacamole?: "
+read REPLY
+[ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] && docker run -p 8080:8080 -d -v /etc/guacamole:/guacamole.properties oznu/guacamole
+
+# change default home dir to /backups from now on
+# Dont do this unless cloud backup dedicated server as well
+sed -i 's/\/home/\/backups/' /etc/default/useradd
+ 
+# add /etc/skel/tfrsync
+# push this to user create script for backups.
+cp -f ./tfrsync /etc/skel/.
+ 
+# make backups folder if its not there.
+[ ! -d /backups ] && mkdir /backups
+
+# mount azure fileshare
+# NEED RHEL/CentOS8 kernel for this!
+#[ ! -d /mnt/rticloudbackup ] && mkdir /mnt/rticloudbackup
+#if [ ! -d "/etc/smbcredentials" ]; then
+#mkdir /etc/smbcredentials
+#fi
+#if [ ! -f "/etc/smbcredentials/rticloudbackup.cred" ]; then
+#    bash -c 'echo "username=rticloudbackup" >> /etc/smbcredentials/rticloudbackup.cred'
+#    bash -c 'echo "password=QW8X0EC37hpJwKy4iP/Kdo4tpzT+GdMTbLF+lR0CkcxN22IkQOQeCCN7fmHxPC6Dqv7vXllNQBtPvbuYTqmXgQ==" >> /etc/smbcredentials/rticloudbackup.cred'
+#fi
+#chmod 600 /etc/smbcredentials/rticloudbackup.cred
+#if [ "`grep rticloudbackup /etc/fstab`" == "" ]; then
+#bash -c 'echo "//rticloudbackup.file.core.windows.net/rticloudbackup /mnt/rticloudbackup cifs nofail,vers=3.0,credentials=/etc/smbcredentials/rticloudbackup.cred,dir_mode=0777,file_mode=0777,serverino" >> /etc/fstab'
+#fi
+#mount -t cifs //rticloudbackup.file.core.windows.net/rticloudbackup /mnt/rticloudbackup -o vers=3.0,credentials=/etc/smbcredentials/rticloudbackup.cred,dir_mode=0777,file_mode=0777,serverino
+
+# lastly, update everything
+yum -y update
+ 
+echo ""
+echo "Done!"
+
+exit 0

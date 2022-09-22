@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+KSNAME=rhel8-rti
+BUILDDATE=$(date +%Y%m%d)
+BUILDROOT=/var/tmp/containers/$BUILDDATE/$KSNAME
+
+POSTYPE=rti
+
+rm -rf /var/tmp/containers
+rm -f /var/tmp/centos*xz
+rm -f /var/tmp/rhel*xz
+
+mkdir /var/tmp/containers
+mkdir /var/tmp/containers/$BUILDDATE
+mkdir /var/tmp/containers/$BUILDDATE/$KSNAME
+mkdir /var/tmp/containers/$BUILDDATE/$KSNAME/docker
+
+if [ "$POSTYPE" == "rti" ]; then
+curl http://rhel8repo.centralus.cloudapp.azure.com/support/rh8-rti.iso -o /tmp/rhel8boot.iso
+livemedia-creator --no-virt --make-tar --iso=/tmp/rhel8boot.iso --ks=./$KSNAME.ks --image-name=rhel8-rti-docker.tar.xz --logfile=/tmp/build-rti-container.error.log
+
+cp -f ./rhel8-rti-dockerfile $BUILDROOT/docker/Dockerfile
+
+# Create cccp.yaml for testing
+cat << EOF > $BUILDROOT/docker/cccp.yaml
+job-id: rhel-base
+test-skip: true
+EOF
+
+cp /var/tmp/rhel8-rti-docker.tar.xz $BUILDROOT/docker
+
+cd $BUILDROOT/docker
+podman build --tag rhel8-rti .
+cd -
+
+fi

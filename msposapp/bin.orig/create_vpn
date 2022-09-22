@@ -34,26 +34,27 @@ read -p ""
 if [ $REPLY == "n" ]; then
   exit 1
 else
-# configure ipsec
+# configure strongSwan
 echo "Creating VPN Connection......"
 cat >> ipsec.conf <<EOF
 
 # basic config
 config setup
+	charondebug="all"
         uniqueids=yes
         strictcrlpolicy=no
 
 # connection to $REMOTE_NAME
 conn $REMOTE_NAME
-  keyexchange=ike
+  keyexchange=ikev1
   authby=secret
   left=%defaultroute
   leftid=${AWS_PUBLIC}
   leftsubnet="${AWS_NETWORK}/24"
   right=${REMOTE_PUBLIC}
   rightsubnet="${REMOTE_NET}/24"
-  ike=aes128-sha1-modp1024
-  esp=aes128-sha1-modp1024
+  ike=aes128-sha1-modp1024!
+  esp=aes128-sha1-modp1024!
   keyingtries=0
   ikelifetime=1h
   lifetime=8h
@@ -71,8 +72,8 @@ EOF
 chmod 600 ipsec.secrets
 
 # copy produced config files to container
-podman cp ipsec.conf "${CONTAINER}:/etc/ipsec.conf"
-podman cp ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
+docker cp ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
+docker cp ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
 
 echo "VPN Connection Created."
 fi

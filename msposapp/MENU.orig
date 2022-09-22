@@ -23,13 +23,13 @@ while :; do
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')${NC}"'\n'
-    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `podman ps --format "{{.Status}}" | head -1`${NC}"
+    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `docker ps --format "{{.Status}}" | head -1`${NC}"
     [ ! -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : Not running${NC}"
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     printf '\u2503'${GREY}" Backups  : `[ -f ./bin/.shopcode ] && ls /backups | grep $(cat ./bin/.shopcode) | wc -l`${NC}"'\n'
 [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
-#    [ -f ./bin/.container ] && echo -e "\u2503${GREY} VPN      :`podman exec $(cat ./bin/.container) ipsec briefstatus | grep -v Assoc | cut -d: -f1 | sed -e 's/\ \ \ \ \ \ //' | head -1`${NC}" || echo -e "\u2503${GREY} VPN      :${NC}"
+#    [ -f ./bin/.container ] && echo -e "\u2503${GREY} VPN      :`docker exec $(cat ./bin/.container) strongswan status | grep -v Assoc | cut -d: -f1 | sed -e 's/\ \ \ \ \ \ //' | head -1`${NC}" || echo -e "\u2503${GREY} VPN      :${NC}"
 printf '\u2503''\n'
 printf '\u2503''\033[1m'"---\033[0m Container"'\n'
 printf '\u2503''\033[1m'" 1.\033[0m Status"'\n'
@@ -79,13 +79,11 @@ printf '\u2517''\u2501''\n'
 	4)
 		cd $ROOTDIR/bin
 		./container_connect
-		echo -ne "${CYAN}Press enter to continue..${NC}"
-                read
 		cd -
 		;;
 	12)
 		cd $ROOTDIR/bin
-		time ./create-image
+		time ./create-base-image
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -

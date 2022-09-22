@@ -7,9 +7,10 @@ rm -f /var/tmp/daisy*xz
 rm -f /var/tmp/rti*xz
 rm -f ./ipsec*
 
-# stop running containers and prune.
-podman container stop $(podman container ps -a -q)
-podman system prune --all
+# stop running containers and prune docker.
+#[ -f .container ] && docker container stop $(docker container ps -a -q)
+docker container stop $(docker container ps -a -q)
+docker system prune --all
 [ -f .shopcode ] && rm .shopcode
 
 # remove users, home folders, mail files, and created hidden files.
@@ -24,5 +25,5 @@ for user in `ls /home | grep tfpos-`
 # remove yum junk.
 yum clean all
 
-# restart.
-systemctl restart podman
+# restart docker to release NIC.
+systemctl restart docker

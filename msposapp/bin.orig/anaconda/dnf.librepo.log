@@ -1,0 +1,14 @@
+12:56:57,742 INF librepo: Librepo version: 1.14.2 with CURL_GLOBAL_ACK_EINTR support (libcurl/7.61.1 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.6 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh/0.9.6/openssl/zlib nghttp2/1.33.0)
+12:56:57,753 INF librepo: Librepo version: 1.14.2 with CURL_GLOBAL_ACK_EINTR support (libcurl/7.61.1 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.6 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh/0.9.6/openssl/zlib nghttp2/1.33.0)
+12:56:58,278 INF librepo: Librepo version: 1.14.2 with CURL_GLOBAL_ACK_EINTR support (libcurl/7.61.1 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.6 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh/0.9.6/openssl/zlib nghttp2/1.33.0)
+12:56:58,278 INF librepo: Downloading: http://mirrors.kernel.org/centos/8/os/x86_64/repodata/repomd.xml
+12:56:58,518 INF librepo: Error during transfer: Status code: 404 for http://mirrors.edge.kernel.org/centos/8/os/x86_64/repodata/repomd.xml (IP: 147.75.199.223)
+12:56:58,519 INF librepo: Downloading: http://mirrors.kernel.org/centos/8/os/x86_64/repodata/repomd.xml
+12:56:58,634 INF librepo: Error during transfer: Status code: 404 for http://mirrors.edge.kernel.org/centos/8/os/x86_64/repodata/repomd.xml (IP: 147.75.199.223)
+12:56:58,654 INF librepo: Downloading: http://mirrors.kernel.org/centos/8/os/x86_64/repodata/repomd.xml
+12:56:58,763 INF librepo: Error during transfer: Status code: 404 for http://mirrors.edge.kernel.org/centos/8/os/x86_64/repodata/repomd.xml (IP: 147.75.199.223)
+12:56:58,788 INF librepo: Downloading: http://mirrors.kernel.org/centos/8/os/x86_64/repodata/repomd.xml
+12:56:58,892 INF librepo: Error during transfer: Status code: 404 for http://mirrors.edge.kernel.org/centos/8/os/x86_64/repodata/repomd.xml (IP: 147.75.199.223)
+12:56:58,894 INF librepo: Error while downloading: Cannot download repodata/repomd.xml: All mirrors were tried
+12:56:58,904 INF librepo: Librepo version: 1.14.2 with CURL_GLOBAL_ACK_EINTR support (libcurl/7.61.1 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.6 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh/0.9.6/openssl/zlib nghttp2/1.33.0)
+12:59:59,117 INF librepo: Librepo version: 1.14.2 with CURL_GLOBAL_ACK_EINTR support (libcurl/7.61.1 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.6 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh/0.9.6/openssl/zlib nghttp2/1.33.0)

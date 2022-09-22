@@ -1,17 +1,15 @@
 # Basic setup information
 url --url="http://mirrors.kernel.org/centos/7/os/x86_64/"
-install
 keyboard us
 rootpw --iscrypted $1$b2bDwXkz$ZpKi4Jx7tox779nrUdt8h1
 selinux --permissive
 skipx
 timezone  America/Chicago
-install
 network --bootproto=dhcp --activate --onboot=on
 shutdown
 bootloader --disable
 lang en_US
-auth  --useshadow --passalgo=sha512
+#auth  --useshadow --passalgo=sha512
 firewall --enabled --ssh  --trust=eth0
 firstboot --disable
 logging --level=info
@@ -19,7 +17,7 @@ logging --level=info
 # Repositories to use
 repo --name="CentOS" --baseurl=http://mirrors.kernel.org/centos/7/os/x86_64/ --cost=100
 ## Uncomment for rolling builds
-repo --name="CentOS Updates" --baseurl=http://mirror.centos.org/centos/7/updates/x86_64/ --cost=100
+repo --name="CentOSUpdates" --baseurl=http://mirror.centos.org/centos/7/updates/x86_64/ --cost=100
 
 # Disk setup
 zerombr
@@ -34,13 +32,13 @@ profile = pci-dss
 # Package setup
 %packages --excludedocs --instLangs=en --nocore
 @Base
+kernel
 bind-utils
 bash
 yum
 vim-minimal
 centos-release
 less
--kernel*
 -*firmware
 -firewalld-filesystem
 -os-prober
