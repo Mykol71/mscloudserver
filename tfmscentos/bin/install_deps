@@ -1,8 +1,0 @@
-#!/bin/bash
-#-Install Deps. and Create initial repo.
-yum -y install httpd
-systemctl enable httpd
-systemctl start httpd
-yum -y install createrepo
-systemctl restart httpd
-#-

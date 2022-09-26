@@ -1,6 +1,0 @@
-#!/bin/bash
-
-#Promote Production Repository
-#1. update symbolic link.
-
-echo "Create symlink here."
