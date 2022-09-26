@@ -1,10 +1,11 @@
 #!/usr/bin/bash
 
-[ ! -f .container ] && echo "Nothing running!" && exit
-CONTAINER=`cat .container`
+SHOPCODE="`cat .shopcode`"
+[ ! -f .$SHOPCODE.container ] && echo "Nothing running!" && exit
+CONTAINER=`cat .$SHOPCODE.container`
 
-podman container stop $(cat .container)
-rm -f .container
+podman container stop $(cat .$SHOPCODE.container)
+rm -f .$SHOPCODE.container
 
 [ -f .shopcode ] && [ -d /home/tfpos-`cat .shopcode` ] && userdel tfpos-`cat .shopcode` && rm -rf /home/tfpos-`cat .shopcode` && rm -rf /var/spool/mail/tfpos-`cat .shopcode`
 

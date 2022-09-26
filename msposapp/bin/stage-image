@@ -7,7 +7,7 @@
 OS=rhel
 POSTYPE=rti
 [ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
-SHOPCODE=`cat .shopcode`
+SHOPCODE="`cat .shopcode`"
 
 [ "`podman container ls | grep $SHOPCODE`" != "" ] && echo "Container already running for $SHOPCODE." && exit 0
 
@@ -31,6 +31,16 @@ podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/su
 
 #Make loop back device in container so we can mount isos inside the container
 podman exec $CONTAINER mknod /dev/loop b 7 0
+podman exec $CONTAINER mkdir /boot
+
+#unmask services
+podman exec $CONTAINER systemctl unmask systemd-logind.service
+podman exec $CONTAINER systemctl unmask console-getty.service
+podman exec $CONTAINER systemctl unmask systemd-remount-fs.service
+podman exec $CONTAINER systemctl unmask systemd-timedated.service
+podman exec $CONTAINER systemctl unmask sys-fs-fuse-connections.mount
+podman exec $CONTAINER systemctl unmask getty.target
+podman exec $CONTAINER systemctl start systemd-logind.service
 
 #install ostools
 podman exec $CONTAINER updateos rh8 install_ostools-1.16

@@ -1,4 +1,5 @@
 #!/bin/bash
 
-[ ! -f .container ] && echo "No running container." && exit
-podman exec -it `cat .container` su - tfsupport
+SHOPCODE="`cat .shopcode`"
+[ ! -f .$SHOPCODE.container ] && echo "No running container." && exit 0
+podman exec -it `cat .$SHOPCODE.container` su - tfsupport
