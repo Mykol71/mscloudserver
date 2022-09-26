@@ -1,11 +1,15 @@
 #!/bin/bash
 
+#Shopcode
+
 [ "`podman image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
 
 OS=rhel
 POSTYPE=rti
 [ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
 SHOPCODE=`cat .shopcode`
+
+[ "`podman container ls | grep $SHOPCODE`" != "" ] && echo "Container already running for $SHOPCODE." && exit 0
 
 #add POS users
 useradd -b /home tfpos-$SHOPCODE
@@ -14,7 +18,7 @@ mkdir /home/tfpos-$SHOPCODE/usr2
 #start container
 CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}8-${POSTYPE} /usr/sbin/init`
 
-echo $CONTAINER>.container
+echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
 podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos-rpms/RPM-GPG-KEY-redhat-release

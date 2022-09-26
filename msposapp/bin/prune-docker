@@ -23,6 +23,3 @@ for user in `ls /home | grep tfpos-`
 
 # remove yum junk.
 yum clean all
-
-# restart.
-systemctl restart podman

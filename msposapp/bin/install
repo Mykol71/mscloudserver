@@ -32,13 +32,13 @@ timedatectl set-timezone America/Chicago
 
 #copy in port forwrd config for docker
 cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
-systemctl restart podman 2>/dev/null
-systemctl enable podman
+#systemctl restart podman 2>/dev/null
+#systemctl enable podman
 
 # add custom cloud backup server scripts to /usr/local/bin
-find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
-find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
-find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
+#find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
+#find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
+#find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
 # add tfsupport usr and generate keys folder, if not there.
 [ ! -d /home/tfsupport ] && useradd tfsupport
@@ -54,14 +54,14 @@ find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
 # change default home dir to /backups from now on
 # Dont do this unless cloud backup dedicated server as well
-sed -i 's/\/home/\/backups/' /etc/default/useradd
+#sed -i 's/\/home/\/backups/' /etc/default/useradd
  
 # add /etc/skel/tfrsync
 # push this to user create script for backups.
-cp -f ./tfrsync /etc/skel/.
+#cp -f ./tfrsync /etc/skel/.
  
 # make backups folder if its not there.
-[ ! -d /backups ] && mkdir /backups
+#[ ! -d /backups ] && mkdir /backups
 
 # lastly, update everything
 yum -y update

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#Shopcode
+echo -n "POS Shop Code: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
