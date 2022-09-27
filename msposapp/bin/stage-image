@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #Shopcode
-
 [ "`podman image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
 
 OS=rhel
@@ -25,9 +24,6 @@ podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.co
 
 #disable subscription manager
 podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
-
-#copy media to container
-[ "$POSTYPE" == "rti" ] && cp ../files/ostools*.gz /home/tfpos-$SHOPCODE/$POSDIR/. && cp ../files/register_insights /home/tfpos-$SHOPCODE/$POSDIR/.
 
 #Make loop back device in container so we can mount isos inside the container
 podman exec $CONTAINER mknod /dev/loop b 7 0

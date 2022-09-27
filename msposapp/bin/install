@@ -1,11 +1,11 @@
 #!/usr/bin/bash
-#Set Host User
+
 HOST_USER=`whoami`
 
 #Environment Name 
 [ ! -f ../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../.envtype
 #Shopcode
-[ ! -f .shopcode ] && echo -n "POS Shop Code: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
+[ ! -f .shopcode ] && echo -n "ShopID: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
 
 #set selinux to permissive
 setenforce 0
@@ -25,20 +25,8 @@ timedatectl set-timezone America/Chicago
 [ "`grep net.ipv4.conf.all.accept_redirects /etc/sysctl.conf`" == "" ] &&  echo "net.ipv4.conf.all.accept_redirects = 0">>/etc/sysctl.conf &&  sysctl -p /etc/sysctl.conf && systemctl restart network.service
 [ "`grep net.ipv4.conf.all.send_redirects /etc/sysctl.conf`" == "" ] &&  echo "net.ipv4.conf.all.send_redirects = 0">>/etc/sysctl.conf &&  sysctl -p /etc/sysctl.conf && systemctl restart network.service
 
-#disable consistant network naming
-#rpm -qa | grep -e '^systemd-[0-9]\+\|^udev-[0-9]\+'
-#sed -i '/^GRUB\_CMDLINE\_LINUX/s/\"$/\ net\.ifnames\=0\"/' /etc/default/grub
-#grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
-
 #copy in port forwrd config for docker
 cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
-#systemctl restart podman 2>/dev/null
-#systemctl enable podman
-
-# add custom cloud backup server scripts to /usr/local/bin
-#find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
-#find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
-#find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
 # add tfsupport usr and generate keys folder, if not there.
 [ ! -d /home/tfsupport ] && useradd tfsupport
@@ -51,17 +39,6 @@ cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
 #echo -n "Install guacamole?: "
 #read REPLY
 #[ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] && podman run -p 8080:8080 -d -v /etc/guacamole:/guacamole.properties oznu/guacamole
-
-# change default home dir to /backups from now on
-# Dont do this unless cloud backup dedicated server as well
-#sed -i 's/\/home/\/backups/' /etc/default/useradd
- 
-# add /etc/skel/tfrsync
-# push this to user create script for backups.
-#cp -f ./tfrsync /etc/skel/.
- 
-# make backups folder if its not there.
-#[ ! -d /backups ] && mkdir /backups
 
 # lastly, update everything
 yum -y update

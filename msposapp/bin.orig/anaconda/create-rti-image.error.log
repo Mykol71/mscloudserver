@@ -1,2 +1,0 @@
-cp: cannot stat '/var/tmp/centos7-rti-docker.tar.xz': No such file or directory
-Error: error building at STEP "ADD centos7-rti-docker.tar.xz /": checking on sources under "/var/tmp/containers/20220912/centos7-rti/docker": copier: stat: "/centos7-rti-docker.tar.xz": no such file or directory

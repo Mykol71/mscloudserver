@@ -1,8 +1,0 @@
-#!/usr/bin/bash
-
-cp -f ./centos7-doveplus-dockerfile /var/tmp/containers/`date +%Y%m%d`/centos7-doveplus/docker/Dockerfile
-cp -f ./startup.sh /var/tmp/containers/`date +%Y%m%d`/centos7-doveplus/docker/.
-cp -f /var/tmp/centos7-doveplus-docker.tar.xz /var/tmp/containers/`date +%Y%m%d`/centos7-doveplus/docker
-cd /var/tmp/containers/`date +%Y%m%d`/centos7-doveplus/docker
-docker build --rm -t centos7-doveplus-18.1.1 .
-cd -

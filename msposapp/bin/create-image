@@ -34,3 +34,5 @@ podman build --tag rhel8-rti .
 cd -
 
 fi
+
+exit 0
