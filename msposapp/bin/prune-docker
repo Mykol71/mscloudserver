@@ -13,7 +13,7 @@ podman system prune --all
 [ -f .shopcode ] && rm .shopcode
 
 # remove users, home folders, mail files, and created hidden files.
-find .. -name ".*" -type f -exec rm -f {} \;
+find ../.. -name ".*" -type f -exec rm -f {} \;
 for user in `ls /home | grep tfpos-`
   do
     userdel $user
