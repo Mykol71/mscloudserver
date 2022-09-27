@@ -5,6 +5,8 @@ TFCLOUD_VERSION="2.4"
 ROOTDIR="$(pwd)"
 export ROOTDIR
 
+SHOPCODE="None"
+
 [ -f ./bin/.container ] && CONTAINER=`cat ./bin/.container`
 [ -f ./bin/.posip ] && POSIP=`cat ./bin/.posip`
 
@@ -24,10 +26,8 @@ while :; do
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')${NC}"'\n'
-#    [ -f ./bin/.container ] && echo -e "\u2503${GREY} Status   : `podman ps --format "{{.Status}}" | head -1`${NC}"
-    echo -e "\u2503${GREY} Status   : `podman ps --format "{{.ID}}" | wc -l` running containers.${NC}"
-#    [ ! -f ./bin/.$SHOPCODE.container ] && echo -e "\u2503${GREY} Status   : None running${NC}"
-    echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
+    echo -e "\u2503${GREY} Status   : `podman ps | grep $SHOPCODE | wc -l 2>/dev/null` running${NC}"
+    echo -e "\u2503${GREY} ShopID   : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     printf '\u2503'${GREY}" Backups  : `[ -f ./bin/.shopcode ] && ls /backups | grep $(cat ./bin/.shopcode) | wc -l`${NC}"'\n'
 [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
@@ -51,7 +51,7 @@ printf '\u2503''\033[1m'" 113.\033[0m Start"'\n'
 printf '\u2503''\033[1m'" 114.\033[0m Stop"'\n'
 printf '\u2503''\n'
 printf '\u2503''\033[1m'"---\033[0m System"'\n'
-printf '\u2503''\033[1m'" s.\033[0m Set Shopcode"'\n'
+printf '\u2503''\033[1m'" s.\033[0m ShopID"'\n'
 printf '\u2503''\033[1m'" i.\033[0m Install"'\n'
 printf '\u2503''\033[1m'" p.\033[0m Purge"'\n'
 printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
