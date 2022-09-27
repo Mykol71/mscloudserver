@@ -3,7 +3,7 @@
 HOST_USER=`whoami`
 
 #Environment Name 
-[ ! -f ../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../.envtype
+[ ! -f ../../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../../.envtype
 #Shopcode
 [ ! -f .shopcode ] && echo -n "ShopID: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
 

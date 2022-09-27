@@ -22,7 +22,7 @@ while :; do
     [ -f ./bin/.shopcode ] && SHOPCODE=`cat ./bin/.shopcode`
     echo -e "${GREY}$(date +'%x %l:%M %p')${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
-    echo -e "\u2503${BLUE} @ ${NC}`[ -f .envtype ] && cat .envtype || echo -e Not Installed`${NC}"
+    echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')${NC}"'\n'
@@ -32,7 +32,7 @@ while :; do
 [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} VPN      :`podman exec $(cat ./bin/.container) ipsec briefstatus | grep -v Assoc | cut -d: -f1 | sed -e 's/\ \ \ \ \ \ //' | head -1`${NC}" || echo -e "\u2503${GREY} VPN      :${NC}"
-printf '\u2503''\n'
+#printf '\u2503''\n'
 printf '\u2503''\033[1m'"---\033[0m Container"'\n'
 printf '\u2503''\033[1m'" 1.\033[0m Status"'\n'
 printf '\u2503''\033[1m'" 2.\033[0m Start"'\n'

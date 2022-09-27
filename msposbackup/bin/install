@@ -2,6 +2,9 @@
 #Set Host User
 HOST_USER=`whoami`
 
+#Environment Name
+[ ! -f ../../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../../.envtype
+
 #set selinux to permissive
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
