@@ -16,7 +16,6 @@ while :; do
     CYAN=''
     NC='\033[0m'
     clear
-#    echo -e "${GREY}$(date +'%x %l:%M %p') -- $(cat /etc/redhat-release) ${NC}"
     echo -e "${GREY}$(date +'%x %l:%M %p') ${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
     echo -e "\u2503${BLUE} @ ${NC}`[ -f .envtype ] && cat .envtype || echo -e Not Installed`${NC}"
@@ -24,10 +23,9 @@ while :; do
     printf '\u2503''\u2501''\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
-#    echo -e "\u2503${GREY} ShopID   : `[ -f ./msposapp/bin/.shopcode ] && cat ./msposapp/bin/.shopcode`${NC}"
-    printf '\u2503'${GREY}' Version  : 2.4'${NC}'\n'
+    printf '\u2503'${GREY}" Version  : $TFCLOUD_VERSION${NC}\n"
+    printf '\u2503'${GREY}" OSVers   : `cat /etc/redhat-release | cut -d" " -f6`${NC}\n"
     [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./msposapp/bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
-    printf '\u2503''\n'
     printf '\u2503''\033[1m'"---\033[0m System"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Data"'\n'
     printf '\u2503''\033[1m'" 2.\033[0m Containers"'\n'
