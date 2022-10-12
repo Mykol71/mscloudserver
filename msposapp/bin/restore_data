@@ -1,12 +1,12 @@
 #!/bin/bash
 
-[ ! -f ./.container ] && echo No running container! && exit
 POS_DIR=$1
 [ "$POS_DIR" == "d" ] && POS_USER=daisy
 [ "$POS_DIR" == "usr2" ] && POS_USER=rti
 
-CONTAINER=`cat .container`
 SHOPCODE=`cat .shopcode`
+[ ! -f ./.$SHOPCODE.container ] && echo No running container! && exit
+CONTAINER=`cat .$SHOPCODE.container`
 
 echo ""
 echo "Data Restoration"
