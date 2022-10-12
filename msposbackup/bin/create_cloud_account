@@ -5,18 +5,14 @@ ID=`/usr/bin/id -u`
 echo "Enter Shop Code:"
 read -p ""
 SHOPCODE=$REPLY
-#if [ ${#SHOPCODE} != 8 ] ; then
-#echo "Shop Code must be 8 characters."
-#exit
-#fi
 [ -d /backups/tfrsync-$SHOPCODE ] && echo "Cloud account with that shop code already exists!" && exit
-#echo $SHOPCODE
 echo "Enter Public Key:"
 read -p "" 
 KEY=$REPLY
-#echo $KEY
-useradd tfrsync-$SHOPCODE
+useradd -d /backups tfrsync-$SHOPCODE
+mkdir /backups/tfrsync-$SHOPCODE
 mkdir /backups/tfrsync-$SHOPCODE/.ssh
+cp -f ./tfrsync /backups/tfrsync-$SHOPCODE
 chown tfrsync-$SHOPCODE:tfrsync-$SHOPCODE /backups/tfrsync-$SHOPCODE/.ssh
 chmod 700 /backups/tfrsync-$SHOPCODE/.ssh 
 echo "command=\"/backups/tfrsync-$SHOPCODE/tfrsync\" $KEY">/backups/tfrsync-$SHOPCODE/.ssh/authorized_keys
