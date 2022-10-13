@@ -4,9 +4,10 @@
 ID=`/usr/bin/id -u`
 [ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
 
+[ -f .shopcode ] && SHOPCODE=`cat .shopcode` || exit 1
 # check for running container
-if [ -f ./.container ]; then
-  CONTAINER="`cat .container`"
+if [ -f ./.$SHOPCODE.container ]; then
+  CONTAINER="`cat .$SHOPCODE.container`"
 else
   echo "No Running Container!"
   exit 1
