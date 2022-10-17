@@ -12,4 +12,4 @@ else
 fi
 
 # disconnect
-podman exec $CONTAINER ipsec stop
+podman exec $CONTAINER strongswan stop

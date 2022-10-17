@@ -15,6 +15,9 @@ sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 yum clean all
 yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time podman device-mapper-libs device-mapper-event-libs chrony lorax anaconda-tui unzip expect
 
+#install epel repo
+#yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
 # set timezone
 timedatectl set-timezone America/Chicago
 
