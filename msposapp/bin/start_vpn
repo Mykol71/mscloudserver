@@ -9,4 +9,4 @@ else
   exit 1
 fi
 
-[ -f $SHOPCODE.ipsec.conf ] && podman exec $CONTAINER strongswan start
+podman exec $CONTAINER strongswan start

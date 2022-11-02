@@ -27,7 +27,7 @@ podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel
 
 # install strongswan
 podman exec $CONTAINER yum -y remove libreswan
-podman exec $CONTAINER yum -y install strongswan
+podman exec $CONTAINER yum -y install strongswan strongswan-libipsec strongswan-charon-nm
 
 #disable subscription manager
 podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf

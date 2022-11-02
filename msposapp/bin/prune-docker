@@ -5,7 +5,7 @@ rm -rf /var/tmp/containers
 rm -f /var/tmp/centos7*xz
 rm -f /var/tmp/daisy*xz
 rm -f /var/tmp/rti*xz
-rm -f ./ipsec*
+rm -f .*ipsec*
 
 # stop running containers and prune.
 podman stop -a

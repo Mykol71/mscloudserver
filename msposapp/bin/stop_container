@@ -9,5 +9,5 @@ rm -f .$SHOPCODE.container
 
 [ -f .shopcode ] && [ -d /home/tfpos-`cat .shopcode` ] && userdel tfpos-`cat .shopcode` && rm -rf /home/tfpos-`cat .shopcode` && rm -rf /var/spool/mail/tfpos-`cat .shopcode`
 
-rm -f ./ipsec.secrets
-rm -f ./ipsec.conf
+rm -f .$SHOPCODE.ipsec.secrets
+rm -f .$SHOPCODE.*.conf

@@ -13,11 +13,8 @@ else
   exit 1
 fi
 
-# check if vpn exist
-[ -f $SHOPCODE.ipsec.conf ] && echo "VPN connection already exists." && exit 0
-
 # gather user input
-INPUTS="REMOTE_NAME AWS_PUBLIC AWS_NETWORK REMOTE_PUBLIC REMOTE_NET PASSPHRASE"
+INPUTS="REMOTE_NAME REMOTE_PUBLIC REMOTE_NET PASSPHRASE"
 
 echo "Gathering required information...."
 for var in $INPUTS; do
@@ -25,6 +22,12 @@ for var in $INPUTS; do
   read REPLY
   export $var=$REPLY
 done
+
+#set public ip
+PUBLIC=`curl -s ifconfig.me`
+
+# check if vpn exist
+[ -f .$SHOPCODE.$REMOTE_NAME.conf ] && echo "VPN connection already exists." && exit 0
 
 # verify input
 if [ "$INPUTS" != "" ]; then
@@ -37,20 +40,15 @@ if [ $REPLY == "n" ]; then
 else
 # configure ipsec
 echo "Creating VPN Connection......"
-cat >> $SHOPCODE.ipsec.conf <<EOF
 
-# basic config
-config setup
-        uniqueids=yes
-        strictcrlpolicy=no
-
+cat > .$SHOPCODE.$REMOTE_NAME.conf << EOF
 # connection to $REMOTE_NAME
 conn $REMOTE_NAME
   keyexchange=ike
   authby=secret
   left=%defaultroute
-  leftid=${AWS_PUBLIC}
-  leftsubnet="${AWS_NETWORK}/24"
+  leftid=${PUBLIC}
+  leftsubnet="10.88.0.0/16"
   right=${REMOTE_PUBLIC}
   rightsubnet="${REMOTE_NET}/24"
   ike=aes128-sha1-modp1024
@@ -64,16 +62,29 @@ conn $REMOTE_NAME
   auto=start
 EOF
 
-cat  >> $SHOPCODE.ipsec.secrets <<EOF
-${AWS_PUBLIC} ${REMOTE_PUBLIC} : PSK "${PASSPHRASE}"
+cat > .$SHOPCODE.ipsec.conf <<EOF
+# basic config
+config setup
+        uniqueids=yes
+        strictcrlpolicy=no
+
+EOF
+
+for conn in `ls -a | grep $SHOPCODE | grep .conf | grep -v ipsec`
+do
+cat $conn >> .$SHOPCODE.ipsec.conf
+done
+
+cat  >> .$SHOPCODE.ipsec.secrets <<EOF
+${PUBLIC} ${REMOTE_PUBLIC} : PSK "${PASSPHRASE}"
 EOF
 
 # set passphrase file perms
-chmod 600 $SHOPCODE.ipsec.secrets
+chmod 600 .$SHOPCODE.ipsec.secrets
 
 # copy produced config files to container
-podman cp $SHOPCODE.ipsec.conf "${CONTAINER}:/etc/ipsec.conf"
-podman cp $SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/ipsec.secrets"
+podman cp .$SHOPCODE.ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
+podman cp .$SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
 
 echo "VPN Connection Created."
 fi
