@@ -27,7 +27,7 @@ while :; do
     printf '\u2503''\u2501''\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')${NC}"'\n'
     echo -e "\u2503${GREY} Status   : `podman ps | grep $SHOPCODE | wc -l 2>/dev/null` running${NC}"
-    echo -e "\u2503${GREY} InstID   : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
+    echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     printf '\u2503'${GREY}" Backups  : `[ -f ./bin/.shopcode ] && ls /backups | grep $(cat ./bin/.shopcode) | wc -l`${NC}"'\n'
 [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
 #    [ -f ./bin/.container ] && echo -e "\u2503${GREY} IP       : ${BLUE}${POSIP}${NC}" || echo -e "\u2503${GREY} IP       :${NC}"
