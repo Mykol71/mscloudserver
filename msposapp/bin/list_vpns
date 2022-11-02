@@ -9,4 +9,4 @@ else
   exit 1
 fi
 
-podman exec ${CONTAINER} strongswan status
+podman exec ${CONTAINER} strongswan statusall
