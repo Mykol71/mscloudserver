@@ -88,6 +88,9 @@ pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
 %end
 
 %post
+# update systemwide crypto policy
+update-crypto-policies --set LEGACY
+
 # container customizations inside the chroot
 #rpm -e kernel
 
@@ -105,7 +108,7 @@ echo "%_install_langs $LANG" > /etc/rpm/macros.image-language-conf
 umount /run
 systemd-tmpfiles --create --boot
 # mask mounts and login bits
-systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount
+#systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount
 
 # Remove things we don't need
 rm -f /etc/udev/hwdb.bin

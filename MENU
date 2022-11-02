@@ -25,12 +25,12 @@ while :; do
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
     printf '\u2503'${GREY}" Version  : $TFCLOUD_VERSION${NC}\n"
     printf '\u2503'${GREY}" OSVers   : `cat /etc/redhat-release | cut -d" " -f6`${NC}\n"
-    [ "`netstat -an | grep 8080`" != "" ] && echo -e "\u2503${BLUE} http://$(cat ./msposapp/bin/.posip):8080/ ${NC}" || echo -e "\u2503${BLUE}${NC}"
+    printf '\u2503''\n'
     printf '\u2503''\033[1m'"---\033[0m System"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Data"'\n'
     printf '\u2503''\033[1m'" 2.\033[0m Containers"'\n'
-    printf '\u2503''\033[1m'" 3.\033[0m Admin"'\n'
-    printf '\u2503''\033[1m'" 4.\033[0m Reports"'\n'
+#    printf '\u2503''\033[1m'" 3.\033[0m Admin"'\n'
+    printf '\u2503''\033[1m'" 3.\033[0m Reports"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
     printf '\u2503''\033[1m'" x.\033[0m Exit"'\n'
@@ -48,12 +48,12 @@ while :; do
 		./MENU
 		cd -
 		;;
-	3)
+	4)
 		cd $ROOTDIR/linuxadmin
 		./MENU
 		cd -
 		;;
-	4)
+	3)
 		cd $ROOTDIR/msposreports
 		./MENU
 		cd -
