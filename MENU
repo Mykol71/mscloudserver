@@ -48,11 +48,6 @@ while :; do
 		./MENU
 		cd -
 		;;
-	4)
-		cd $ROOTDIR/linuxadmin
-		./MENU
-		cd -
-		;;
 	3)
 		cd $ROOTDIR/msposreports
 		./MENU
