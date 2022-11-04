@@ -9,4 +9,24 @@ else
   exit 1
 fi
 
+cat > .$SHOPCODE.ipsec.conf <<EOF
+# basic config
+config setup
+        uniqueids=yes
+        strictcrlpolicy=no
+
+EOF
+
+#create ipsec.conf
+for conn in `ls -a | grep $SHOPCODE | grep .conf | grep -v ipsec`
+do
+cat $conn >> .$SHOPCODE.ipsec.conf
+done
+
+# copy produced config files to container
+podman cp .$SHOPCODE.ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
+[ ! -f .$SHOPCODE.ipsec.secrets ] && touch .$SHOPCODE.ipsec.secrets
+podman cp .$SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
+
+# start strongswan on container
 podman exec $CONTAINER strongswan start

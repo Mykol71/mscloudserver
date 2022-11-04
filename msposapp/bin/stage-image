@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Install check
+[ ! -f .shopcode ] && echo "Not installed." && exit 0
+
 #Shopcode
 [ "`podman image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
 

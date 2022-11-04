@@ -11,5 +11,6 @@ else
   exit 1
 fi
 
-# disconnect
+# stop strongswan on container
 podman exec $CONTAINER strongswan stop
+rm -f .$SHOPCODE.ipsec.conf

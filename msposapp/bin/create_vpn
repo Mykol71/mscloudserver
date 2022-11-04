@@ -62,29 +62,12 @@ conn $REMOTE_NAME
   auto=start
 EOF
 
-cat > .$SHOPCODE.ipsec.conf <<EOF
-# basic config
-config setup
-        uniqueids=yes
-        strictcrlpolicy=no
-
-EOF
-
-for conn in `ls -a | grep $SHOPCODE | grep .conf | grep -v ipsec`
-do
-cat $conn >> .$SHOPCODE.ipsec.conf
-done
-
 cat  >> .$SHOPCODE.ipsec.secrets <<EOF
 ${PUBLIC} ${REMOTE_PUBLIC} : PSK "${PASSPHRASE}"
 EOF
 
 # set passphrase file perms
 chmod 600 .$SHOPCODE.ipsec.secrets
-
-# copy produced config files to container
-podman cp .$SHOPCODE.ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
-podman cp .$SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
 
 echo "VPN Connection Created."
 fi
