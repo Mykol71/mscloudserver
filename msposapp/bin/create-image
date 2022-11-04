@@ -3,6 +3,9 @@
 #Install check
 [ ! -f .shopcode ] && echo "Not installed." && exit 0
 
+#already built check
+[ "`podman image ls | grep rhel8-rti`" != "" ] && echo "Image already built." && exit 0
+
 KSNAME=rhel8-rti
 BUILDDATE=$(date +%Y%m%d)
 BUILDROOT=/var/tmp/containers/$BUILDDATE/$KSNAME
