@@ -45,6 +45,9 @@ cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
 
 # lastly, update everything
 yum -y update
+
+# create base image
+[ "`podman image ls | grep rhel8-rti`" == "" ] && ./create-image
  
 echo ""
 echo "Done!"
