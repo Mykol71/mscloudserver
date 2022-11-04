@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #check for installed.
-[ ! -f ../envtype ] && echo "Not installed." && exit 0
+[ ! -f ../../.envtype ] && echo "Not installed." && exit 0
 
 #Shopcode
-echo -n "POS Shop Code: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
+echo -n "Shopcode: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
