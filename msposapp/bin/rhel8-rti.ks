@@ -90,6 +90,7 @@ pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
 %post
 # update systemwide crypto policy
 update-crypto-policies --set LEGACY
+sed -i "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf
 
 # container customizations inside the chroot
 #rpm -e kernel

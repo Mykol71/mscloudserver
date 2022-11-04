@@ -11,17 +11,15 @@ HOST_USER=`whoami`
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 
+#disable subscription manager.
+sed -i "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf
+
 #install required packages
 yum clean all
 yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time podman device-mapper-libs device-mapper-event-libs chrony lorax anaconda-tui unzip expect
 
-#install epel repo
-#yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-
 # set timezone
 timedatectl set-timezone America/Chicago
-
-#install vpn client software
 
 #ip port forwarding
 [ "`grep net.ipv4.ip_forward /etc/sysctl.conf`" == "" ] &&  echo "net.ipv4.ip_forward = 1">>/etc/sysctl.conf &&  sysctl -p /etc/sysctl.conf && systemctl restart network.service
@@ -38,18 +36,12 @@ cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
 # Add tfsupport to sudoers, if not there.
 [ "`grep tfsupport /etc/sudoers`" == "" ] && echo "tfsupport        ALL=(ALL)       NOPASSWD: ALL">>/etc/sudoers
 
-# install guacamole
-#echo -n "Install guacamole?: "
-#read REPLY
-#[ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] && podman run -p 8080:8080 -d -v /etc/guacamole:/guacamole.properties oznu/guacamole
-
 # lastly, update everything
 yum -y update
 
 # create base image
 [ "`podman image ls | grep rhel8-rti`" == "" ] && ./create-image
  
-echo ""
 echo "Done!"
 
 exit 0
