@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-TFCLOUD_VERSION="2.4"
+TFCLOUD_VERSION="2.6"
 
 ROOTDIR="$(pwd)"
 export ROOTDIR
@@ -20,7 +20,7 @@ while :; do
     NC='\033[0m'                                                                                                                                                                                                  
     clear                                                                                                                                                                                                         
     [ -f ./bin/.shopcode ] && SHOPCODE=`cat ./bin/.shopcode`
-    echo -e "${GREY}$(date +'%x %l:%M %p')${NC}"
+    echo -e "${GREY}$(date +'%x %l:%M %p') - $TFCLOUD_VERSION${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
@@ -42,7 +42,6 @@ while :; do
     printf '\u2503''\033[1m'" s.\033[0m Shopcode"'\n'
     printf '\u2503''\033[1m'" i.\033[0m Install"'\n'
     printf '\u2503''\033[1m'" p.\033[0m Purge"'\n'
-    printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
     printf '\u2503''\033[1m'" x.\033[0m Exit"'\n'
     printf '\u2517''\u2501''\n'
 	echo -ne "Enter selection: ${NC}"
@@ -111,11 +110,6 @@ while :; do
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -
-		;;
-	r)
-		cat ./README.md | more
-		echo -ne "Press enter to continue..${NC}"
-		read
 		;;
 	x) exit ;;
 	*) ;;
