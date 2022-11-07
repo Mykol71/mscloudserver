@@ -37,6 +37,7 @@ while :; do
     printf '\u2503''\033[1m'" 4.\033[0m Status"'\n'
     printf '\u2503''\033[1m'" 5.\033[0m Start/Stop"'\n'
     printf '\u2503''\033[1m'" 6.\033[0m Create"'\n'
+    printf '\u2503''\033[1m'" 7.\033[0m Delete"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
     printf '\u2503''\033[1m'" s.\033[0m Shopcode"'\n'
@@ -86,6 +87,13 @@ while :; do
 	6)
 		cd $ROOTDIR/bin
 		./create_vpn
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		cd -
+		;;
+	7)
+		cd $ROOTDIR/bin
+		./delete_vpn
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -

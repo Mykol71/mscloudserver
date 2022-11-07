@@ -8,6 +8,7 @@ do
    LOGPATH="/backups/tfrsync-${SHOPCODE}/d/daisy/log"
 else
    POSTYPE="Unknown"
+   LOGPATH="None"
 fi
 if [ -d /backups/tfrsync-$SHOPCODE/usr2 ] ; then POSTYPE="RTI"
    LOGPATH="/backups/tfrsync-${SHOPCODE}/usr2/bbx/log"

@@ -9,9 +9,13 @@ if [ -d /backups/tfrsync-$SHOPCODE/d ] ; then POSTYPE="Daisy"
 LOGPATH="/backups/tfrsync-${SHOPCODE}/d/daisy/log"
 else
 POSTYPE="Unknown"
+LOGPATH="None"
 fi
 if [ -d /backups/tfrsync-$SHOPCODE/usr2 ] ; then POSTYPE="RTI"
 LOGPATH="/backups/tfrsync-${SHOPCODE}/usr2/bbx/log"
+else
+POSTYPE="Unknown"
+LOGPATH="None"
 fi
 if [ -f /backups/tfrsync-$SHOPCODE/paying_customer ] ; then SUBSCRIBER="Y"
 else

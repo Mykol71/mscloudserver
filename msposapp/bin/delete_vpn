@@ -1,0 +1,37 @@
+# verify root
+ID=`/usr/bin/id -u`
+[ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
+
+[ -f .shopcode ] && SHOPCODE=`cat .shopcode` || exit 1
+# check for running container
+if [ -f ./.$SHOPCODE.container ]; then
+  CONTAINER="`cat .$SHOPCODE.container`"
+else
+  echo "No Running Container!"
+  exit 1
+fi
+
+[ "`ls -a | grep $SHOPCODE | grep .conf | grep -v ipsec.conf`" == "" ] && echo "No connections." && exit 1
+echo "Connection?"
+echo `ls -a | grep $SHOPCODE | grep .conf | grep -v ipsec.conf | sed -e "s/.$SHOPCODE.//" | sed -e "s/.conf//"`
+read CONN
+rm -f .$SHOPCODE.$CONN.conf
+
+#recreate ipsec.conf
+cat > .$SHOPCODE.ipsec.conf <<EOF
+# basic config
+config setup
+        uniqueids=yes
+        strictcrlpolicy=no
+
+EOF
+
+for conn in `ls -a | grep $SHOPCODE | grep .conf | grep -v ipsec`
+do
+cat $conn >> .$SHOPCODE.ipsec.conf
+done
+
+# copy produced config files to container
+podman cp .$SHOPCODE.ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
+[ ! -f .$SHOPCODE.ipsec.secrets ] && touch .$SHOPCODE.ipsec.secrets
+podman cp .$SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
