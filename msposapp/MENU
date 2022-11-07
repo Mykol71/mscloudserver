@@ -34,9 +34,9 @@ while :; do
     printf '\u2503''\033[1m'" 3.\033[0m Connect"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mVPNs"'\n'
-    printf '\u2503''\033[1m'" 11.\033[0m Status"'\n'
-    printf '\u2503''\033[1m'" 12.\033[0m Start/Stop"'\n'
-    printf '\u2503''\033[1m'" 13.\033[0m Create"'\n'
+    printf '\u2503''\033[1m'" 4.\033[0m Status"'\n'
+    printf '\u2503''\033[1m'" 5.\033[0m Start/Stop"'\n'
+    printf '\u2503''\033[1m'" 6.\033[0m Create"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
     printf '\u2503''\033[1m'" s.\033[0m Shopcode"'\n'
@@ -69,21 +69,21 @@ while :; do
                 read
 		cd -
 		;;
-	11)
+	4)
 		cd $ROOTDIR/bin
 		./list_vpns
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -
 		;;
-	12)
+	5)
 		cd $ROOTDIR/bin
 		[ -f .$SHOPCODE.ipsec.conf ] && ./stop_vpn || ./start_vpn
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -
 		;;
-	13)
+	6)
 		cd $ROOTDIR/bin
 		./create_vpn
 		echo -ne "${CYAN}Press enter to continue..${NC}"
