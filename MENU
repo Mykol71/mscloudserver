@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-TFCLOUD_VERSION="2.5"
+TFCLOUD_VERSION="2.6"
 # verify root
 ID=$(/usr/bin/id -u)
 [ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
@@ -16,20 +16,17 @@ while :; do
     CYAN=''
     NC='\033[0m'
     clear
-    echo -e "${GREY}$(date +'%x %l:%M %p') ${NC}"
+    echo -e "${GREY}$(date +'%x %l:%M %p') - ${TFCLOUD_VERSION}${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
     echo -e "\u2503${BLUE} @ ${NC}`[ -f .envtype ] && cat .envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ '${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
-    printf '\u2503'${GREY}" Version  : $TFCLOUD_VERSION${NC}\n"
-    printf '\u2503'${GREY}" OSVers   : `cat /etc/redhat-release | cut -d" " -f6`${NC}\n"
+    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Data"'\n'
     printf '\u2503''\033[1m'" 2.\033[0m Containers"'\n'
-#    printf '\u2503''\033[1m'" 3.\033[0m Admin"'\n'
     printf '\u2503''\033[1m'" 3.\033[0m Reports"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'

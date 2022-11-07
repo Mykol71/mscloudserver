@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TFCLOUD_VERSION="2.4"
+TFCLOUD_VERSION="2.6"
 
 # verify root
 ID=$(/usr/bin/id -u)
@@ -16,20 +16,16 @@ while :; do
    LGGRN='\033[1;32m'
     BLUE='\033[1;34m'
     GREY='\033[0;37m'
-#    CYAN='\033[1;36m'
     CYAN=''
     NC='\033[0m'
     clear
-echo -e "${GREY}$(date +'%x %l:%M %p')${NC}"
+    echo -e "${GREY}$(date +'%x %l:%M %p') - $TFCLOUD_VERSION${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
-#    printf '\u2503'🌷${GREY}' $(hostname)'${NC}'\n'
-echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
+    echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Data'${NC}'\n'
     printf '\u2503''\u2501''\n'
-#printf '\u2503'" Space    :${NC} $(df -h /backups | tail -1 | awk '{print $4}')"'\n'
-    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
-    printf '\u2503'${GREY}' Version  : 2.4'${NC}'\n'
+    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503''\n'
 printf '\u2503''\033[1m'"-\033[0mBackups"'\n'
 printf '\u2503''\033[1m'" 1.\033[0m List Accounts"'\n'
@@ -86,10 +82,6 @@ printf '\u2517''\u2501''\n'
 	i)
 		$ROOTDIR/bin/install
 		echo -ne "${CYAN}Press enter to continue..${NC}"
-		read
-		;;
-	r)
-		cat ./README.md | more
 		read
 		;;
 	x)
