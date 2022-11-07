@@ -43,7 +43,7 @@ yum -y update
 echo -n "Create base image? y/n: "
 read answer
 [ "$answer" == "n" ] && echo "Done." && exit 0
-podman rmi $(podman images -a -q) -f 
+podman rmi $(podman images -a -q) -f 2>/dev/null
 ./create-image
  
 echo "Done!"
