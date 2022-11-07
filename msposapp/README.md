@@ -8,16 +8,17 @@ Status area (grey)-
 current set shop identifier is displayed in the status area at the top of the menu.
 
 - Status
-if the currently set shop identifier has a running container, it will display how long it has been up.
+if the current set shop identifier has a running container, it will display how long it has been up.
 
 
 Containers -
 
 - Status
-displays the detailed status info for all running shops on the server.
+displays the detailed status info for all running containers (shops) on the server.
 
 - Start/Stop
 if the current shop identifier has a container running, it stops it. if not, it starts one.
+if the current shop identifier has a tfrsync.pl cloud backup on this server, it will ask if you want to restore data from it.
 
 - Connect
 connects to the current shop identifier's container.
