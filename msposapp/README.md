@@ -1,18 +1,14 @@
 msposapp
 --------
 
-
 Status area (grey)-
-
 - Shopcode
 current set shop identifier is displayed in the status area at the top of the menu.
 
 - Status
 if the current set shop identifier has a running container, it will display how long it has been up.
 
-
 Containers -
-
 - Status
 displays the detailed status info for all running containers (shops) on the server.
 
@@ -23,9 +19,7 @@ if the current shop identifier has a tfrsync.pl cloud backup on this server, it 
 - Connect
 connects to the current shop identifier's container.
 
-
 VPNs -
-
 - Status
 displays detailed status of all VPNs running on the current shop identifiers container.
 
@@ -38,9 +32,7 @@ adds a VPN to a remote location. (must stop/start VPNs after.)
 - Delete
 removes a VPN connection from the current shop identifier's container. (must stop/start VPNs after.)
 
-
 System -
-
 - Shopcode
 Allows you to set the current working shop identifier.
 
