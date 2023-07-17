@@ -23,3 +23,6 @@ for user in `ls /home | grep tfpos-`
 
 # remove yum junk.
 yum clean all
+
+# remove ssh keys
+rm -f ~/.ssh/known_hosts

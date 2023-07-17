@@ -49,23 +49,23 @@ podman exec $CONTAINER systemctl unmask getty.target
 podman exec $CONTAINER systemctl start systemd-logind.service
 
 #install ostools
-podman exec $CONTAINER updateos rh8 install_ostools-1.16
+podman exec $CONTAINER updateos install_ostools-1.16
 
 #install rti
 podman exec $CONTAINER touch /etc/samba/smbusers 
-podman exec $CONTAINER updateos rh8 conf_platform
-podman exec $CONTAINER updateos rh8 conf_users
-podman exec $CONTAINER updateos rh8 install_rti
-podman exec $CONTAINER updateos rh8 install_tcc
-podman exec $CONTAINER updateos rh8 harden_system
-podman exec $CONTAINER updateos rh8 system_auth
+podman exec $CONTAINER updateos conf_platform
+podman exec $CONTAINER updateos conf_users
+podman exec $CONTAINER updateos install_rti
+podman exec $CONTAINER updateos install_tcc
+podman exec $CONTAINER updateos harden_system
+podman exec $CONTAINER updateos system_auth
 podman exec $CONTAINER systemctl start rti 
 
 #set samba passwords
-podman exec -it $CONTAINER updateos rh8 smb_passwords
+podman exec -it $CONTAINER updateos smb_passwords
 
 #register with insights.
-podman exec $CONTAINER updateos rh8 register_insights
+podman exec $CONTAINER updateos register_insights
 
 #restore backup data if exist.
 [ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data $POSDIR

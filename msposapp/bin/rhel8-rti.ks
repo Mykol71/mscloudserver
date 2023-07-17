@@ -6,6 +6,7 @@ selinux --permissive
 firewall --disabled
 #network --bootproto=dhcp --device=link --activate --onboot=on
 network  --bootproto=dhcp --device=link --ipv6=no --activate --onboot=on
+network  --bootproto=dhcp --device=eth1 --ipv6=no --activate --onboot=on
 network  --hostname=rhel8-rti.teleflora.com
 bootloader --disable
 lang en_US

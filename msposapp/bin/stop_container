@@ -4,6 +4,8 @@ SHOPCODE="`cat .shopcode`"
 [ ! -f .$SHOPCODE.container ] && echo "Nothing running!" && exit
 CONTAINER=`cat .$SHOPCODE.container`
 
+sed -i /`podman container inspect $SHOPCODE.teleflora.com --format '{{.NetworkSettings.IPAddress}}'`/d ~/.ssh/known_hosts
+
 podman container stop $(cat .$SHOPCODE.container)
 rm -f .$SHOPCODE.container
 
