@@ -20,43 +20,4 @@ find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 # make backups folder if its not there.
 [ ! -d /backups ] && mkdir /backups
 
-# make skel file
-cat > /etc/skel/tfrsync << EOF
-#!/bin/sh
-
-case "$SSH_ORIGINAL_COMMAND" in
-*\&*)
-echo "Rejected"
-;;
-*\(*)
-echo "Rejected"
-;;
-*\{*)
-echo "Rejected"
-;;
-*\;*)
-echo "Rejected"
-;;
-*\<*)
-echo "Rejected"
-;;
-*\`*)
-echo "Rejected"
-;;
-*\|*)
-echo "Rejected"
-;;
-rsync\ --server*)
-$SSH_ORIGINAL_COMMAND
-;;
-*)
-echo "Rejected"
-;;
-esac
-
-EOF
-
-echo ""
-echo "Done!"
-
 exit 0
