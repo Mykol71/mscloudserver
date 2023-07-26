@@ -3,7 +3,7 @@
 HOST_USER=`whoami`
 
 #Environment Name
-[ ! -f ../../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../../.envtype
+[ ! -f ../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../.envtype
 
 #set selinux to permissive
 setenforce 0
@@ -17,15 +17,44 @@ find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
 find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
 find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
 
-# add tfsupport usr and generate keys folder, if not there.
-[ ! -d /home/tfsupport ] && useradd tfsupport
-[ ! -d /home/tfsupport/keys ] && mkdir /home/tfsupport/keys && chown tfsupport:tfsupport /home/tfsupport/keys
-
-# Add tfsupport to sudoers, if not there.
-[ "`grep tfsupport /etc/sudoers`" == "" ] && echo "tfsupport        ALL=(ALL)       NOPASSWD: ALL">>/etc/sudoers
-
 # make backups folder if its not there.
 [ ! -d /backups ] && mkdir /backups
+
+# make skel file
+cat > /etc/skel/tfrsync << EOF
+#!/bin/sh
+
+case "$SSH_ORIGINAL_COMMAND" in
+*\&*)
+echo "Rejected"
+;;
+*\(*)
+echo "Rejected"
+;;
+*\{*)
+echo "Rejected"
+;;
+*\;*)
+echo "Rejected"
+;;
+*\<*)
+echo "Rejected"
+;;
+*\`*)
+echo "Rejected"
+;;
+*\|*)
+echo "Rejected"
+;;
+rsync\ --server*)
+$SSH_ORIGINAL_COMMAND
+;;
+*)
+echo "Rejected"
+;;
+esac
+
+EOF
 
 echo ""
 echo "Done!"

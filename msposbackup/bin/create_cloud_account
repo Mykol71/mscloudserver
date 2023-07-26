@@ -9,10 +9,11 @@ SHOPCODE=$REPLY
 echo "Enter Public Key:"
 read -p "" 
 KEY=$REPLY
-useradd -d /backups tfrsync-$SHOPCODE
-mkdir /backups/tfrsync-$SHOPCODE
+useradd -d /backups/tfrsync-$SHOPCODE tfrsync-$SHOPCODE
 mkdir /backups/tfrsync-$SHOPCODE/.ssh
-cp -f ./tfrsync /backups/tfrsync-$SHOPCODE
+cp -f ./bin/tfrsync /backups/tfrsync-$SHOPCODE
+chown tfrsync-$SHOPCODE:tfrsync-$SHOPCODE /backups/tfrsync-$SHOPCODE/tfrsync
+chmod 500 /backups/tfrsync-$SHOPCODE/tfrsync
 chown tfrsync-$SHOPCODE:tfrsync-$SHOPCODE /backups/tfrsync-$SHOPCODE/.ssh
 chmod 700 /backups/tfrsync-$SHOPCODE/.ssh 
 echo "command=\"/backups/tfrsync-$SHOPCODE/tfrsync\" $KEY">/backups/tfrsync-$SHOPCODE/.ssh/authorized_keys
