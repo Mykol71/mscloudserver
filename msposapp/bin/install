@@ -2,6 +2,9 @@
 
 HOST_USER=`whoami`
 
+#verify root
+[ $ID -ne 0 ] && echo "You must be root or in sudoers to run $0." && exit 1
+
 #Environment Name 
 [ ! -f ../../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../../.envtype
 #Shopcode
