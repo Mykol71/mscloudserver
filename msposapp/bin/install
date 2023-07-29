@@ -3,6 +3,7 @@
 HOST_USER=`whoami`
 
 #verify root
+ID=`/usr/bin/id -u`
 [ $ID -ne 0 ] && echo "You must be root or in sudoers to run $0." && exit 1
 
 #Environment Name 
