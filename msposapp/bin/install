@@ -33,16 +33,6 @@ timedatectl set-timezone America/Chicago
 #copy in port forwrd config for docker
 cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
 
-# add tfsupport usr and generate keys folder, if not there.
-#[ ! -d /home/tfsupport ] && useradd tfsupport
-#[ ! -d /home/tfsupport/keys ] && mkdir /home/tfsupport/keys && chown tfsupport:tfsupport /home/tfsupport/keys
-
-# Add tfsupport to sudoers, if not there.
-#[ "`grep tfsupport /etc/sudoers`" == "" ] && echo "tfsupport        ALL=(ALL)       NOPASSWD: ALL">>/etc/sudoers
-
-# lastly, update everything
-yum -y update
-
 # create base image
 echo -n "Create base image? y/n: "
 read answer
