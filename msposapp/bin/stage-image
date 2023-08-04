@@ -75,10 +75,6 @@ podman cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
 podman cp ./istar.rpm ${CONTAINER}:/tmp
 podman exec $CONTAINER rpm -i /tmp/istar.rpm
 
-#create vpn if desired
-#echo -n "Create VPN? (y/n): "
-#read VPN
-
 #Done
 echo "---"
 echo "${OS}8-$POSTYPE-$SHOPCODE instance is ready!"

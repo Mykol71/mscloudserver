@@ -1,6 +1,5 @@
 msposapp
 --------
-
 Status area (grey)-
 - Shopcode
 current set shop identifier is displayed in the status area at the top of the menu.
