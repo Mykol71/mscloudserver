@@ -32,7 +32,7 @@ sleep 3
 podman exec $CONTAINER chown root:root /etc/sudoers
 
 #fix home dirs perms
-podman exec $CONTAINER /bin/bash -c 'for dir in `find /home -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do [ "`grep ^$dir /etc/passwd`" != "" ] && chown -R $dir:$dir /home/$dir; done'
+podman exec $CONTAINER /bin/bash -c 'for dir in `find /home -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do [ "`grep ^$dir /etc/passwd`" != "" ] && chown -R $dir:rti /home/$dir; done'
 
 # RTI only.
 if [ "$POS_DIR" == "usr2" ]; then
