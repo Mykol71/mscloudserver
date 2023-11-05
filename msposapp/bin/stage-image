@@ -23,14 +23,18 @@ CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflo
 echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
-podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos-rpms/RPM-GPG-KEY-redhat-release
+podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
 
 # install epel repo
 podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 # install strongswan
-podman exec $CONTAINER yum -y remove libreswan
-podman exec $CONTAINER yum -y install strongswan strongswan-libipsec strongswan-charon-nm
+#podman exec $CONTAINER yum -y remove libreswan
+#podman exec $CONTAINER yum -y install strongswan strongswan-libipsec strongswan-charon-nm
+# Install anyconnect
+podman exec $CONTAINER wget http://rhel8repo.centralus.cloudapp.azure.com/support/anyconnect-linux.tar.gz
+podman exec $CONTAINER gunzip ./anyconnect-linux.tar.gz
+podman exec $CONTAINER tar xvf ./anyconnect-linux.tar
 
 #disable subscription manager
 podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
