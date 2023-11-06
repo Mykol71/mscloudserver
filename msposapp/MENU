@@ -16,6 +16,8 @@ while :; do
     LGGRN='\033[1;32m'                                                                                                                                                                                            
     BLUE='\033[1;34m'                                                                                                                                                                                              
     GREY='\033[0;37m'                                                                                                                                                                                             
+    YELLOW='\033[1;33m'
+
     CYAN=''                                                                                                                                                                                             
     NC='\033[0m'                                                                                                                                                                                                  
     clear                                                                                                                                                                                                         
@@ -25,6 +27,7 @@ while :; do
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
+    printf '\u2503'${YELLOW}" $(hostname)"${NC}'\n'
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     echo -e "\u2503${GREY} Status   : `podman container list --noheading | grep $SHOPCODE | sed -e "s/\ \ /~/g" | cut -d~ -f5 2>/dev/null`${NC}"
     printf '\u2503''\n'

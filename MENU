@@ -13,6 +13,7 @@ while :; do
     LGGRN='\033[1;32m'
     BLUE='\033[1;34m'
     GREY='\033[0;37m'
+    YELLOW='\033[1;33m'
     CYAN=''
     NC='\033[0m'
     clear
@@ -21,7 +22,7 @@ while :; do
     echo -e "\u2503${BLUE} @ ${NC}`[ -f .envtype ] && cat .envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ '${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
+    printf '\u2503'${YELLOW}" $(hostname)"${NC}'\n'
     printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
