@@ -33,6 +33,11 @@ timedatectl set-timezone America/Chicago
 #copy in port forwrd config for docker
 cp -f ./99-docker.conf /usr/lib/sysctl.d/99-podman.conf
 
+# Download and install sshfs.
+wget http://rhel8repo.centralus.cloudapp.azure.com/support/fuse-sshfs-2.8-7.el8.x86_64.rpm
+yum -y localinstall ./fuse-sshfs-2.8-7.el8.x86_64.rpm
+rm -f ./fuse-sshfs-2.8-7.el8.x86_64.rpm
+
 # create base image
 echo -n "Create base image? y/n: "
 read answer

@@ -29,12 +29,12 @@ podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.co
 podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 # install strongswan
-#podman exec $CONTAINER yum -y remove libreswan
-#podman exec $CONTAINER yum -y install strongswan strongswan-libipsec strongswan-charon-nm
+podman exec $CONTAINER yum -y remove libreswan
+podman exec $CONTAINER yum -y install strongswan strongswan-libipsec strongswan-charon-nm
 # Install anyconnect
-podman exec $CONTAINER wget http://rhel8repo.centralus.cloudapp.azure.com/support/anyconnect-linux.tar.gz
-podman exec $CONTAINER gunzip ./anyconnect-linux.tar.gz
-podman exec $CONTAINER tar xvf ./anyconnect-linux.tar
+#podman exec $CONTAINER wget http://rhel8repo.centralus.cloudapp.azure.com/support/cisco-secure-client-linux64.tar.gz
+#podman exec $CONTAINER gunzip ./cisco-secure-client-linux64.tar.gz
+#podman exec $CONTAINER tar xvf ./cisco-secure-client-linux64.tar
 
 #disable subscription manager
 podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf

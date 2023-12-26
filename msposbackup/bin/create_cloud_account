@@ -6,6 +6,10 @@ echo "Enter Shop Code:"
 read -p ""
 SHOPCODE=$REPLY
 [ -d /backups/tfrsync-$SHOPCODE ] && echo "Cloud account with that shop code already exists!" && exit
+echo -n "(L)ocal or (R)emote account?: "
+read ANSWER
+case "$ANSWER" in
+L|l)
 echo "Enter Public Key:"
 read -p "" 
 KEY=$REPLY
@@ -26,3 +30,23 @@ if [ "$REPLY" == "y" ] ; then
 touch /backups/tfrsync-$SHOPCODE/paying_customer
 echo "Cloud account tfrsync-$SHOPCODE is now a subscriber."
 fi
+;;
+R|r)
+useradd tfrsync-$SHOPCODE
+mkdir /backups/tfrsync-$SHOPCODE
+chown tfrsync-$SHOPCODE:tfrsync-$SHOPCODE /backups/tfrsync-$SHOPCODE
+mkdir /home/tfrsync-$SHOPCODE/.ssh
+chown tfrsync-$SHOPCODE:tfrsync-$SHOPCODE /home/tfrsync-$SHOPCODE/.ssh
+echo -n "Enter Remote Host: "
+read REMOTE_HOST
+echo "Enter Private Key:"
+read -p ""
+PRIV_KEY=$REPLY
+echo "$PRIV_KEY">/home/tfrsync-$SHOPCODE/.ssh/id_rsa
+chown tfrsync-$SHOPCODE:tfrsync-$SHOPCODE /home/tfrsync-$SHOPCODE/.ssh/id_rsa
+chmod 600 /home/tfrsync-$SHOPCODE/.ssh/id_rsa
+sshfs tfrsync-$SHOPCODE@$REMOTE_HOST:~ /backups/tfrsync-$SHOPCODE
+[ "$?" == "0" ] && echo "Cloud account tfrsync-$SHOPCODE mounted."
+;;
+esac
+exit 0

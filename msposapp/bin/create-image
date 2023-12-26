@@ -22,8 +22,8 @@ mkdir /var/tmp/containers/$BUILDDATE/$KSNAME
 mkdir /var/tmp/containers/$BUILDDATE/$KSNAME/docker
 
 if [ "$POSTYPE" == "rti" ]; then
-curl http://rhel8repo.centralus.cloudapp.azure.com/support/rh8-rti.iso -o /tmp/rhel8boot.iso
-livemedia-creator --no-virt --make-tar --iso=/tmp/rhel8boot.iso --ks=./$KSNAME.ks --image-name=rhel8-rti-docker.tar.xz --logfile=/tmp/build-rti-container.error.log
+curl http://rhel8repo.centralus.cloudapp.azure.com/support/rhel-8.5-x86_64-boot.iso -o /tmp/rhel8boot.iso
+livemedia-creator --no-virt --make-tar --iso=/tmp/rhel8boot.iso --ks=./$KSNAME.ks --image-name=rhel8-rti-docker.tar.xz --logfile=/tmp/build-rti-container.error.log 2>/dev/null
 
 cp -f ./rhel8-rti-dockerfile $BUILDROOT/docker/Dockerfile
 
