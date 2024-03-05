@@ -26,7 +26,7 @@ CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflo
 echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
-podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos-rpms/RPM-GPG-KEY-redhat-release
+podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
 
 # install epel repo
 podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
