@@ -11,6 +11,9 @@ POSTYPE=rti
 [ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
 SHOPCODE="`cat .shopcode`"
 
+#get nic name
+NETDEV=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
+
 [ "`podman container ls | grep $SHOPCODE`" != "" ] && echo "Container already running for $SHOPCODE." && exit 0
 
 #add POS users
@@ -74,6 +77,10 @@ podman exec $CONTAINER updateos register_insights
 podman cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
 podman cp ./istar.rpm ${CONTAINER}:/tmp
 podman exec $CONTAINER rpm -i /tmp/istar.rpm
+
+#prepare local net nic for container
+./pipework $NETDEV -i eth1 $CONTAINER dhclient
+podman exec $CONTAINER sed -i /search/d /etc/resolv.conf
 
 #create vpn if desired
 #echo -n "Create VPN? (y/n): "

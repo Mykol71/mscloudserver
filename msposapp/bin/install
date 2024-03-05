@@ -19,7 +19,7 @@ sed -i "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf
 
 #install required packages
 yum clean all
-yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time podman device-mapper-libs device-mapper-event-libs chrony lorax anaconda-tui unzip expect
+yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time podman device-mapper-libs device-mapper-event-libs chrony lorax anaconda-tui unzip expect dhclient
 
 # set timezone
 timedatectl set-timezone America/Chicago
