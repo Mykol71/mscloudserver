@@ -1,5 +1,35 @@
 msposapp
 --------
+msposapp manages containers that are full linux installs with the RTI POS system installed and configured.
+it can manage multiple vpns from each container to a different home location.
+
+03/05/2024  3:45 PM - 2.6
+┏━━━━━━━━
+┃ @ Mike's Store
+┃ )~ Containers
+┃━
+┃ Shopcode : 12122121
+┃ Status   :  Up 8 hours
+┃
+┃-Containers
+┃ 1. Status
+┃ 2. Start/Stop
+┃ 3. Connect
+┃
+┃-VPNs
+┃ 4. Status
+┃ 5. Start/Stop
+┃ 6. Create
+┃ 7. Delete
+┃
+┃-System
+┃ s. Shopcode
+┃ i. Install
+┃ p. Purge
+┃ r. Readme
+┃ x. Exit
+┗━
+Enter selection: 
 
 Status area (grey)-
 - Shopcode
