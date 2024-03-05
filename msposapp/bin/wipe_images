@@ -1,9 +1,0 @@
-#!/usr/bin/bash
-
-echo -n "Enter image ID (* for all): "
-read IMAGE_ID
-if [ "$IMAGE_ID" == "*" ]; then
-podman rmi $(podman images -a -q) -f
-else
-podman rmi $IMAGE_ID -f
-fi
