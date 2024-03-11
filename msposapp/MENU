@@ -20,6 +20,7 @@ while :; do
     NC='\033[0m'                                                                                                                                                                                                  
     clear                                                                                                                                                                                                         
     [ -f ./bin/.shopcode ] && SHOPCODE=`cat ./bin/.shopcode`
+    [ -f ./bin/.$SHOPCODE.container ] && CONTAINER=`cat ./bin/.$SHOPCODE.container`
     echo -e "${GREY}$(date +'%x %l:%M %p') - $TFCLOUD_VERSION${NC}"
     printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
@@ -27,6 +28,8 @@ while :; do
     printf '\u2503''\u2501''\n'
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     echo -e "\u2503${GREY} Status   : `podman container list --noheading | grep $SHOPCODE | sed -e "s/\ \ /~/g" | cut -d~ -f5 2>/dev/null`${NC}"
+#    printf '\u2503''\n'
+    echo -e "\u2503${GREY} IP Addr  : `podman exec $CONTAINER hostname -I 2>/dev/null | cut -d" " -f2` ${NC}"
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mContainers"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Status"'\n'
