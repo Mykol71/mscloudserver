@@ -26,7 +26,8 @@ done
 # copy produced config files to container
 podman cp .$SHOPCODE.ipsec.conf "${CONTAINER}:/etc/strongswan/ipsec.conf"
 [ ! -f .$SHOPCODE.ipsec.secrets ] && touch .$SHOPCODE.ipsec.secrets
-podman cp .$SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/strongswan/ipsec.secrets"
+podman cp .$SHOPCODE.ipsec.secrets "${CONTAINER}:/etc/ipsec.d/ipsec.secrets"
 
 # start strongswan on container
+podman exec $CONTAINER ipsec start
 podman exec $CONTAINER strongswan start
