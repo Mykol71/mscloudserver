@@ -32,8 +32,7 @@ podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.co
 podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 # install strongswan
-podman exec $CONTAINER yum -y remove libreswan
-podman exec $CONTAINER yum -y install strongswan strongswan-libipsec strongswan-charon-nm
+podman exec $CONTAINER yum -y install strongswan strongswan-libipsec
 
 #disable subscription manager
 podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf

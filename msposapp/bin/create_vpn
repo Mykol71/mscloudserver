@@ -48,7 +48,7 @@ conn $REMOTE_NAME
   authby=secret
   left=%defaultroute
   leftid=${PUBLIC}
-  leftsubnet="10.88.0.0/16"
+  leftsubnet="192.168.11.0/24"
   right=${REMOTE_PUBLIC}
   rightsubnet="${REMOTE_NET}/24"
   ike=aes128-sha1-modp1024
