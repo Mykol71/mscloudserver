@@ -9,6 +9,14 @@ HOST_USER=`whoami`
 [ ! -f ../../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../../.envtype
 #Shopcode
 [ ! -f .shopcode ] && echo -n "Shopcode: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
+SHOPCODE="`cat .shopcode`"
+
+#OS Version
+#OSVERSION="rhel8" && echo "rhel8" > .$SHOPCODE.osversion
+#echo -n "OS Version - (rhel8, centos7): " && read OSVERSION
+#[ "$OSVERSION" == "centos7" ] && OSVERSION="centos7" && echo "centos7" >.$SHOPCODE.osversion
+[ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion
+OSVERSION="`cat .$SHOPCODE.osversion`"
 
 #set selinux to permissive
 setenforce 0
@@ -25,8 +33,8 @@ yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx n
 echo -n "Create base image? y/n: "
 read answer
 [ "$answer" == "n" ] && echo "Done." && exit 0
-podman rmi $(podman images -a -q) -f 2>/dev/null
-./create-image
+#podman rmi $(podman images -a -q) -f 2>/dev/null
+./create-image-$OSVERSION
  
 echo "Done!"
 

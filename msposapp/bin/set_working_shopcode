@@ -5,3 +5,6 @@
 
 #Shopcode
 echo -n "Shopcode: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
+
+#OS Version
+[ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion

@@ -27,9 +27,10 @@ while :; do
     printf '\u2503'${LGGRN}' )~ Containers'${NC}'\n'
     printf '\u2503''\u2501''\n'
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
+    echo -e "\u2503${GREY} OS Vers  : `[ -f ./bin/.$SHOPCODE.osversion ] && cat ./bin/.$SHOPCODE.osversion`${NC}"
     echo -e "\u2503${GREY} Status   : `podman container list --noheading | grep $SHOPCODE | sed -e "s/\ \ /~/g" | cut -d~ -f5 2>/dev/null`${NC}"
 #    printf '\u2503''\n'
-    echo -e "\u2503${GREY} IP Addr  : `podman exec $CONTAINER hostname -I 2>/dev/null | cut -d" " -f2` ${NC}"
+    echo -e "\u2503${GREY} IP Addr  : `[ -f ./bin/.$SHOPCODE.container ] && podman exec $CONTAINER hostname -I 2>/dev/null | cut -d" " -f2` ${NC}"
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mContainers"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Status"'\n'

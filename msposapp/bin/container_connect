@@ -6,5 +6,7 @@
 SHOPCODE="`cat .shopcode`"
 [ ! -f .$SHOPCODE.container ] && echo "No running container." && exit 0
 
-#podman exec -it `cat .$SHOPCODE.container` su - tfsupport
-ssh tfsupport@`podman container inspect $SHOPCODE.teleflora.com --format '{{.NetworkSettings.IPAddress}}'`
+CONTAINER="`cat .$SHOPCODE.container`"
+
+podman exec -it $CONTAINER su - tfsupport
+#ssh tfsupport@`podman container inspect $SHOPCODE.teleflora.com --format '{{.NetworkSettings.IPAddress}}'`

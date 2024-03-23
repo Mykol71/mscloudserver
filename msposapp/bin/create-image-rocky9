@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+
+#Install check
+[ ! -f .shopcode ] && echo "Not installed." && exit 0
+
+#already built check
+[ "`podman image ls | grep rocky9-rti`" != "" ] && echo "Image already built." && exit 0
+
+KSNAME=rocky9-rti
+BUILDDATE=$(date +%Y%m%d)
+BUILDROOT=/var/tmp/containers/$BUILDDATE/$KSNAME
+
+POSTYPE=rti
+
+rm -f /var/tmp/rocky*xz
+
+[ ! -d /var/tmp/containers ] && mkdir /var/tmp/containers
+[ ! -d /var/tmp/containers/$BUILDDATE ] && mkdir /var/tmp/containers/$BUILDDATE
+[ ! -d /var/tmp/containers/$BUILDDATE/$KSNAME ] && mkdir /var/tmp/containers/$BUILDDATE/$KSNAME
+[ ! -d /var/tmp/containers/$BUILDDATE/$KSNAME/docker ] && mkdir /var/tmp/containers/$BUILDDATE/$KSNAME/docker
+
+if [ "$POSTYPE" == "rti" ]; then
+livemedia-creator --no-virt --make-tar --ks=./$KSNAME.ks --image-name=rocky9-rti-docker.tar.xz --logfile=/tmp/build-rti-container.error.log
+
+cp -f ./rocky9-rti-dockerfile $BUILDROOT/docker/Dockerfile
+
+# Create cccp.yaml for testing
+cat << EOF > $BUILDROOT/docker/cccp.yaml
+job-id: rocky-base
+test-skip: true
+EOF
+
+cp /var/tmp/rocky9-rti-docker.tar.xz $BUILDROOT/docker
+
+cd $BUILDROOT/docker
+podman build --tag rocky9-rti .
+cd -
+
+fi
+
+exit 0

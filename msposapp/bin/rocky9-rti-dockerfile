@@ -1,0 +1,23 @@
+FROM scratch
+ADD rocky9-rti-docker.tar.xz /
+LABEL org.label-schema.schema-version = "1.0" \
+    org.label-schema.name="ROCKY-RTI Base Image" \
+    org.label-schema.vendor="ROCKY" \
+    org.label-schema.license="GPLv2" \
+    org.label-schema.build-date="20240327"
+MAINTAINER “Mike Green" <mgreen@teleflora.com>
+ENV container rocky9-rti-docker
+RUN curl http://rhel8repo.centralus.cloudapp.azure.com/ostools-1.17/updateos -o /bin/updateos
+RUN chmod +x /bin/updateos
+VOLUME /sys/fs/cgroup
+RUN systemctl enable sshd
+RUN systemctl enable cups
+RUN systemctl enable smb
+EXPOSE 22
+EXPOSE 111
+EXPOSE 15022
+EXPOSE 9100
+EXPOSE 445
+EXPOSE 631
+EXPOSE 500
+CMD [“/usr/bin/bash”]

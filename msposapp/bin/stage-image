@@ -3,13 +3,12 @@
 #Install check
 [ ! -f .shopcode ] && echo "Not installed." && exit 0
 
-#Shopcode
-[ "`podman image ls -q`" == "" ] && echo "No image available. Build image first." && exit 0
-
-OS=rhel
+OS=rocky9
 POSTYPE=rti
 [ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
 SHOPCODE="`cat .shopcode`"
+[ -f .$SHOPCODE.osversion ] && OS="`cat .$SHOPCODE.osversion`"
+[ "`podman image ls | grep $OS`" == "" ] && echo "No image available. Build image first." && exit 0
 
 #get nic name
 NETDEV=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
@@ -21,21 +20,24 @@ useradd -b /home tfpos-$SHOPCODE
 mkdir /home/tfpos-$SHOPCODE/usr2
 
 #start container
-CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}8-${POSTYPE} /usr/sbin/init`
+CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}-${POSTYPE} /usr/sbin/init`
 
 echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
-podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
 
 # install epel repo
-podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+[ "$OS" == "centos7" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+[ "$OS" == "rocky9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
 # install strongswan
 podman exec $CONTAINER yum -y install strongswan strongswan-libipsec
 
 #disable subscription manager
-podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
 #Make loop back device in container so we can mount isos inside the container
 podman exec $CONTAINER mknod /dev/loop b 7 0
@@ -67,7 +69,7 @@ podman exec $CONTAINER systemctl start rti
 podman exec -it $CONTAINER updateos smb_passwords
 
 #register with insights.
-podman exec $CONTAINER updateos register_insights
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER updateos register_insights
 
 #restore backup data if exist.
 [ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data $POSDIR
@@ -81,12 +83,15 @@ podman exec $CONTAINER rpm -i /tmp/istar.rpm
 ./pipework $NETDEV -i eth1 $CONTAINER dhclient
 podman exec $CONTAINER sed -i /search/d /etc/resolv.conf
 
+#move off hosts.deny
+[ "$OS" == "centos7" ] && podman exec $CONTAINER mv /etc/hosts.deny /tmp
+
 #create vpn if desired
 #echo -n "Create VPN? (y/n): "
 #read VPN
 
 #Done
 echo "---"
-echo "${OS}8-$POSTYPE-$SHOPCODE instance is ready!"
+echo "${OS}-$POSTYPE-$SHOPCODE instance is ready!"
 echo "---"
 exit 0

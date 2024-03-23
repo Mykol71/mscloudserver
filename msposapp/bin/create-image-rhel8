@@ -12,18 +12,15 @@ BUILDROOT=/var/tmp/containers/$BUILDDATE/$KSNAME
 
 POSTYPE=rti
 
-rm -rf /var/tmp/containers
-rm -f /var/tmp/centos*xz
 rm -f /var/tmp/rhel*xz
 
-mkdir /var/tmp/containers
-mkdir /var/tmp/containers/$BUILDDATE
-mkdir /var/tmp/containers/$BUILDDATE/$KSNAME
-mkdir /var/tmp/containers/$BUILDDATE/$KSNAME/docker
+[ ! -d /var/tmp/containers ] && mkdir /var/tmp/containers
+[ ! -d /var/tmp/containers/$BUILDDATE ] && mkdir /var/tmp/containers/$BUILDDATE
+[ ! -d /var/tmp/containers/$BUILDDATE/$KSNAME ] && mkdir /var/tmp/containers/$BUILDDATE/$KSNAME
+[ ! -d /var/tmp/containers/$BUILDDATE/$KSNAME/docker ] && mkdir /var/tmp/containers/$BUILDDATE/$KSNAME/docker
 
 if [ "$POSTYPE" == "rti" ]; then
-curl http://rhel8repo.centralus.cloudapp.azure.com/support/rh8-rti.iso -o /tmp/rhel8boot.iso
-livemedia-creator --no-virt --make-tar --iso=/tmp/rhel8boot.iso --ks=./$KSNAME.ks --image-name=rhel8-rti-docker.tar.xz --logfile=/tmp/build-rti-container.error.log
+livemedia-creator --no-virt --make-tar --ks=./$KSNAME.ks --image-name=rhel8-rti-docker.tar.xz --logfile=/tmp/build-rti-container.error.log
 
 cp -f ./rhel8-rti-dockerfile $BUILDROOT/docker/Dockerfile
 

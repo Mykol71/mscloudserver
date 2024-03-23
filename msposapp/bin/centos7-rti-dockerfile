@@ -1,0 +1,21 @@
+FROM scratch
+ADD centos7-rti-docker.tar.xz /
+LABEL org.label-schema.schema-version = "1.0" \
+    org.label-schema.name="CentOS-RTI Base Image" \
+    org.label-schema.vendor="CentOS" \
+    org.label-schema.license="GPLv2" \
+    org.label-schema.build-date="20220527"
+MAINTAINER “Mike Green" <mgreen@teleflora.com>
+ENV container centos7-rti-docker
+RUN curl http://rhel8repo.centralus.cloudapp.azure.com/ostools-1.17/updateos -o /bin/updateos
+RUN chmod +x /bin/updateos
+VOLUME /sys/fs/cgroup
+VOLUME /usr2
+EXPOSE 22
+EXPOSE 111
+EXPOSE 15022
+EXPOSE 9100
+EXPOSE 445
+EXPOSE 631
+EXPOSE 500
+CMD [“/usr/bin/bash”]
