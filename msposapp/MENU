@@ -28,7 +28,8 @@ while :; do
     printf '\u2503''\u2501''\n'
     echo -e "\u2503${GREY} Shopcode : `[ -f ./bin/.shopcode ] && cat ./bin/.shopcode`${NC}"
     echo -e "\u2503${GREY} OS Vers  : `[ -f ./bin/.$SHOPCODE.osversion ] && cat ./bin/.$SHOPCODE.osversion`${NC}"
-    echo -e "\u2503${GREY} Status   : `podman container list --noheading | grep $SHOPCODE | sed -e "s/\ \ /~/g" | cut -d~ -f5 2>/dev/null`${NC}"
+#    echo -e "\u2503${GREY} Status   : `podman container list --noheading | grep $SHOPCODE | sed -e "s/\ \ /~/g" | cut -d~ -f5 2>/dev/null`${NC}"
+    echo -e "\u2503${GREY} Status   : `podman container inspect $SHOPCODE.teleflora.com --format '{{.State.Status}}' 2>/dev/null`${NC}"
 #    printf '\u2503''\n'
     echo -e "\u2503${GREY} IP Addr  : `[ -f ./bin/.$SHOPCODE.container ] && podman exec $CONTAINER hostname -I 2>/dev/null | cut -d" " -f2` ${NC}"
     printf '\u2503''\n'
