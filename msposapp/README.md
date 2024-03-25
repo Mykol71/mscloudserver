@@ -3,13 +3,15 @@ msposapp
 msposapp manages containers that are full linux installs with the RTI POS system installed and configured.
 it can manage multiple vpns from each container to a different home location.
 
-03/05/2024  3:45 PM - 2.6
+03/24/2024  8:21 PM - 2.6
 ┏━━━━━━━━
 ┃ @ Mike's Store
 ┃ )~ Containers
 ┃━
-┃ Shopcode : 12122121
-┃ Status   :  Up 8 hours
+┃ Shopcode : 12345678
+┃ OS Vers  : rocky9
+┃ Status   : running
+┃ IP Addr  : 192.168.11.103 
 ┃
 ┃-Containers
 ┃ 1. Status
@@ -31,12 +33,15 @@ it can manage multiple vpns from each container to a different home location.
 ┗━
 Enter selection: 
 
-Status area (grey)-
+Status area -
 - Shopcode
 current set shop identifier is displayed in the status area at the top of the menu.
-
-- Status
-if the current set shop identifier has a running container, it will display how long it has been up.
+- OS Vers -
+Flavor and version of the container.
+- Status -
+Container running status.
+- IP Addr -
+Local network IP Address.
 
 Containers -
 - Status
@@ -68,8 +73,8 @@ Allows you to set the current working shop identifier.
 
 - Install
 Installs the required packages and make needed config changes for msposapp if not already done.
-Ask for a shop identifier and name, if not already set.
-Build/rebuild the rhe8-rti base image every time its ran.
+Ask for a shop identifier, name, and os version, if not already set.
+Ask if want to Build/rebuild the base image.
 Check for OS updates every time it is ran, after the initial installation.
 
 - Purge
