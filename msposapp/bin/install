@@ -12,10 +12,10 @@ HOST_USER=`whoami`
 SHOPCODE="`cat .shopcode`"
 
 #OS Version
-#OSVERSION="rhel8" && echo "rhel8" > .$SHOPCODE.osversion
+OSVERSION="rhel8" && echo "rhel8" > .$SHOPCODE.osversion
 #echo -n "OS Version - (rhel8, centos7): " && read OSVERSION
 #[ "$OSVERSION" == "centos7" ] && OSVERSION="centos7" && echo "centos7" >.$SHOPCODE.osversion
-[ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion
+#[ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion
 OSVERSION="`cat .$SHOPCODE.osversion`"
 
 #set selinux to permissive

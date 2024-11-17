@@ -1,0 +1,82 @@
+#!/bin/bash
+
+TFCLOUD_VERSION="2.6"
+
+# verify root
+ID=$(/usr/bin/id -u)
+[ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
+
+ROOTDIR="$(pwd)"
+export ROOTDIR
+
+trap '' 2
+while :; do
+	clear
+
+   LGGRN='\033[1;32m'
+    BLUE='\033[1;34m'
+    GREY='\033[0;37m'
+    CYAN=''
+    NC='\033[0m'
+    clear
+    echo -e "${GREY}$(date +'%x %l:%M %p') - $TFCLOUD_VERSION${NC}"
+    printf '\u250f''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\u2501''\n'
+    echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
+    printf '\u2503'${LGGRN}' )~ Repos'${NC}'\n'
+    printf '\u2503''\u2501''\n'
+    printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
+    printf '\u2503'${GREY}" Space    : $(df -h /var/www/html | tail -1 | awk '{print $4}')"${NC}'\n'
+    printf '\u2503'${GREY}" Status   : $(systemctl status httpd | grep Active | cut -d" " -f6 2>/dev/null)"${NC}'\n'
+    printf '\u2503''\n'
+printf '\u2503''\033[1m'"-\033[0mRepos"'\n'
+printf '\u2503''\033[1m'" 1.\033[0m List Repos"'\n'
+printf '\u2503''\033[1m'" 2.\033[0m Create Repos"'\n'
+printf '\u2503''\033[1m'" 3.\033[0m Delete Repos"'\n'
+printf '\u2503''\033[1m'" 4.\033[0m Disable Repos"'\n'
+printf '\u2503''\033[1m'" 5.\033[0m Sync OS Repos"'\n'
+printf '\u2503''\n'
+printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
+printf '\u2503''\033[1m'" i.\033[0m Install"'\n'
+printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
+printf '\u2503''\033[1m'" x.\033[0m Exit"'\n'
+printf '\u2517''\u2501''\n'
+	echo -ne "${CYAN}Enter selection:${NC} "
+	read selection
+	case $selection in
+	1)
+		$ROOTDIR/bin/list_repos
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		;;
+	2)
+		$ROOTDIR/bin/create_repo
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		;;
+	3)
+		$ROOTDIR/bin/delete_repo
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		;;
+	4)
+		$ROOTDIR/bin/disable_repo
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		;;
+	5)
+		$ROOTDIR/bin/sync_repo
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		;;
+	i)
+		$ROOTDIR/bin/install
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		;;
+	x)
+		cd ..
+		exit
+		;;
+	*) ;;
+	esac
+done

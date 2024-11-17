@@ -4,11 +4,10 @@ SHOPCODE="`cat .shopcode`"
 [ ! -f .$SHOPCODE.container ] && echo "Nothing running!" && exit
 CONTAINER=`cat .$SHOPCODE.container`
 
-sed -i /`podman container inspect $SHOPCODE.teleflora.com --format '{{.NetworkSettings.IPAddress}}'`/d ~/.ssh/known_hosts
+sed -i /`podman container inspect $SHOPCODE.teleflora.com --format '{{.NetworkSettings.IPAddress}}'`/d ~/.ssh/known_hosts 2>/dev/null
 
 podman container stop $(cat .$SHOPCODE.container)
 rm -f .$SHOPCODE.container
-rm -f .$SHOPCODE.osversion
 
 [ -f .shopcode ] && [ -d /home/tfpos-`cat .shopcode` ] && userdel tfpos-`cat .shopcode` && rm -rf /home/tfpos-`cat .shopcode` && rm -rf /var/spool/mail/tfpos-`cat .shopcode`
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#DESC Sync OS repos from Redhat.
+
+reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms
+reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-appstream-rpms
+
+exit $?

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#DESC Enable/disable repos.
+
+[ "`systemctl status httpd | grep Active | cut -d" " -f6 | grep running`" != "" ] && echo Stopping repos..... && systemctl stop httpd && exit 0
+echo "Starting repos..." && systemctl start httpd
+
+exit $?

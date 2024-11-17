@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#DESC Creates OS patch repos.
+
+#Redhat repos
+subscription-manager register --activationkey=TelefloraPOS --org=4508688
+[ ! -d /var/www/html/rhel-8-for-x86_64-baseos-rpms ] && mkdir /var/www/html/rhel-8-for-x86_64-baseos-rpms
+[ ! -d /var/www/html/rhel-8-for-x86_64-appstream-rpms ] && mkdir /var/www/html/rhel-8-for-x86_64-appstream-rpms
+echo "0 10 * * 1 reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms >/tmp/reposync_baseos.log 2>&1" > /etc/cron.d/reposync
+echo "0 11 * * 1 reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-appstream-rpms >/tmp/reposync_appstream.log 2>&1" >> /etc/cron.d/reposync
+
+#updateos repo
+cd /var/www/html
+[ -d ostools-1.17 ] && rm -rf ./ostools-1.17
+git clone https://github.com/mykol71/ostools-1.17.git
+
+#ostools repo
+cd /var/www/html
+[ -d ostools-1.16 ] && rm -rf ./ostools-1.16
+git clone https://github.com/mykol71/ostools-1.16.git
+
+#support repo
+[ ! -d /var/www/html/support ] && mkdir /var/www/html/support
+
+exit $?

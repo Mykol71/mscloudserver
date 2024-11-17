@@ -3,7 +3,8 @@
 #Install check
 [ ! -f .shopcode ] && echo "Not installed." && exit 0
 
-OS=rocky9
+#OS=rocky9
+OS=rhel8
 POSTYPE=rti
 [ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
 SHOPCODE="`cat .shopcode`"

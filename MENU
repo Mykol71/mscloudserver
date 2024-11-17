@@ -27,7 +27,8 @@ while :; do
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
     printf '\u2503''\033[1m'" 1.\033[0m Data"'\n'
     printf '\u2503''\033[1m'" 2.\033[0m Containers"'\n'
-    printf '\u2503''\033[1m'" 3.\033[0m Reports"'\n'
+    printf '\u2503''\033[1m'" 3.\033[0m Repos"'\n'
+    printf '\u2503''\033[1m'" 4.\033[0m Reports"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
     printf '\u2503''\033[1m'" x.\033[0m Exit"'\n'
@@ -46,6 +47,11 @@ while :; do
 		cd -
 		;;
 	3)
+		cd $ROOTDIR/msrepos
+		./MENU
+		cd -
+		;;
+	4)
 		cd $ROOTDIR/msposreports
 		./MENU
 		cd -
