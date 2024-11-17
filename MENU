@@ -29,6 +29,7 @@ while :; do
     printf '\u2503''\033[1m'" 2.\033[0m Containers"'\n'
     printf '\u2503''\033[1m'" 3.\033[0m Repos"'\n'
     printf '\u2503''\033[1m'" 4.\033[0m Reports"'\n'
+    printf '\u2503''\033[1m'" 5.\033[0m Monitoring"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
     printf '\u2503''\033[1m'" x.\033[0m Exit"'\n'
@@ -53,6 +54,11 @@ while :; do
 		;;
 	4)
 		cd $ROOTDIR/msposreports
+		./MENU
+		cd -
+		;;
+	5)
+		cd $ROOTDIR/msposmonitor
 		./MENU
 		cd -
 		;;
