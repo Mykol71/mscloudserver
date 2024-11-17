@@ -24,8 +24,8 @@ while :; do
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Data'${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'${GREY}" Hostname : $(hostname)"${NC}'\n'
-    printf '\u2503'${GREY}" Space    : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
+    printf '\u2503'${GREY}" Host  : $(hostname)"${NC}'\n'
+    printf '\u2503'${GREY}" Space : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503''\n'
 printf '\u2503''\033[1m'"-\033[0mBackups"'\n'
 printf '\u2503''\033[1m'" 1.\033[0m List Accounts"'\n'
