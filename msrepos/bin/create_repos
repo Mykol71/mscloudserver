@@ -26,6 +26,6 @@ echo -n "Convert containers app and physical staging to use these repos? " && re
 [ "$ANS" != "y" ] && exit $?
 sed -i 's/BACKEND="http:\/\/rhel8repo.centralus.cloudapp.azure.com\/ostools-1.17"/BACKEND="http:\/\/'$(hostname)'\/ostools-1.17"/g' /var/www/html/ostools-1.17/updateos
 sed -i 's/rhel8repo.centralus.cloudapp.azure.com/'$(hostname)'/g' /var/www/html/ostools-1.17/RH8-RTI-silent.ks
-sed -i 's/rhel8repo.centralus.cloudapp.azure.com/'$(hostname)'/g' ../../msposapp/bin/rh8-rti.ks
+sed -i 's/rhel8repo.centralus.cloudapp.azure.com/'$(hostname)'/g' ../msposapp/bin/rhel8-rti.ks
 
 exit $?

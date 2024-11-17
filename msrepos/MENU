@@ -49,22 +49,22 @@ printf '\u2517''\u2501''\n'
 		read
 		;;
 	2)
-		$ROOTDIR/bin/create_repo
+		$ROOTDIR/bin/create_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	3)
-		$ROOTDIR/bin/delete_repo
+		$ROOTDIR/bin/delete_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	4)
-		$ROOTDIR/bin/disable_repo
+		$ROOTDIR/bin/disable_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	5)
-		$ROOTDIR/bin/sync_repo
+		$ROOTDIR/bin/sync_os_repo
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
