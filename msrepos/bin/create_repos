@@ -3,6 +3,9 @@
 #DESC Creates OS patch repos.
 OSVERS="`cat /etc/redhat-release | cut -d" " -f6 | cut -d. -f1`"
 
+#service local
+
+
 #Redhat repos
 subscription-manager register --activationkey=TelefloraPOS --org=4508688
 [ ! -d /var/www/html/rhel-${OSVERS}-for-x86_64-baseos-rpms ] && mkdir /var/www/html/rhel-${OSVERS}-for-x86_64-baseos-rpms

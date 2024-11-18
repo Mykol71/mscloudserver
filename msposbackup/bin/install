@@ -3,7 +3,12 @@
 HOST_USER=`whoami`
 
 #Environment Name
-[ ! -f ../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../.envtype
+#[ ! -f ../msposapp/.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../msposapp/.envtype
+
+#deps
+yum -y install httpd
+systemctl start httpd
+systemctl enable httpd
 
 #set selinux to permissive
 setenforce 0
@@ -16,6 +21,12 @@ timedatectl set-timezone America/Chicago
 find . -name "*monthname.sh" -exec cp -f {} /usr/local/bin/. \;
 find . -name "*strip.sh" -exec cp -f {} /usr/local/bin/. \;
 find . -name "*recon.sh" -exec cp -f {} /usr/local/bin/. \;
+cp $ROOTDIR/bin/tsrs_batch /var/www/cgi-bin/.
+cp $ROOTDIR/bin/tsrs /var/www/cgi-bin/.
+cp $ROOTDIR/bin/cloud_pricing* /usr/local/bin/.
+cp $ROOTDIR/bin/backup_perf.sh /usr/local/bin/.
+cp $ROOTDIR/bin/crontab /etc/cron.d/mscloudbackup
+cp $ROOTDIR/bin/tfcloud*.sh /home/tfsupport/.
 
 # make backups folder if its not there.
 [ ! -d /backups ] && mkdir /backups

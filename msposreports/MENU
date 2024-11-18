@@ -24,7 +24,7 @@ while :; do
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Reports'${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'${GREY}" Host  : $(hostname)"${NC}'\n'
+    printf '\u2503'${GREY}" $(hostname)"${NC}'\n'
     printf '\u2503'${GREY}" Space : $(df -h /backups | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mBackups"'\n'
@@ -36,6 +36,8 @@ while :; do
     printf '\u2503''\033[1m'" 4.\033[0m Compliance"'\n'
     printf '\u2503''\033[1m'" 5.\033[0m Advisory"'\n'
     printf '\u2503''\033[1m'" 6.\033[0m Malware"'\n'
+    printf '\u2503''\n'
+    printf '\u2503''\033[1m'"-\033[0mHardware"'\n'
     printf '\u2503''\033[1m'" 7.\033[0m Dell TSR"'\n'
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'

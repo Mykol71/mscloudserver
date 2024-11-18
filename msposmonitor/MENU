@@ -24,7 +24,7 @@ while :; do
     echo -e "\u2503${BLUE} @ ${NC}`[ -f ../.envtype ] && cat ../.envtype || echo -e Not Installed`${NC}"
     printf '\u2503'${LGGRN}' )~ Monitoring'${NC}'\n'
     printf '\u2503''\u2501''\n'
-    printf '\u2503'${GREY}" Host  : $(hostname)"${NC}'\n'
+    printf '\u2503'${GREY}" $(hostname)"${NC}'\n'
     printf '\u2503'${GREY}" Space : $(df -h /var/www/html | tail -1 | awk '{print $4}')"${NC}'\n'
     printf '\u2503''\n'
 printf '\u2503''\033[1m'"-\033[0mMonitoring"'\n'
