@@ -26,7 +26,7 @@ CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflo
 echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
-[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import https://media.myk.green/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
 
 # install epel repo

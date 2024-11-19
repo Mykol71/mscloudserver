@@ -4,7 +4,7 @@
 
 for dir in `ls /var/www/html | grep -v lost+found | grep -v cd4 | grep -v sm | grep -v 4ch`
  do
-   echo "http://$(hostname)/$dir/"
+   echo "https://$(hostname)/$dir/"
  done
 
 exit $?
