@@ -21,12 +21,12 @@ useradd -b /home tfpos-$SHOPCODE
 mkdir /home/tfpos-$SHOPCODE/usr2
 
 #start container
-CONTAINER=`podman run -d -it -h $SHOPCODE.teleflora.com --name=$SHOPCODE.teleflora.com --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}-${POSTYPE} /usr/sbin/init`
+CONTAINER=`podman run -d -it -h $SHOPCODE.myk.sh --name=$SHOPCODE.myk.sh --rm --privileged -v "/home/tfpos-${SHOPCODE}/${POSDIR}:/${POSDIR}" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/${POSDIR}" -i ${OS}-${POSTYPE} /usr/sbin/init`
 
 echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
-[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import https://media.myk.green/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://myk.sh/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
 
 # install epel repo
@@ -52,25 +52,10 @@ podman exec $CONTAINER systemctl unmask systemd-timedated.service
 podman exec $CONTAINER systemctl unmask sys-fs-fuse-connections.mount
 podman exec $CONTAINER systemctl unmask getty.target
 podman exec $CONTAINER systemctl start systemd-logind.service
+sleep 20
 
-#install ostools
-podman exec $CONTAINER updateos install_ostools-1.16
-
-#install rti
-podman exec $CONTAINER touch /etc/samba/smbusers 
-podman exec $CONTAINER updateos conf_platform
-podman exec $CONTAINER updateos conf_users
-podman exec $CONTAINER updateos install_rti
-podman exec $CONTAINER updateos install_tcc
-podman exec $CONTAINER updateos harden_system
-podman exec $CONTAINER updateos system_auth
-podman exec $CONTAINER systemctl start rti 
-
-#set samba passwords
-podman exec -it $CONTAINER updateos smb_passwords
-
-#register with insights.
-[ "$OS" == "rhel8" ] && podman exec $CONTAINER updateos register_insights
+#stage
+podman exec $CONTAINER /usr/bin/chos default
 
 #restore backup data if exist.
 [ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data $POSDIR
@@ -80,12 +65,12 @@ podman cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
 podman cp ./istar.rpm ${CONTAINER}:/tmp
 podman exec $CONTAINER rpm -i /tmp/istar.rpm
 
+#move off hosts.deny
+[ "$OS" == "centos7" ] && podman exec $CONTAINER mv /etc/hosts.deny /tmp
+
 #prepare local net nic for container
 ./pipework $NETDEV -i eth1 $CONTAINER dhclient
 podman exec $CONTAINER sed -i /search/d /etc/resolv.conf
-
-#move off hosts.deny
-[ "$OS" == "centos7" ] && podman exec $CONTAINER mv /etc/hosts.deny /tmp
 
 #create vpn if desired
 #echo -n "Create VPN? (y/n): "

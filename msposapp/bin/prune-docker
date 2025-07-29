@@ -2,7 +2,8 @@
 
 # remove temp files.
 rm -rf /var/tmp/containers
-rm -f /var/tmp/centos7*xz
+rm -f /var/tmp/centos*xz
+rm -f /var/tmp/rhel*xz
 rm -f /var/tmp/daisy*xz
 rm -f /var/tmp/rti*xz
 rm -f .*ipsec*
