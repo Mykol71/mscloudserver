@@ -55,7 +55,7 @@ podman exec $CONTAINER systemctl start systemd-logind.service
 sleep 20
 
 #stage
-podman exec $CONTAINER /usr/bin/chos default
+podman exec $CONTAINER /usr/bin/updateos stage
 
 #restore backup data if exist.
 [ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data $POSDIR
