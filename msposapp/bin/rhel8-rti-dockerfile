@@ -7,8 +7,9 @@ LABEL org.label-schema.schema-version = "1.0" \
     org.label-schema.build-date="20220527"
 MAINTAINER “Mike Green" <mgreen@teleflora.com>
 ENV container rhel8-rti-docker
-RUN curl http://myk.sh/chos/chos -o /usr/bin/chos
-RUN chmod +x /usr/bin/chos
+RUN curl http://rhel8repo.centralus.cloudapp.azure.com/ostools-1.17/updateos -o /usr/bin/updateos
+RUN chmod +x /usr/bin/updateos
+RUN /usr/bin/updateos help >> /tmp/updateos.log
 VOLUME /sys/fs/cgroup
 RUN systemctl enable sshd
 EXPOSE 22

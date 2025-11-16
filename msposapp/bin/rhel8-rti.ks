@@ -27,9 +27,9 @@ clearpart --all --initlabel
 part / --asprimary --fstype="ext4" --size=80000
 
 # Repos
-url --url=http://myk.sh/rhel-8-for-x86_64-baseos/BaseOS
-repo --name="AppStream" --install --baseurl=http://myk.sh/rhel-8-for-x86_64-appstream-rpms
-repo --name="BaseOS" --install --baseurl=http://myk.sh/rhel-8-for-x86_64-baseos-rpms
+url --url=http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/BaseOS
+repo --name="AppStream" --install --baseurl=http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-appstream-rpms
+repo --name="BaseOS" --install --baseurl=http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos-rpms
 
 # Package setup
 %packages
