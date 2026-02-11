@@ -29,7 +29,7 @@ part / --asprimary --fstype="ext4" --size=80000
 # Repos
 url --url=http://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/kickstart
 repo --name="AppStream" --install --baseurl=http://download.rockylinux.org/pub/rocky/9/AppStream/x86_64/os
-repo --name="BaseOS" --install --baseurl=http://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/kickstart/os
+repo --name="BaseOS" --install --baseurl=http://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/kickstart
 repo --name="Extras" --install --baseurl=http://download.rockylinux.org/pub/rocky/9/extras/x86_64/os/
 repo --name="Devel" --install --baseurl=http://download.rockylinux.org/pub/rocky/9/devel/x86_64/os/
 

@@ -6,9 +6,6 @@ TFCLOUD_VERSION="2.6"
 ID=$(/usr/bin/id -u)
 [ $ID -ne 0 ] && echo "You must be root to run $0." && exit 1
 
-ROOTDIR="$(pwd)"
-export ROOTDIR
-
 trap '' 2
 while :; do
 	clear
@@ -44,32 +41,32 @@ printf '\u2517''\u2501''\n'
 	read selection
 	case $selection in
 	1)
-		$ROOTDIR/bin/list_repos
+		$ROOTDIR/msrepos/bin/list_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	2)
-		$ROOTDIR/bin/create_repos
+		$ROOTDIR/msrepos/bin/create_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	3)
-		$ROOTDIR/bin/delete_repos
+		$ROOTDIR/msrepos/bin/delete_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	4)
-		$ROOTDIR/bin/disable_repos
+		$ROOTDIR/msrepos/bin/disable_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	5)
-		$ROOTDIR/bin/sync_os_repo
+		$ROOTDIR/msrepos/bin/sync_os_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
 	i)
-		$ROOTDIR/bin/install
+		$ROOTDIR/msrepos/bin/install
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;

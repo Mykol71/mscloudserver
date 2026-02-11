@@ -5,11 +5,11 @@ OSVERS="`cat /etc/redhat-release | cut -d" " -f6 | cut -d. -f1`"
 
 #service local
 
-
 #Redhat repos
-subscription-manager register --activationkey=TelefloraPOS --org=4508688
+#subscription-manager register --activationkey=TelefloraPOS --org=4508688
 [ ! -d /var/www/html/rhel-${OSVERS}-for-x86_64-baseos-rpms ] && mkdir /var/www/html/rhel-${OSVERS}-for-x86_64-baseos-rpms
 [ ! -d /var/www/html/rhel-${OSVERS}-for-x86_64-appstream-rpms ] && mkdir /var/www/html/rhel-${OSVERS}-for-x86_64-appstream-rpms
+#creating cron jobs to sync repos from redhat.
 echo "0 10 * * 1 root reposync -p /var/www/html --download-metadata --repo=rhel-${OSVERS}-for-x86_64-baseos-rpms >/tmp/reposync_baseos.log 2>&1" > /etc/cron.d/reposync
 echo "0 11 * * 1 root reposync -p /var/www/html --download-metadata --repo=rhel-${OSVERS}-for-x86_64-appstream-rpms >/tmp/reposync_appstream.log 2>&1" >> /etc/cron.d/reposync
 
@@ -25,10 +25,10 @@ cd -
 [ ! -d /var/www/html/support ] && mkdir /var/www/html/support
 
 #switch to repos
-echo -n "Convert containers app and physical staging to use these repos? " && read ANS
+echo -n "Convert containers use these repos? " && read ANS
 [ "$ANS" != "y" ] && exit $?
-sed -i 's/BACKEND="http:\/\/rhel8repo.centralus.cloudapp.azure.com\/ostools-1.17"/BACKEND="https:\/\/'$(hostname)'\/ostools-1.17"/g' /var/www/html/ostools-1.17/updateos
-sed -i 's/rhel8repo.centralus.cloudapp.azure.com/'$(hostname)'/g' /var/www/html/ostools-1.17/RH8-RTI-silent.ks
-sed -i 's/rhel8repo.centralus.cloudapp.azure.com/'$(hostname)'/g' ../msposapp/bin/rhel8-rti.ks
+sed -i 's/BACKEND="http:\/\/rhel8repo.centralus.cloudapp.azure.com\/ostools-1.17"/BACKEND="http:\/\/$(hostname -i)\/ostools-1.17"/g' /var/www/html/ostools-1.17/updateos
+sed -i 's/baseurl=http://rhel8repo.centralus.cloudapp.azure.com/baseurl=http://$(hostname -i)/g' /var/www/html/ostools-1.17/RH8-RTI-silent.ks
+sed -i 's/baseurl=http://rhel8repo.centralus.cloudapp.azure.com/baseurl=http://$(hostname -i)/g' $ROOTDIR/msposapp/bin/rhel8-rti.ks
 
 exit $?

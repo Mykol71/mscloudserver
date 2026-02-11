@@ -26,7 +26,7 @@ CONTAINER=`podman run -d -it -h $SHOPCODE.myk.sh --name=$SHOPCODE.myk.sh --rm --
 echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
-[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://192.168.1.67/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
 
 # install epel repo
@@ -35,7 +35,7 @@ echo $CONTAINER>.$SHOPCODE.container
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
 # install strongswan
-podman exec $CONTAINER yum -y install strongswan strongswan-libipsec
+#podman exec $CONTAINER yum -y install strongswan strongswan-libipsec
 
 #disable subscription manager
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
@@ -55,15 +55,15 @@ podman exec $CONTAINER systemctl start systemd-logind.service
 sleep 20
 
 #stage
-podman exec $CONTAINER /usr/bin/updateos stage
+#podman exec $CONTAINER /usr/bin/updateos stage
 
 #restore backup data if exist.
 [ "`ls /backups | grep $SHOPCODE`" != "" ] && ./restore_data $POSDIR
 
 #install receipt printer drivers
-podman cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
-podman cp ./istar.rpm ${CONTAINER}:/tmp
-podman exec $CONTAINER rpm -i /tmp/istar.rpm
+#podman cp ./istar.ppd ${CONTAINER}:/etc/cups/ppd
+#podman cp ./istar.rpm ${CONTAINER}:/tmp
+#podman exec $CONTAINER rpm -i /tmp/istar.rpm
 
 #move off hosts.deny
 [ "$OS" == "centos7" ] && podman exec $CONTAINER mv /etc/hosts.deny /tmp

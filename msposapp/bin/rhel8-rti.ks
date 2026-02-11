@@ -7,7 +7,7 @@ firewall --disabled
 #network --bootproto=dhcp --device=link --activate --onboot=on
 network  --bootproto=dhcp --device=link --ipv6=no --activate --onboot=on
 network  --bootproto=dhcp --device=eth1 --ipv6=no --activate --onboot=on
-network  --hostname=rh8.myk.sh
+network  --hostname=myk.sh
 bootloader --disable
 lang en_US
 shutdown
@@ -24,7 +24,7 @@ user --groups=wheel,rti --name=tfsupport --password=$6$G/P1TGIsGMWZ9aak$Sm/HZ1fc
 # Disk setup
 zerombr
 clearpart --all --initlabel
-part / --asprimary --fstype="ext4" --size=80000
+part / --asprimary --fstype="ext4" --size=30000
 
 # Repos
 url --url=http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/BaseOS
@@ -36,9 +36,10 @@ repo --name="BaseOS" --install --baseurl=http://rhel8repo.centralus.cloudapp.azu
 @^minimal-environment
 @system-tools
 bash
+ksh
 expect
 perl
-libreswan
+#libreswan
 net-tools
 wget
 mailx
@@ -50,8 +51,8 @@ sed
 rsync
 sendmail
 kernel-modules
-cups
-samba
+#cups
+#samba
 %end
 
 %addon org_fedora_oscap      
