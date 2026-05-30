@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>POS Cloud | Managed POS Cloud Operations</title>
+    <meta
+      name="description"
+      content="POS Cloud helps managed services teams build, stage, deploy, restore, and connect Linux POS servers in AWS."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="POS Cloud home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img">
+            <path d="M7 9.5h18v13H7z" />
+            <path d="M11 14h6M11 18h10" />
+            <path d="M10 25.5h12M14 22.5v3M18 22.5v3" />
+          </svg>
+        </span>
+        <span>POS Cloud</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#platform">Platform</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#security">Security</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+      <a class="nav-action" href="#contact">Plan a migration</a>
+    </header>
+
+    <main id="top">
+      <section class="hero section-grid" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Move retail POS servers to the cloud without losing the operational playbook</h1>
+          <p>
+            Build, stage, deploy, restore, and connect store locations from one managed command center.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button button-primary" href="#contact">
+              Plan a migration
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h11M11 6l4 4-4 4" />
+              </svg>
+            </a>
+            <a class="button button-secondary" href="#workflow">View workflow</a>
+          </div>
+        </div>
+
+        <div class="command-center" aria-label="POS Cloud command center preview">
+          <div class="console-top">
+            <span class="console-dot"></span>
+            <span class="console-dot"></span>
+            <span class="console-dot"></span>
+            <span class="console-title">pos-cloud / shop 12345678</span>
+            <span class="status-label">running</span>
+          </div>
+          <div class="console-grid">
+            <div>
+              <span>Shopcode</span>
+              <strong>12345678</strong>
+            </div>
+            <div>
+              <span>OS version</span>
+              <strong>rocky9</strong>
+            </div>
+            <div>
+              <span>Container</span>
+              <strong>rti-pos-prod</strong>
+            </div>
+            <div>
+              <span>POS IP</span>
+              <strong>192.168.11.103</strong>
+            </div>
+          </div>
+          <div class="console-body">
+            <div class="task-rail">
+              <span class="task is-complete">Build OS media</span>
+              <span class="task is-complete">Stage POS runtime</span>
+              <span class="task is-active">Restore backup</span>
+              <span class="task">Start VPNs</span>
+            </div>
+            <pre aria-label="Deployment log"><code>$ msposapp restore_data --shop 12345678
+restore source: cloud backup / tfrsync
+container: rocky9-rti
+status: syncing production data
+next: switch stores online</code></pre>
+          </div>
+        </div>
+
+        <div class="hero-preview" aria-hidden="true">
+          <span>Build</span>
+          <svg viewBox="0 0 20 20">
+            <path d="M4 10h12M12 6l4 4-4 4" />
+          </svg>
+          <span>Stage</span>
+          <svg viewBox="0 0 20 20">
+            <path d="M4 10h12M12 6l4 4-4 4" />
+          </svg>
+          <span>Deploy</span>
+        </div>
+      </section>
+
+      <section id="platform" class="platform section-grid" aria-labelledby="platform-title">
+        <div class="section-copy">
+          <h2 id="platform-title">Built for the support path you already trust</h2>
+          <p>
+            POS Cloud wraps proven Linux install, backup, and VPN routines in a single managed surface
+            for production, QA, and dev POS instances.
+          </p>
+        </div>
+        <div class="topology" aria-label="Store VPN topology">
+          <div class="store-node store-one">
+            <span>Store 01</span>
+            <strong>router</strong>
+          </div>
+          <div class="store-node store-two">
+            <span>Store 02</span>
+            <strong>router</strong>
+          </div>
+          <div class="cloud-node">
+            <span>AWS private cloud</span>
+            <strong>POS container</strong>
+            <small>isolated runtime + backup restore</small>
+          </div>
+          <div class="topology-line line-one"></div>
+          <div class="topology-line line-two"></div>
+        </div>
+      </section>
+
+      <section id="workflow" class="workflow" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <h2 id="workflow-title">Build, stage, and go live from one repeatable workflow</h2>
+          <p>
+            Prepare compliant OS media, stage the POS runtime, restore cloud backup data, and bring
+            stores online through managed VPN connections.
+          </p>
+        </div>
+
+        <div class="workflow-board">
+          <div class="step-controls" role="tablist" aria-label="Workflow steps">
+            <button class="step-button is-selected" type="button" data-step="0" role="tab" aria-selected="true">
+              <span>01</span>
+              Build OS media
+            </button>
+            <button class="step-button" type="button" data-step="1" role="tab" aria-selected="false">
+              <span>02</span>
+              Stage POS runtime
+            </button>
+            <button class="step-button" type="button" data-step="2" role="tab" aria-selected="false">
+              <span>03</span>
+              Restore production data
+            </button>
+            <button class="step-button" type="button" data-step="3" role="tab" aria-selected="false">
+              <span>04</span>
+              Switch stores online
+            </button>
+          </div>
+
+          <article class="workflow-detail" aria-live="polite">
+            <div class="detail-header">
+              <div>
+                <h3 id="workflow-step-title">Build OS media</h3>
+                <p id="workflow-step-copy">
+                  Match the customer server patch level and prepare the POS image without relying on
+                  marketplace shortcuts.
+                </p>
+              </div>
+              <span id="workflow-step-state">ready</span>
+            </div>
+            <div class="detail-grid">
+              <div class="field-list" aria-label="Step fields">
+                <div>
+                  <span>Shopcode</span>
+                  <strong>12345678</strong>
+                </div>
+                <div>
+                  <span>OS version</span>
+                  <strong id="workflow-os">rocky9</strong>
+                </div>
+                <div>
+                  <span>Container</span>
+                  <strong id="workflow-container">image build</strong>
+                </div>
+                <div>
+                  <span>VPN</span>
+                  <strong id="workflow-vpn">not required</strong>
+                </div>
+                <div>
+                  <span>Backup</span>
+                  <strong id="workflow-backup">standby</strong>
+                </div>
+              </div>
+              <pre class="workflow-log"><code id="workflow-log">$ create-image rocky9-rti
+checking package set
+installing POS dependencies
+committing base image</code></pre>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="security" class="security section-grid" aria-labelledby="security-title">
+        <div class="section-copy">
+          <h2 id="security-title">Compliance-aware operations without extra busywork</h2>
+          <p>
+            Keep POS servers isolated, patched, backed up, and reachable through managed VPNs while
+            support teams use familiar Linux workflows.
+          </p>
+        </div>
+        <div class="feature-rows">
+          <article class="feature-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 7.5 12 4l7 3.5v5.2c0 4.4-3.1 6.9-7 8.1-3.9-1.2-7-3.7-7-8.1Z" />
+              <path d="M9.5 12.3 11.4 14l3.4-4" />
+            </svg>
+            <div>
+              <h3>Isolated POS containers</h3>
+              <p>Use one runtime boundary per POS server so one store’s work never blurs into another.</p>
+            </div>
+          </article>
+          <article class="feature-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 10V8a5 5 0 0 1 10 0v2" />
+              <path d="M6 10h12v9H6z" />
+              <path d="M12 14v2" />
+            </svg>
+            <div>
+              <h3>Encrypted backup restore</h3>
+              <p>Restore from managed cloud backup during the migration window with a clear audit trail.</p>
+            </div>
+          </article>
+          <article class="feature-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12h5l3-5 3 10 3-5h2" />
+              <path d="M5 19h14M5 5h14" />
+            </svg>
+            <div>
+              <h3>Site-to-site VPN control</h3>
+              <p>Create, start, stop, and verify branch connectivity without jumping between tools.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="evidence section-grid" aria-labelledby="evidence-title">
+        <div class="screenshot-frame">
+          <img src="pics/RTI_cloud1.png" alt="Existing POS Cloud network diagram" />
+        </div>
+        <div class="section-copy">
+          <h2 id="evidence-title">Migration planning stays grounded in the real environment</h2>
+          <p>
+            POS Cloud keeps AWS networking, store routers, Linux images, and RTI application deployment
+            visible in the same migration narrative your support team already documents.
+          </p>
+          <a class="inline-link" href="docs/README.md">Read the current deployment docs</a>
+        </div>
+      </section>
+
+      <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+        <div class="section-heading">
+          <h2 id="pricing-title">Simple pricing for managed POS cloud operations</h2>
+          <p>Start with a migration, then keep each store running on a predictable managed service.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-column">
+            <span>Setup</span>
+            <strong>$249</strong>
+            <p>per migration</p>
+          </article>
+          <article class="price-column">
+            <span>Managed hosting</span>
+            <strong>$159</strong>
+            <p>per store / month</p>
+          </article>
+          <article class="support-column">
+            <span>Support</span>
+            <strong>Included</strong>
+            <p>Cloud backup restore, VPN management, and POS runtime maintenance are part of the service.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="final-cta" aria-labelledby="contact-title">
+        <div>
+          <h2 id="contact-title">Ready to move a store into POS Cloud?</h2>
+          <p>Use the same build, stage, deploy, and restore path your team already knows.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="mailto:mgreen@teleflora.org?subject=POS%20Cloud%20migration%20planning">
+            Plan a migration
+          </a>
+          <a class="button button-secondary" href="docs/deploy.md">Read deployment guide</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <path d="M7 9.5h18v13H7z" />
+            <path d="M11 14h6M11 18h10" />
+            <path d="M10 25.5h12M14 22.5v3M18 22.5v3" />
+          </svg>
+        </span>
+        <span>POS Cloud</span>
+      </a>
+      <nav aria-label="Footer navigation">
+        <a href="#platform">Platform</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#security">Security</a>
+        <a href="#pricing">Pricing</a>
+        <a href="docs/README.md">Docs</a>
+      </nav>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

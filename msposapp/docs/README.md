@@ -64,6 +64,7 @@ After outage, and ongoing.
 Information
 -----------
 
+ - [Release Documentation](release.md)
  - [Pricing](pricing.md)
  - [Reporting](reporting.md)
  - [References](references.md)
