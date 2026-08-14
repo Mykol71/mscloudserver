@@ -1,0 +1,5 @@
+#!/bin/bash
+
+podman image ls
+
+exit $?

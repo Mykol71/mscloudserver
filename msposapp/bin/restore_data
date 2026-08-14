@@ -53,3 +53,5 @@ fi
 if [ "$POS_DIR" == "d" ]; then
 podman exec $CONTAINER chown -R daisy:daisy /d
 fi
+
+exit 0

@@ -46,6 +46,7 @@ while :; do
     printf '\u2503''\n'
     printf '\u2503''\033[1m'"-\033[0mSystem"'\n'
     printf '\u2503''\033[1m'" s.\033[0m Shopcode"'\n'
+    printf '\u2503''\033[1m'" m.\033[0m Images"'\n'
     printf '\u2503''\033[1m'" i.\033[0m Install"'\n'
     printf '\u2503''\033[1m'" p.\033[0m Purge"'\n'
     printf '\u2503''\033[1m'" r.\033[0m Readme"'\n'
@@ -121,6 +122,13 @@ while :; do
 		cd $ROOTDIR/bin
 		./prune-docker
 		CONTAINER=`cat ./bin/.container 2>/dev/null`
+		echo -ne "${CYAN}Press enter to continue..${NC}"
+		read
+		cd -
+		;;
+	m)
+		cd $ROOTDIR/bin
+		./list_images
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		cd -

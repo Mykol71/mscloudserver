@@ -4,7 +4,6 @@ rootpw --iscrypted $1$b2bDwXkz$ZpKi4Jx7tox779nrUdt8h1
 timezone --isUtc --nontp UTC
 selinux --permissive
 firewall --disabled
-#network --bootproto=dhcp --device=link --activate --onboot=on
 network  --bootproto=dhcp --device=link --ipv6=no --activate --onboot=on
 network  --bootproto=dhcp --device=eth1 --ipv6=no --activate --onboot=on
 network  --hostname=myk.sh
@@ -24,7 +23,7 @@ user --groups=wheel,rti --name=tfsupport --password=$6$G/P1TGIsGMWZ9aak$Sm/HZ1fc
 # Disk setup
 zerombr
 clearpart --all --initlabel
-part / --asprimary --fstype="ext4" --size=30000
+part / --asprimary --fstype="ext4" --size=10000
 
 # Repos
 url --url=http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/BaseOS
@@ -39,7 +38,6 @@ bash
 ksh
 expect
 perl
-#libreswan
 net-tools
 wget
 mailx
@@ -51,8 +49,8 @@ sed
 rsync
 sendmail
 kernel-modules
-#cups
-#samba
+cups
+samba
 %end
 
 %addon org_fedora_oscap      
@@ -74,7 +72,7 @@ update-crypto-policies --set LEGACY
 sed -i "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf
 
 # container customizations inside the chroot
-#rpm -e kernel
+rpm -e kernel
 
 echo 'container' > /etc/dnf/vars/infra
 
@@ -90,7 +88,7 @@ echo "%_install_langs $LANG" > /etc/rpm/macros.image-language-conf
 umount /run
 systemd-tmpfiles --create --boot
 # mask mounts and login bits
-#systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount
+systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount
 
 # Remove things we don't need
 rm -f /etc/udev/hwdb.bin

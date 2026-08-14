@@ -7,14 +7,12 @@ HOST_USER=`whoami`
 
 #Environment Name 
 [ ! -f ../../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../../.envtype
+
 #Shopcode
-[ ! -f .shopcode ] && echo -n "Shopcode: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
-SHOPCODE="`cat .shopcode`"
+[ -f .shopcode ] && SHOPCODE="`cat .shopcode`"
+[ "$SHOPCODE" == "" ] && echo -n "Shopcode: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
 
 #OS Version
-#OSVERSION="rhel8" && echo "rhel8" > .$SHOPCODE.osversion
-#echo -n "OS Version - (rhel8, centos7): " && read OSVERSION
-#[ "$OSVERSION" == "centos7" ] && OSVERSION="centos7" && echo "centos7" >.$SHOPCODE.osversion
 [ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion
 OSVERSION="`cat .$SHOPCODE.osversion`"
 
