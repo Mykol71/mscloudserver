@@ -13,19 +13,8 @@ HOST_USER=`whoami`
 [ "$SHOPCODE" == "" ] && echo -n "Shopcode: " && read SHOPCODE && echo "$SHOPCODE" >.shopcode
 
 #OS Version
-[ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion
+[ ! -f .$SHOPCODE.osversion ] && echo -n "OS Version - (rhel8, centos7, rocky9, rhel9): " && read OSVERSION && echo "$OSVERSION" > .$SHOPCODE.osversion
 OSVERSION="`cat .$SHOPCODE.osversion`"
-
-#set selinux to permissive
-setenforce 0
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
-
-#disable subscription manager.
-sed -i "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf
-
-#install required packages
-yum clean all
-yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time podman device-mapper-libs device-mapper-event-libs chrony lorax anaconda-tui unzip expect dhclient
 
 # create base image
 echo -n "Create base image? y/n: "

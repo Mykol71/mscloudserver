@@ -28,10 +28,12 @@ echo $CONTAINER>.$SHOPCODE.container
 
 #import yum repo gpg key
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rhel9" ] && podman exec $CONTAINER rpm --import http://rhel9repo.centralus.cloudapp.azure.com/rhel-9-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
 
 # install epel repo
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+[ "$OS" == "rhel9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 [ "$OS" == "centos7" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 

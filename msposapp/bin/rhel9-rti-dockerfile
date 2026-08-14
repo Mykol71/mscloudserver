@@ -1,0 +1,16 @@
+FROM scratch
+ADD rhel9-rti-docker.tar.xz /
+LABEL org.label-schema.schema-version = "1.0" \
+    org.label-schema.name="RHEL9 Base Image" \
+    org.label-schema.vendor="RHEL" \
+    org.label-schema.license="GPLv2" \
+    org.label-schema.build-date="20220527"
+MAINTAINER “Mike Green" <mgreen@teleflora.com>
+ENV container rhel9-rti-docker
+RUN curl http://rhel8repo.centralus.cloudapp.azure.com/updateos/updateos -o /usr/bin/updateos
+RUN chmod +x /usr/bin/updateos
+RUN /usr/bin/updateos help >> /tmp/updateos.log
+VOLUME /sys/fs/cgroup
+RUN systemctl enable sshd
+EXPOSE 22
+CMD [“/usr/bin/bash”]

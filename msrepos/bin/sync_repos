@@ -1,0 +1,48 @@
+#!/bin/bash
+
+OS=rhel9
+POSTYPE=rti
+[ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
+SHOPCODE="repo"
+[ -f .$SHOPCODE.osversion ] && OS="`cat .$SHOPCODE.osversion`"
+[ "`podman image ls | grep $OS`" == "" ] && echo "No image available. Build image first." && exit 0
+
+#get nic name
+NETDEV=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
+
+#start container
+CONTAINER=`podman run -d -it -h $OS-repo.myk.sh --name=$OS-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i ${OS}-rti /usr/sbin/init`
+
+#import yum repo gpg key
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
+[ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
+
+# install epel repo
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+[ "$OS" == "centos7" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+[ "$OS" == "rocky9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+
+#move off hosts.deny
+[ "$OS" == "centos7" ] && podman exec $CONTAINER mv /etc/hosts.deny /tmp
+
+#prepare local net nic for container
+./bin/pipework $NETDEV -i eth1 $CONTAINER dhclient
+podman exec $CONTAINER sed -i /search/d /etc/resolv.conf
+
+#install package with reposync
+podman exec $CONTAINER yum -y install yum-utils
+
+#subscription manager register
+podman exec $CONTAINER subscription-manager register --activationkey=TelefloraPOS --org=4508688
+
+#sync repos
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms
+[ "$OS" == "rhel8" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-appstream-rpms
+
+[ "$OS" == "rhel9" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-9-for-x86_64-baseos-rpms
+[ "$OS" == "rhel9" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-9-for-x86_64-appstream-rpms
+
+#shutdown container
+podman container rm -f $CONTAINER
+
+exit $?

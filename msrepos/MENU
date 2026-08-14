@@ -61,7 +61,7 @@ printf '\u2517''\u2501''\n'
 		read
 		;;
 	5)
-		$ROOTDIR/msrepos/bin/sync_os_repos
+		$ROOTDIR/msrepos/bin/sync_repos
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
@@ -71,7 +71,6 @@ printf '\u2517''\u2501''\n'
 		read
 		;;
 	x)
-		cd ..
 		exit
 		;;
 	*) ;;

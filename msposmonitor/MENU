@@ -67,7 +67,6 @@ printf '\u2517''\u2501''\n'
 		read
 		;;
 	x)
-		cd ..
 		exit
 		;;
 	*) ;;

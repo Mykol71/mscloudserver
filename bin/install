@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+HOST_USER=`whoami`
+
+#verify root
+[ "$HOST_USER" != "root" ] && echo "You must be root or in sudoers to run $0." && exit 1
+
+#Environment Name 
+[ ! -f ../.envtype ] && echo -n "Env Name: " && read ENVTYPE && echo "$ENVTYPE" >../.envtype
+
+#set selinux to permissive
+setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
+#disable subscription manager.
+sed -i "s/enabled=1/enabled=0/g" /etc/yum/pluginconf.d/subscription-manager.conf
+
+#install required packages
+yum clean all
+yum -y install net-tools gtk3 ksh wget firewalld tigervnc-server-minimal mailx nmap time podman device-mapper-libs device-mapper-event-libs chrony lorax anaconda-tui unzip expect dhclient
+
+echo "Done!"
+
+exit 0
