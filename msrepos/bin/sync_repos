@@ -1,6 +1,9 @@
 #!/bin/bash
 
+#left off here.......run for all versions of os..........
+#
 OS=rhel9
+#
 POSTYPE=rti
 [ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
 SHOPCODE="repo"
