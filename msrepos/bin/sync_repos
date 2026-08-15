@@ -13,27 +13,24 @@ NETDEV=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 #start container
 CONTAINER=`podman run -d -it -h $OS-repo.myk.sh --name=$OS-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i ${OS}-rti /usr/sbin/init`
 
-#import yum repo gpg key
-[ "$OS" == "rhel8" ] && podman exec $CONTAINER rpm --import http://rhel8repo.centralus.cloudapp.azure.com/rhel-8-for-x86_64-baseos/RPM-GPG-KEY-redhat-release
-[ "$OS" == "rocky9" ] && podman exec $CONTAINER rpm --import http://download.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-9
-
-# install epel repo
-[ "$OS" == "rhel8" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-[ "$OS" == "centos7" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-[ "$OS" == "rocky9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-
-#move off hosts.deny
-[ "$OS" == "centos7" ] && podman exec $CONTAINER mv /etc/hosts.deny /tmp
+#podman exec $CONTAINER rm -f /etc/yum.repos.d/*
+#podman exec $CONTAINER sed -i s/gpgcheck\ =\ 1/gpgcheck\ =\ 0/g /etc/yum.repos.d/*
+#podman exec $CONTAINER sed -i s/gpgcheck:\ 1/gpgcheck:\ 0/g /etc/yum.repos.d/*
 
 #prepare local net nic for container
 ./bin/pipework $NETDEV -i eth1 $CONTAINER dhclient
 podman exec $CONTAINER sed -i /search/d /etc/resolv.conf
 
-#install package with reposync
-podman exec $CONTAINER yum -y install yum-utils
+#install gpg key
+podman exec $CONTAINER wget http://rhel9repo.centralus.cloudapp.azure.com/rhel-9-for-x86_64-baseos/RPM-GPG-KEY-redhat-release -O /tmp/RPM-GPG-KEY-redhat-release
+podman exec $CONTAINER rpmdb --rebuilddb
+podman exec $CONTAINER rpm --import /tmp/RPM-GPG-KEY-redhat-release
 
 #subscription manager register
 podman exec $CONTAINER subscription-manager register --activationkey=TelefloraPOS --org=4508688
+
+#install package with reposync
+podman exec $CONTAINER yum -y install yum-utils
 
 #sync repos
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms
@@ -43,6 +40,6 @@ podman exec $CONTAINER subscription-manager register --activationkey=TelefloraPO
 [ "$OS" == "rhel9" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-9-for-x86_64-appstream-rpms
 
 #shutdown container
-podman container rm -f $CONTAINER
+#podman container rm -f $CONTAINER
 
 exit $?
