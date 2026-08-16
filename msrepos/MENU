@@ -65,11 +65,6 @@ printf '\u2517''\u2501''\n'
 		echo -ne "${CYAN}Press enter to continue..${NC}"
 		read
 		;;
-	i)
-		$ROOTDIR/msrepos/bin/install
-		echo -ne "${CYAN}Press enter to continue..${NC}"
-		read
-		;;
 	x)
 		exit
 		;;

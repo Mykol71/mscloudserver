@@ -1,9 +1,0 @@
-#!/bin/bash
-
-#DESC Installs reqs for repo creation.
-
-yum -y install httpd subscription-manager yum-utils git podman
-systemctl enable httpd
-systemctl start httpd
-
-exit 0

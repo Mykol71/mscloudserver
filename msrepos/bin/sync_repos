@@ -1,36 +1,18 @@
 #!/bin/bash
 
-#left off here.......run for all versions of os..........
-#
-OS=rhel9
-#
-POSTYPE=rti
-[ "$POSTYPE" == "rti" ] && VER="16" && POSDIR="usr2"
-SHOPCODE="repo"
-[ -f .$SHOPCODE.osversion ] && OS="`cat .$SHOPCODE.osversion`"
-[ "`podman image ls | grep $OS`" == "" ] && echo "No image available. Build image first." && exit 0
+#DESC This script will run on any redhat version and will create or sync redhat yum repos for 8,9 and 10 on one server. No redhat account or license needed.
+#DESC redhat containers source (look for the unauthenticated versions): https://catalog.redhat.com/en/software/containers/explore
 
-#get nic name
-NETDEV=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
+#install or update deps
+yum install -y httpd podman
+systemctl enable httpd
 
+for OS in rhel8 rhel9 rhel10
+do
 #start container
-CONTAINER=`podman run -d -it -h $OS-repo.myk.sh --name=$OS-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i ${OS}-rti /usr/sbin/init`
-
-#podman exec $CONTAINER rm -f /etc/yum.repos.d/*
-#podman exec $CONTAINER sed -i s/gpgcheck\ =\ 1/gpgcheck\ =\ 0/g /etc/yum.repos.d/*
-#podman exec $CONTAINER sed -i s/gpgcheck:\ 1/gpgcheck:\ 0/g /etc/yum.repos.d/*
-
-#prepare local net nic for container
-./bin/pipework $NETDEV -i eth1 $CONTAINER dhclient
-podman exec $CONTAINER sed -i /search/d /etc/resolv.conf
-
-#install gpg key
-podman exec $CONTAINER wget http://rhel9repo.centralus.cloudapp.azure.com/rhel-9-for-x86_64-baseos/RPM-GPG-KEY-redhat-release -O /tmp/RPM-GPG-KEY-redhat-release
-podman exec $CONTAINER rpmdb --rebuilddb
-podman exec $CONTAINER rpm --import /tmp/RPM-GPG-KEY-redhat-release
-
-#subscription manager register
-podman exec $CONTAINER subscription-manager register --activationkey=TelefloraPOS --org=4508688
+[ "$OS" == "rhel8" ] && CONTAINER=`podman run -d -it -h rhel8-repo.myk.sh --name=rhel8-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi8/ubi:8.10-1786322297 /usr/bin/bash`
+[ "$OS" == "rhel9" ] && CONTAINER=`podman run -d -it -h rhel9-repo.myk.sh --name=rhel9-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi9/ubi:9.8-1786631889 /usr/bin/bash`
+[ "$OS" == "rhel10" ] && CONTAINER=`podman run -d -it -h rhel10-repo.myk.sh --name=rhel10-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi10/ubi:1786398434 /usr/bin/bash`
 
 #install package with reposync
 podman exec $CONTAINER yum -y install yum-utils
@@ -42,7 +24,12 @@ podman exec $CONTAINER yum -y install yum-utils
 [ "$OS" == "rhel9" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-9-for-x86_64-baseos-rpms
 [ "$OS" == "rhel9" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-9-for-x86_64-appstream-rpms
 
-#shutdown container
-#podman container rm -f $CONTAINER
+[ "$OS" == "rhel10" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-10-for-x86_64-baseos-rpms
+[ "$OS" == "rhel10" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-10-for-x86_64-appstream-rpms
 
+#shutdown container
+podman container rm -f $CONTAINER
+done
+
+echo "Done!...."
 exit $?
