@@ -34,6 +34,7 @@ echo $CONTAINER>.$SHOPCODE.container
 # install epel repo
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 [ "$OS" == "rhel9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+[ "$OS" == "rhel10" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
 [ "$OS" == "centos7" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 [ "$OS" == "rocky9" ] && podman exec $CONTAINER yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 

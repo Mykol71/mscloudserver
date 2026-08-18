@@ -1,16 +1,16 @@
-FROM registry.access.redhat.com/ubi10/ubi:1786398434
+FROM scratch
 ADD rhel10-rti-docker.tar.xz /
 LABEL org.label-schema.schema-version = "1.0" \
     org.label-schema.name="RHEL10 Base Image" \
     org.label-schema.vendor="RHEL" \
     org.label-schema.license="GPLv2" \
-    org.label-schema.build-date="20260815"
+    org.label-schema.build-date="20220527"
 MAINTAINER “Mike Green" <mgreen@teleflora.com>
-ENV container rhel10-rti-docker
+ENV container rhel9-rti-docker
+RUN curl http://rhel8repo.centralus.cloudapp.azure.com/updateos/updateos -o /usr/bin/updateos
+RUN chmod +x /usr/bin/updateos
+RUN /usr/bin/updateos help >> /tmp/updateos.log
 VOLUME /sys/fs/cgroup
-VOLUME /var/www/html
-RUN dnf install -y yum yum-utils subscription-manager
-RUN subscription-manager register --activationkey=TelefloraPOS --org=4508688
-RUN reposync -p /var/www/html --download-metadata --repo=rhel-10-for-x86_64-baseos-rpms
-RUN reposync -p /var/www/html --download-metadata --repo=rhel-10-for-x86_64-appstream-rpms
+RUN systemctl enable sshd
+EXPOSE 22
 CMD [“/usr/bin/bash”]
