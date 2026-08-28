@@ -3,6 +3,8 @@
 #DESC This script will run on any redhat version and will create or sync redhat yum repos for 8,9 and 10 on one server. No redhat account or license needed.
 #DESC redhat containers source (look for the unauthenticated versions): https://catalog.redhat.com/en/software/containers/explore
 #DESC if you add to cron, add the /usr/sbin path to PATH prior to script exec in crontab.
+#DESC Ex: $ 0 0 * * * export PATH=$PATH:/usr/sbin && /home/mgreen/mscloudserver/msrepos/bin/sync_repos >/tmp/os_repo_sync.log 2>&1
+#DESC Because it cloud not find iptables in its path. (/usr/sbin)
 
 #install or update deps
 yum install -y httpd podman
