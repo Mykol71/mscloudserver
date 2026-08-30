@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#DESC This script will run on any redhat version and will create or sync redhat yum repos for 8,9 and 10 on one server. No redhat account or license needed.
+#DESC This script will run on any redhat version and will create or sync redhat yum repos for 7,8,9 and 10 on one server. No redhat account or license needed.
 #DESC redhat containers source (look for the unauthenticated versions): https://catalog.redhat.com/en/software/containers/explore
 #DESC if you add to cron, add the /usr/sbin path to PATH prior to script exec in crontab.
 #DESC Ex: $ 0 0 * * * export PATH=$PATH:/usr/sbin && /home/mgreen/mscloudserver/msrepos/bin/sync_repos >/tmp/os_repo_sync.log 2>&1
@@ -10,9 +10,10 @@
 yum install -y httpd podman
 systemctl enable httpd
 
-for OS in rhel8 rhel9 rhel10
+for OS in rhel7 rhel8 rhel9 rhel10
 do
 #start container
+[ "$OS" == "rhel7" ] && CONTAINER=`podman run -d -h rhel7-repo.myk.sh --name=rhel7-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi7/ubi:7.9-1445 /usr/bin/bash`
 [ "$OS" == "rhel8" ] && CONTAINER=`podman run -d -h rhel8-repo.myk.sh --name=rhel8-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi8/ubi:8.10-1786322297 /usr/bin/bash`
 [ "$OS" == "rhel9" ] && CONTAINER=`podman run -d -h rhel9-repo.myk.sh --name=rhel9-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi9/ubi:9.8-1786631889 /usr/bin/bash`
 [ "$OS" == "rhel10" ] && CONTAINER=`podman run -d -h rhel10-repo.myk.sh --name=rhel10-repo.myk.sh --rm --privileged -v "/var/www/html:/var/www/html" -v /sys/fs/cgroup:/sys/fs/cgroup:ro -w="/var/www/html" -i registry.access.redhat.com/ubi10/ubi:1786398434 /usr/bin/bash`
@@ -21,6 +22,10 @@ do
 podman exec $CONTAINER yum -y install yum-utils
 
 #sync repos
+[ "$OS" == "rhel7" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-7-server-rpms
+[ "$OS" == "rhel7" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-7-server-optional-rpms
+[ "$OS" == "rhel7" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-7-server-extras-rpms
+
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms
 [ "$OS" == "rhel8" ] && podman exec $CONTAINER reposync -p /var/www/html --download-metadata --repo=rhel-8-for-x86_64-appstream-rpms
 
